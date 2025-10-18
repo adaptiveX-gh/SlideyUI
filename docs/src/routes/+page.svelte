@@ -108,14 +108,14 @@ module.exports = {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
-        <a href="http://localhost:5175" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
-          Live Demo
+        <a href="/docs/examples" class="btn btn-secondary btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
+          View Examples
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </a>
-        <a href="/docs/examples" class="btn btn-outline btn-lg shadow-lg hover:shadow-xl transition-all">
-          View Examples
+        <a href="https://github.com/adaptiveX-gh/SlideyUI" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg shadow-lg hover:shadow-xl transition-all">
+          GitHub
         </a>
       </div>
     </div>

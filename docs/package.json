@@ -25,5 +25,11 @@
 		"tailwindcss": "^3.4.17",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.7"
+	},
+	"dependencies": {
+		"@slideyui/core": "file:../packages/slideyui-core",
+		"css-selector-tokenizer": "^0.8.0",
+		"culori": "^3.3.0",
+		"slideyui": "file:../packages/slideyui-core"
 	}
 }

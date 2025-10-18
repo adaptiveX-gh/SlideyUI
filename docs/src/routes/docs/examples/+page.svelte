@@ -190,8 +190,8 @@
 <div class="alert alert-info my-6">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
   <div>
-    <h4 class="font-bold">Live Demos</h4>
-    <p class="text-sm">All examples are available as live demos in the SlideyUI repository.</p>
+    <h4 class="font-bold">Live Demo Available</h4>
+    <p class="text-sm">Check out our <a href="/demo" class="link link-primary font-semibold">interactive live demo</a> to see SlideyUI in action with full keyboard navigation!</p>
   </div>
 </div>
 
@@ -214,11 +214,10 @@
         <CodeBlock code={example.code} lang="html" />
 
         <div class="card-actions justify-end mt-4">
-          <button class="btn btn-outline btn-sm">View Full Example</button>
-          <a href="http://localhost:5175" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
-            Live Demo
+          <a href="/demo" class="btn btn-primary btn-sm">
+            View Live Demo
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </a>
         </div>

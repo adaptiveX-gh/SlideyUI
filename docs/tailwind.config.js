@@ -1,6 +1,8 @@
+import slideyUI from 'slideyui';
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: ['./src/**/*.{html,js,svelte,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -12,6 +14,10 @@ export default {
   plugins: [
     require('daisyui'),
     require('@tailwindcss/typography'),
+    slideyUI({
+      theme: 'pitch-deck',
+      defaultRatio: '16:9',
+    }),
   ],
   daisyui: {
     themes: [
