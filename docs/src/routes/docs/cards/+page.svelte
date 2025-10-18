@@ -1,5 +1,15 @@
 <script lang="ts">
-  import { CardGrid, ContentCard, MediaCard, DataCard } from '@slideyui/svelte';
+  import {
+    CardGrid,
+    ContentCard,
+    MediaCard,
+    DataCard,
+    SplitCard,
+    QuoteCard,
+    CardStack,
+    CollapsibleSection,
+    EmbedCard
+  } from '@slideyui/svelte';
   import LiveCardDemo from '$lib/components/LiveCardDemo.svelte';
   import CodeBlock from '$lib/components/CodeBlock.svelte';
 
@@ -188,6 +198,38 @@
         <div class="card-body">
           <h3 class="card-title">DataCard</h3>
           <p>Metrics, charts, and data visualizations.</p>
+          <div class="badge badge-primary">Specialized</div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">QuoteCard</h3>
+          <p>Testimonials and highlighted quotes.</p>
+          <div class="badge badge-primary">Specialized</div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">CardStack</h3>
+          <p>Stack multiple cards with visual depth.</p>
+          <div class="badge badge-primary">Specialized</div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">CollapsibleSection</h3>
+          <p>Expandable/collapsible content sections.</p>
+          <div class="badge badge-secondary">Interactive</div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">EmbedCard</h3>
+          <p>Embed YouTube, Vimeo, CodePen, and more.</p>
           <div class="badge badge-primary">Specialized</div>
         </div>
       </div>

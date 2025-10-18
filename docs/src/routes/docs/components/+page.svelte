@@ -1,7 +1,19 @@
 <script lang="ts">
   import CodeBlock from '$lib/components/CodeBlock.svelte';
   import ComponentPreview from '$lib/components/ComponentPreview.svelte';
-  import { CardGrid, ContentCard, DataCard, MediaCard } from '@slideyui/svelte';
+  import {
+    CardGrid,
+    ContentCard,
+    DataCard,
+    MediaCard,
+    SplitCard,
+    QuoteCard,
+    CardStack,
+    CardNotes,
+    CollapsibleSection,
+    EmbeddedCard,
+    EmbedCard
+  } from '@slideyui/svelte';
 
   const calloutCode = `<div class="callout callout-info">
   <div class="callout-title">Key Insight</div>
@@ -392,6 +404,236 @@
 <p class="text-sm text-base-content/70 mt-4">
   💡 Hover over the cards to see interactive effects! MediaCard works with images, videos, or custom media elements.
 </p>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">SplitCard</h3>
+<p>Create two-column layouts perfect for comparisons, before/after content, or side-by-side presentations.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <SplitCard
+    title="Comparison: Basic vs Pro"
+    aspectRatio="16/9"
+    interactive={true}
+    bordered={true}
+    shadow={true}
+    split={50}
+  >
+    <div slot="left">
+      <h3 class="text-2xl font-bold mb-4">Basic Plan</h3>
+      <ul class="space-y-2">
+        <li class="flex items-start gap-2">
+          <span class="text-primary">✓</span>
+          <span>10 presentations</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-primary">✓</span>
+          <span>Basic templates</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-primary">✓</span>
+          <span>Email support</span>
+        </li>
+      </ul>
+    </div>
+    <div slot="right">
+      <h3 class="text-2xl font-bold mb-4">Pro Plan</h3>
+      <ul class="space-y-2">
+        <li class="flex items-start gap-2">
+          <span class="text-secondary">✓</span>
+          <span>Unlimited presentations</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-secondary">✓</span>
+          <span>Premium templates</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-secondary">✓</span>
+          <span>Priority support</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-secondary">✓</span>
+          <span>AI generation</span>
+        </li>
+      </ul>
+    </div>
+  </SplitCard>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (Svelte)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={`<SplitCard
+  title="Comparison"
+  split={50}
+>
+  <div slot="left">
+    <h3>Option A</h3>
+    <p>Left side content...</p>
+  </div>
+  <div slot="right">
+    <h3>Option B</h3>
+    <p>Right side content...</p>
+  </div>
+</SplitCard>`} lang="svelte" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">CardStack</h3>
+<p>Stack multiple cards with visual depth - perfect for showing layered content or progression.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <CardStack maxVisible={3} offsetX={20} offsetY={20}>
+    <ContentCard
+      title="Card 1"
+      subtitle="First layer"
+      aspectRatio="16/9"
+      bordered={true}
+      shadow={true}
+    >
+      <p>This is the top card in the stack</p>
+    </ContentCard>
+    <ContentCard
+      title="Card 2"
+      subtitle="Second layer"
+      aspectRatio="16/9"
+      bordered={true}
+      shadow={true}
+    >
+      <p>This card appears behind the first</p>
+    </ContentCard>
+    <ContentCard
+      title="Card 3"
+      subtitle="Third layer"
+      aspectRatio="16/9"
+      bordered={true}
+      shadow={true}
+    >
+      <p>This card appears at the back</p>
+    </ContentCard>
+  </CardStack>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (Svelte)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={`<CardStack maxVisible={3} offsetX={20} offsetY={20}>
+  <ContentCard title="Card 1">
+    <p>First card content</p>
+  </ContentCard>
+  <ContentCard title="Card 2">
+    <p>Second card content</p>
+  </ContentCard>
+  <ContentCard title="Card 3">
+    <p>Third card content</p>
+  </ContentCard>
+</CardStack>`} lang="svelte" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">CollapsibleSection</h3>
+<p>Add expandable/collapsible sections to cards - great for progressive disclosure of information.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <ContentCard
+    title="Product Features"
+    subtitle="Click sections to expand"
+    aspectRatio="16/9"
+    bordered={true}
+    shadow={true}
+  >
+    <CollapsibleSection title="Performance" open={true}>
+      <p>Lightning-fast rendering with optimized component architecture. Built for scale.</p>
+    </CollapsibleSection>
+    <CollapsibleSection title="AI Integration">
+      <p>Native support for AI-generated content with streaming and state management.</p>
+    </CollapsibleSection>
+    <CollapsibleSection title="Customization">
+      <p>Fully themeable with 5 built-in themes and extensive customization options.</p>
+    </CollapsibleSection>
+  </ContentCard>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (Svelte)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={`<ContentCard title="Features">
+  <CollapsibleSection title="Section 1" open={true}>
+    <p>Content that starts expanded</p>
+  </CollapsibleSection>
+  <CollapsibleSection title="Section 2">
+    <p>Content that starts collapsed</p>
+  </CollapsibleSection>
+</ContentCard>`} lang="svelte" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">EmbedCard</h3>
+<p>Embed videos, iframes, and interactive content from YouTube, Vimeo, CodePen, and more.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <CardGrid columns={{ sm: 1, md: 2 }} gap="lg">
+    <EmbedCard
+      provider="youtube"
+      embedUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      title="YouTube Video"
+      caption="Embedded YouTube content"
+      aspectRatio="16/9"
+      bordered={true}
+      shadow={true}
+    />
+    <EmbedCard
+      provider="codepen"
+      embedUrl="https://codepen.io/team/codepen/embed/preview/PNaGbb"
+      title="CodePen Demo"
+      caption="Interactive code example"
+      aspectRatio="16/9"
+      bordered={true}
+      shadow={true}
+    />
+  </CardGrid>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (Svelte)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={`<EmbedCard
+  provider="youtube"
+  embedUrl="https://www.youtube.com/embed/VIDEO_ID"
+  title="Video Title"
+  caption="Optional caption"
+  aspectRatio="16/9"
+/>`} lang="svelte" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">CardNotes</h3>
+<p>Add presenter notes or metadata to any card - perfect for speaker notes in presentations.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <ContentCard
+    title="Product Launch Strategy"
+    subtitle="Q1 2025"
+    aspectRatio="16/9"
+    bordered={true}
+    shadow={true}
+  >
+    <p class="text-xl">Key milestones and timeline for our upcoming product launch.</p>
+    <CardNotes>
+      <p><strong>Speaker Notes:</strong> Remember to mention the beta testing results from December. Emphasize the 98% satisfaction rate.</p>
+    </CardNotes>
+  </ContentCard>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (Svelte)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={`<ContentCard title="Slide Title">
+  <p>Visible content...</p>
+  <CardNotes>
+    <p>These are speaker notes - visible in presenter mode only</p>
+  </CardNotes>
+</ContentCard>`} lang="svelte" />
+  </div>
+</details>
 
 <h2>Steps & Timelines</h2>
 

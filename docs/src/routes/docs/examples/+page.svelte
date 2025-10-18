@@ -1,6 +1,14 @@
 <script lang="ts">
   import CodeBlock from '$lib/components/CodeBlock.svelte';
-  import { CardGrid, ContentCard, DataCard, MediaCard } from '@slideyui/svelte';
+  import {
+    CardGrid,
+    ContentCard,
+    DataCard,
+    MediaCard,
+    SplitCard,
+    QuoteCard,
+    EmbedCard
+  } from '@slideyui/svelte';
 
   const examples = [
     {

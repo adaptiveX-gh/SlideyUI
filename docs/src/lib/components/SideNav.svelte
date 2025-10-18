@@ -26,8 +26,16 @@
       title: 'Reference',
       items: [
         { title: 'Components', href: '/docs/components' },
+        { title: 'Cards', href: '/docs/cards' },
+        { title: 'Analytics', href: '/docs/analytics' },
         { title: 'Utilities', href: '/docs/utilities' },
         { title: 'Examples', href: '/docs/examples' },
+      ],
+    },
+    {
+      title: 'Demos',
+      items: [
+        { title: 'Presentation Mode', href: '/demo/presentation' },
       ],
     },
   ];

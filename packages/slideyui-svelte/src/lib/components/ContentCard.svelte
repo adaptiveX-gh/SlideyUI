@@ -10,6 +10,7 @@
 	export let title: string | undefined = undefined;
 	export let subtitle: string | undefined = undefined;
 	export let variant: 'default' | 'featured' | 'minimal' = 'default';
+	export let density: 'minimal' | 'concise' | 'detailed' | 'extensive' = 'detailed';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -61,7 +62,7 @@
 		</div>
 	{/if}
 
-	<div class="slide-card-body flex-1 overflow-auto">
+	<div class="slide-card-body slide-card-density-{density} flex-1 overflow-auto">
 		<slot />
 	</div>
 
