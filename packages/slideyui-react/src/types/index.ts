@@ -397,6 +397,10 @@ export interface CardContainerProps {
   /** Custom data attributes (for AI apps) */
   'data-card-id'?: string;
   'data-card-state'?: string;
+  /** Enable container-based auto-scaling (Gamma.ai-style) */
+  autoScale?: boolean;
+  /** Enable fluid viewport-based scaling */
+  fluidScale?: boolean;
 }
 
 /**

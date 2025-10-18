@@ -17,6 +17,10 @@
 	export let cardId: string | undefined = undefined;
 	export let cardState: 'generating' | 'selected' | 'error' | 'complete' | undefined = undefined;
 
+	// Responsive scaling - Gamma.ai-style behavior
+	export let autoScale: boolean = false;
+	export let fluidScale: boolean = false;
+
 	// Allow additional classes
 	let className: string = '';
 	export { className as class };
@@ -63,6 +67,8 @@
 	style={styles}
 	data-card-id={cardId}
 	data-card-state={cardState}
+	data-auto-scale={autoScale ? 'true' : undefined}
+	data-fluid-scale={fluidScale ? 'true' : undefined}
 >
 	<slot />
 </div>

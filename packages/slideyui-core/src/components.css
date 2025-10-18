@@ -754,4 +754,107 @@
   .slide-card[data-card-state="complete"] {
     @apply border-green-500;
   }
+
+  /* Auto-Scale System - Gamma.ai-style responsive scaling */
+  /* Cards with data-auto-scale="true" will scale proportionally with viewport */
+  .slide-card[data-auto-scale="true"] {
+    container-type: inline-size;
+    --card-scale: 1;
+    --card-min-width: 320px;
+    --card-max-width: 1200px;
+  }
+
+  /* Container query-based scaling for different viewport sizes */
+  @container (min-width: 320px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 0.5;
+    }
+  }
+
+  @container (min-width: 480px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 0.65;
+    }
+  }
+
+  @container (min-width: 640px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 0.8;
+    }
+  }
+
+  @container (min-width: 768px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 0.9;
+    }
+  }
+
+  @container (min-width: 1024px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 1;
+    }
+  }
+
+  @container (min-width: 1280px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 1.1;
+    }
+  }
+
+  @container (min-width: 1536px) {
+    .slide-card[data-auto-scale="true"] {
+      --card-scale: 1.2;
+    }
+  }
+
+  /* Apply scaling to card content */
+  .slide-card[data-auto-scale="true"] > * {
+    transform: scale(var(--card-scale));
+    transform-origin: top left;
+    width: calc(100% / var(--card-scale));
+  }
+
+  /* Smooth transitions when scaling */
+  .slide-card[data-auto-scale="true"] > * {
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Alternative: Fluid scaling using viewport width */
+  /* More Gamma-like behavior - everything scales smoothly */
+  .slide-card[data-fluid-scale="true"] {
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+  }
+
+  .slide-card[data-fluid-scale="true"] .slide-card-title {
+    font-size: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .slide-card[data-fluid-scale="true"] .slide-card-description {
+    font-size: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .slide-card[data-fluid-scale="true"] .slide-card-body {
+    font-size: clamp(0.875rem, 2.5vw, 1.75rem);
+  }
+
+  /* Scale images and media proportionally */
+  .slide-card[data-fluid-scale="true"] img,
+  .slide-card[data-fluid-scale="true"] video,
+  .slide-card[data-fluid-scale="true"] iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Scale padding proportionally */
+  .slide-card[data-fluid-scale="true"] {
+    padding: clamp(1rem, 3vw, 3rem);
+  }
+
+  .slide-card[data-fluid-scale="true"].slide-card-compact {
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .slide-card[data-fluid-scale="true"].slide-card-spacious {
+    padding: clamp(1.5rem, 4vw, 4rem);
+  }
 }

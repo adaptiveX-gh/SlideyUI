@@ -41,6 +41,8 @@ export function CardContainer({
   bordered = true,
   shadow = true,
   interactive = false,
+  autoScale = false,
+  fluidScale = false,
   'data-card-id': cardId,
   'data-card-state': cardState,
 }: CardContainerProps) {
@@ -63,6 +65,8 @@ export function CardContainer({
       }}
       data-card-id={cardId}
       data-card-state={cardState}
+      data-auto-scale={autoScale ? 'true' : undefined}
+      data-fluid-scale={fluidScale ? 'true' : undefined}
     >
       {children}
     </div>

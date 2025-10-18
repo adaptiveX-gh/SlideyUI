@@ -23,6 +23,10 @@
 	export let cardId: string | undefined = undefined;
 	export let cardState: 'generating' | 'selected' | 'error' | 'complete' | undefined = undefined;
 
+	// Responsive scaling - Gamma.ai-style behavior
+	export let autoScale: boolean = false;
+	export let fluidScale: boolean = false;
+
 	let className: string = '';
 	export { className as class };
 
@@ -46,6 +50,8 @@
 	{backgroundImage}
 	{cardId}
 	{cardState}
+	{autoScale}
+	{fluidScale}
 	class="flex flex-col {paddingClass} {className}"
 >
 	{#if title || subtitle}
