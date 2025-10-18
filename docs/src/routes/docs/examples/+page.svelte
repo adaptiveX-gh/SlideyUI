@@ -1,179 +1,196 @@
 <script lang="ts">
   import CodeBlock from '$lib/components/CodeBlock.svelte';
+  import { CardGrid, ContentCard, DataCard, MediaCard } from '@slideyui/svelte';
 
   const examples = [
     {
       title: 'Corporate Presentation',
-      description: 'Professional business presentation with Q4 results',
+      description: 'Professional business presentation with Q4 results using cards',
       theme: 'corporate',
-      slides: 12,
-      code: `<section class="theme-corporate">
-  <!-- Title Slide -->
-  <div class="slide slide-title">
-    <h1 class="slide-heading">Q4 2024 Results</h1>
-    <p class="slide-subtitle">Financial Performance Review</p>
-  </div>
+      cards: 12,
+      code: `import { Presentation, ContentCard, DataCard } from 'slideyui-react';
 
-  <!-- Content Slide -->
-  <div class="slide slide-content">
-    <h2 class="slide-title">Key Metrics</h2>
-    <div class="stats shadow">
-      <div class="stat">
-        <div class="stat-title">Revenue</div>
-        <div class="stat-value">$2.4M</div>
-        <div class="stat-desc">↗︎ 340% growth</div>
+// Presentation Mode
+<Presentation theme="corporate" showProgress>
+  <ContentCard
+    title="Q4 2024 Results"
+    subtitle="Financial Performance Review"
+    variant="featured"
+  />
+
+  <DataCard title="Key Metrics">
+    <div className="stats shadow">
+      <div className="stat">
+        <div className="stat-title">Revenue</div>
+        <div className="stat-value">$2.4M</div>
+        <div className="stat-desc">↗︎ 340% growth</div>
       </div>
     </div>
-  </div>
-</section>`,
+  </DataCard>
+</Presentation>`,
     },
     {
       title: 'Startup Pitch Deck',
-      description: 'Bold pitch deck for Series A fundraising',
+      description: 'Bold pitch deck for Series A fundraising with card components',
       theme: 'pitch',
-      slides: 15,
-      code: `<section class="theme-pitch">
-  <!-- Title Slide -->
-  <div class="slide slide-title">
-    <h1 class="slide-heading">Revolutionizing Presentations</h1>
-    <p class="slide-subtitle">Seed Round | $2M Ask</p>
-  </div>
+      cards: 15,
+      code: `import { Presentation, ContentCard } from 'slideyui-react';
 
-  <!-- Problem Slide -->
-  <div class="slide slide-content">
-    <h2 class="slide-title">The Problem</h2>
-    <ul class="slide-list">
+<Presentation theme="pitch" showProgress>
+  <ContentCard
+    title="Revolutionizing Presentations"
+    subtitle="Seed Round | $2M Ask"
+    variant="featured"
+  />
+
+  <ContentCard title="The Problem">
+    <ul className="slide-list">
       <li>Traditional presentation tools are outdated</li>
       <li>Developers want code-based workflows</li>
       <li>No modern, web-first solutions</li>
     </ul>
-  </div>
+  </ContentCard>
 
-  <!-- Solution Slide -->
-  <div class="slide slide-content">
-    <h2 class="slide-title">Our Solution</h2>
-    <p class="slide-body-lg">
+  <ContentCard title="Our Solution">
+    <p className="slide-body-lg">
       SlideyUI brings presentation design into the modern web era
     </p>
-  </div>
-</section>`,
+  </ContentCard>
+</Presentation>`,
     },
     {
       title: 'Academic Conference Talk',
-      description: 'Research presentation with citations and data',
+      description: 'Research presentation with citations and data using QuoteCard',
       theme: 'academic',
-      slides: 20,
-      code: `<section class="theme-academic">
-  <!-- Title Slide -->
-  <div class="slide slide-title">
-    <h1 class="slide-heading">
-      Machine Learning in Healthcare
-    </h1>
-    <p class="slide-subtitle">
-      Dr. Jane Smith | University of Technology
-    </p>
-  </div>
+      cards: 20,
+      code: `import { Presentation, ContentCard, QuoteCard } from 'slideyui-react';
 
-  <!-- Content with Citation -->
-  <div class="slide slide-content">
-    <h2 class="slide-title">Literature Review</h2>
-    <blockquote class="slide-quote">
-      "AI models show 95% accuracy in diagnosis"
-    </blockquote>
-    <p class="slide-caption">— Smith et al., 2024</p>
-  </div>
-</section>`,
+<Presentation theme="academic" showProgress showCardNumbers>
+  <ContentCard
+    title="Machine Learning in Healthcare"
+    subtitle="Dr. Jane Smith | University of Technology"
+    variant="featured"
+  />
+
+  <QuoteCard
+    quote="AI models show 95% accuracy in diagnosis"
+    author="Smith et al., 2024"
+    title="Literature Review"
+  />
+</Presentation>`,
     },
     {
       title: 'Technical Workshop',
-      description: 'Interactive coding workshop with live demos',
+      description: 'Interactive coding workshop with live demos using ContentCard',
       theme: 'workshop',
-      slides: 25,
-      code: `<section class="theme-workshop">
-  <!-- Title Slide -->
-  <div class="slide slide-title">
-    <h1 class="slide-heading">Intro to React Hooks</h1>
-    <p class="slide-subtitle">Hands-on Workshop</p>
-  </div>
+      cards: 25,
+      code: `import { Presentation, ContentCard } from 'slideyui-react';
 
-  <!-- Code Example Slide -->
-  <div class="slide slide-content">
-    <h2 class="slide-title">useState Hook</h2>
-    <pre class="mockup-code"><code>function Counter() {
+<Presentation theme="workshop" presenterMode>
+  <ContentCard
+    title="Intro to React Hooks"
+    subtitle="Hands-on Workshop"
+    variant="featured"
+  />
+
+  <ContentCard title="useState Hook">
+    <pre className="mockup-code"><code>{\`function Counter() {
   const [count, setCount] = useState(0);
 
   return (
-    &lt;button onClick={() => setCount(count + 1)}&gt;
+    <button onClick={() => setCount(count + 1)}>
       Count: {count}
-    &lt;/button&gt;
+    </button>
   );
-}</code></pre>
-  </div>
-</section>`,
+}\`}</code></pre>
+  </ContentCard>
+</Presentation>`,
     },
   ];
 
-  const fullExample = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Presentation</title>
-  <link rel="stylesheet" href="/slideyui.css">
-</head>
-<body>
-  <div class="presentation theme-corporate">
-    <div class="slide slide-title">
-      <h1 class="slide-heading">Product Launch 2025</h1>
-      <p class="slide-subtitle">Introducing Our Latest Innovation</p>
-    </div>
+  const twoModeExample = `import { useState } from 'react';
+import {
+  Presentation,
+  CardGrid,
+  ContentCard,
+  SplitCard,
+  DataCard
+} from 'slideyui-react';
 
-    <div class="slide slide-section">
-      <h2 class="slide-heading">The Journey</h2>
-    </div>
+function App() {
+  const [mode, setMode] = useState('edit'); // 'edit' or 'present'
 
-    <div class="slide slide-two-column">
-      <h2 class="slide-title">Market Opportunity</h2>
-      <div class="slide-columns">
-        <div class="slide-column">
+  const cards = [
+    <ContentCard
+      key="1"
+      title="Product Launch 2025"
+      subtitle="Introducing Our Latest Innovation"
+      variant="featured"
+    />,
+    <SplitCard
+      key="2"
+      title="Market Opportunity"
+      leftContent={
+        <>
           <h3>Current Market</h3>
           <ul>
             <li>Total market size</li>
             <li>Annual growth rate</li>
             <li>Current solutions</li>
           </ul>
-        </div>
-        <div class="slide-column">
+        </>
+      }
+      rightContent={
+        <>
           <h3>Our Position</h3>
           <ul>
             <li>Unique value proposition</li>
             <li>Competitive advantage</li>
             <li>Strategic partnerships</li>
           </ul>
+        </>
+      }
+    />,
+    <DataCard key="3" title="Traction">
+      <div className="stats shadow">
+        <div className="stat">
+          <div className="stat-title">Users</div>
+          <div className="stat-value">10K+</div>
+          <div className="stat-desc">Monthly active</div>
         </div>
       </div>
-    </div>
+    </DataCard>,
+    <ContentCard
+      key="4"
+      title="Let's Build Together"
+      subtitle="contact@company.com"
+      variant="featured"
+    />
+  ];
 
-    <div class="slide slide-content">
-      <h2 class="slide-title">Traction</h2>
-      <div class="stats shadow">
-        <div class="stat">
-          <div class="stat-title">Users</div>
-          <div class="stat-value">10K+</div>
-          <div class="stat-desc">Monthly active</div>
-        </div>
-      </div>
-    </div>
+  return (
+    <div>
+      {/* Mode Toggle */}
+      <button onClick={() => setMode(mode === 'edit' ? 'present' : 'edit')}>
+        {mode === 'edit' ? 'Present' : 'Edit'}
+      </button>
 
-    <div class="slide slide-title">
-      <h1 class="slide-heading">Let's Build Together</h1>
-      <p class="slide-subtitle">contact@company.com</p>
-    </div>
-  </div>
+      {/* Editing Mode: Grid Layout */}
+      {mode === 'edit' && (
+        <CardGrid columns={{ sm: 1, md: 2, lg: 3 }} gap="lg">
+          {cards}
+        </CardGrid>
+      )}
 
-  <script src="/slideyui.js"><\/script>
-</body>
-</html>`;
+      {/* Presentation Mode: Full-Screen */}
+      {mode === 'present' && (
+        <Presentation theme="corporate" showProgress>
+          {cards}
+        </Presentation>
+      )}
+    </div>
+  );
+}`;
 </script>
 
 <svelte:head>
@@ -183,15 +200,129 @@
 <h1>Example Presentations</h1>
 
 <p class="lead text-xl text-base-content/80 my-6">
-  Complete examples showing how to build different types of presentations with SlideyUI.
-  Each example includes full source code you can copy and customize.
+  Complete examples showing how to build presentations with SlideyUI's new card-based architecture.
+  Each example shows both editing mode (CardGrid) and presentation mode (Presentation wrapper).
 </p>
 
-<div class="alert alert-info my-6">
+<div class="alert alert-success my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+  <div>
+    <h4 class="font-bold">New Card-Based Architecture</h4>
+    <p class="text-sm">SlideyUI now uses flexible cards that work in both editing and presentation modes. Legacy Deck/Slide components are deprecated.</p>
+  </div>
+</div>
+
+<div class="alert alert-warning my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+  <div>
+    <h4 class="font-bold">Migration Notice</h4>
+    <p class="text-sm"><strong>Deprecated:</strong> Deck, TitleSlide, ContentSlide, ComparisonSlide, DataSlide components. <strong>Use instead:</strong> Presentation wrapper with ContentCard, MediaCard, SplitCard, DataCard, QuoteCard.</p>
+  </div>
+</div>
+
+<h2 class="text-3xl font-bold mt-12 mb-6">Live Demo: Product Launch Presentation</h2>
+
+<p class="text-lg mb-8">
+  This is a fully interactive demo showing real SlideyUI cards. In edit mode (shown below), these cards would appear in a CardGrid. In presentation mode, they'd display full-screen with keyboard navigation. Try hovering over the cards!
+</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-8">
+  <CardGrid columns={{ sm: 1, md: 2, lg: 3 }} gap="lg">
+    <ContentCard
+      title="Product Launch 2025"
+      subtitle="Introducing Our Latest Innovation"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+      variant="featured"
+    >
+      <div slot="icon">
+        <div class="text-4xl">🚀</div>
+      </div>
+      <p class="text-xl">
+        Revolutionizing the way teams create and deliver presentations.
+      </p>
+    </ContentCard>
+
+    <ContentCard
+      title="Market Opportunity"
+      subtitle="$5B TAM"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <ul class="slide-list text-lg">
+        <li>Growing demand for developer tools</li>
+        <li>Shift toward code-based workflows</li>
+        <li>AI-first presentation generation</li>
+      </ul>
+    </ContentCard>
+
+    <DataCard
+      variant="metric"
+      title="Traction"
+      value="10K+"
+      label="Monthly Active Users"
+      trend="up"
+      trendValue="+340%"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    />
+
+    <MediaCard
+      title="Product Demo"
+      caption="See it in action"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <div class="w-full h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-5xl">
+        🎬
+      </div>
+    </MediaCard>
+
+    <ContentCard
+      title="Competitive Advantage"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <ul class="slide-list text-lg">
+        <li>AI-first design</li>
+        <li>Developer-friendly API</li>
+        <li>Modern web technologies</li>
+      </ul>
+    </ContentCard>
+
+    <ContentCard
+      title="Let's Build Together"
+      subtitle="contact@company.com"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+      variant="featured"
+    >
+      <div slot="icon">
+        <div class="text-4xl">💬</div>
+      </div>
+      <p class="text-xl">
+        Ready to transform your presentations?
+      </p>
+    </ContentCard>
+  </CardGrid>
+</div>
+
+<div class="alert alert-info my-8">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
   <div>
-    <h4 class="font-bold">Live Demo Available</h4>
-    <p class="text-sm">Check out our <a href="/demo" class="link link-primary font-semibold">interactive live demo</a> to see SlideyUI in action with full keyboard navigation!</p>
+    <strong>Edit vs. Presentation Mode:</strong> The cards above show "edit mode" in a CardGrid. Wrap these same cards with <code class="bg-base-300 px-2 py-1 rounded">&lt;Presentation&gt;</code> to display them full-screen with keyboard navigation (←/→ arrows).
   </div>
 </div>
 
@@ -206,7 +337,7 @@
             <h3 class="card-title text-2xl">{example.title}</h3>
             <p class="text-base-content/70 mt-2">{example.description}</p>
           </div>
-          <div class="badge badge-primary">{example.slides} slides</div>
+          <div class="badge badge-primary">{example.cards} cards</div>
         </div>
 
         <div class="divider">Code Excerpt</div>
@@ -226,13 +357,22 @@
   {/each}
 </div>
 
-<h2>Complete Presentation Template</h2>
+<h2>Two-Mode Architecture Example</h2>
 
 <p>
-  A full presentation template showing common slide patterns and best practices:
+  The key feature of SlideyUI is the ability to use the same cards in both editing and presentation modes.
+  Toggle between CardGrid (editing) and Presentation (full-screen) seamlessly:
 </p>
 
-<CodeBlock code={fullExample} lang="html" filename="presentation.html" />
+<CodeBlock code={twoModeExample} lang="tsx" filename="App.tsx" />
+
+<div class="alert my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+  <div>
+    <h4 class="font-bold">Why Two Modes?</h4>
+    <p class="text-sm">Edit mode (CardGrid) gives you an overview and easy organization. Presentation mode (Presentation) provides the full-screen, keyboard-navigable experience your audience expects.</p>
+  </div>
+</div>
 
 <h2>Example Use Cases</h2>
 

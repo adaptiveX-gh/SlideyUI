@@ -1,12 +1,38 @@
 /**
  * ContentSlide Component
  * Standard content slide with title and flexible layout options
+ *
+ * @deprecated Use ContentCard component instead for modern card-based presentations
+ * @see {@link ContentCard}
  */
 
 import { ContentSlideProps } from '../types';
+import { ContentCard } from './cards/ContentCard';
+import clsx from 'clsx';
 
 /**
  * Standard content slide with title and customizable layouts
+ *
+ * @deprecated Use ContentCard component instead. This component is maintained for backwards compatibility.
+ *
+ * Migration:
+ * ```tsx
+ * // Old (deprecated):
+ * <ContentSlide title="Key Features" subtitle="What we offer" layout="centered">
+ *   <ul className="slide-list">
+ *     <li>Feature 1</li>
+ *     <li>Feature 2</li>
+ *   </ul>
+ * </ContentSlide>
+ *
+ * // New (recommended):
+ * <ContentCard title="Key Features" subtitle="What we offer">
+ *   <ul className="slide-list">
+ *     <li>Feature 1</li>
+ *     <li>Feature 2</li>
+ *   </ul>
+ * </ContentCard>
+ * ```
  *
  * @example
  * ```tsx
@@ -22,36 +48,27 @@ export function ContentSlide({
   title,
   subtitle,
   layout = 'default',
-  divider = false,
+  divider: _divider = false, // Ignored in card-based implementation
   className = '',
   children,
   backgroundImage,
   backgroundColor,
 }: ContentSlideProps) {
+  // Map layout prop to className for backward compatibility
   const layoutClass = layout !== 'default' ? `slide-layout-${layout}` : '';
 
   return (
-    <div
-      className={`slide slide-layout-content ${layoutClass} ${className}`}
-      style={{
-        backgroundColor,
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
+    <ContentCard
+      title={title}
+      subtitle={subtitle}
+      backgroundColor={backgroundColor}
+      backgroundImage={backgroundImage}
+      className={clsx(layoutClass, className)}
+      // Force slide-like appearance
+      mode="full"
+      aspectRatio="16/9"
     >
-      <div className="slide-content">
-        {(title || subtitle) && (
-          <div className={`slide-header ${divider ? 'slide-divider' : ''}`}>
-            {title && <h2 className="slide-title">{title}</h2>}
-            {subtitle && <h3 className="slide-subtitle">{subtitle}</h3>}
-          </div>
-        )}
-
-        <div className="slide-body">
-          {children}
-        </div>
-      </div>
-    </div>
+      {children}
+    </ContentCard>
   );
 }

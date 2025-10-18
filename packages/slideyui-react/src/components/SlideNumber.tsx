@@ -4,7 +4,7 @@
  */
 
 import { SlideNumberProps } from '../types';
-import { useSlideContext } from '../hooks/useSlideContext';
+import { usePresentationContext } from './Presentation';
 
 /**
  * Slide number indicator showing current slide position
@@ -19,7 +19,9 @@ export function SlideNumber({
   format = 'fraction',
   className = '',
 }: SlideNumberProps) {
-  const { currentSlide, totalSlides } = useSlideContext();
+  const { currentCard, totalCards } = usePresentationContext();
+  const currentSlide = currentCard;
+  const totalSlides = totalCards;
 
   const displayNumber = format === 'fraction'
     ? `${currentSlide + 1} / ${totalSlides}`

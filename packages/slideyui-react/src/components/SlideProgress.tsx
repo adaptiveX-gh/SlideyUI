@@ -4,7 +4,7 @@
  */
 
 import { SlideProgressProps } from '../types';
-import { useSlideContext } from '../hooks/useSlideContext';
+import { usePresentationContext } from './Presentation';
 
 /**
  * Progress indicator showing current position in presentation
@@ -19,7 +19,9 @@ export function SlideProgress({
   showPercentage = false,
   className = '',
 }: SlideProgressProps) {
-  const { currentSlide, totalSlides } = useSlideContext();
+  const { currentCard, totalCards } = usePresentationContext();
+  const currentSlide = currentCard;
+  const totalSlides = totalCards;
 
   const progress = totalSlides > 0 ? ((currentSlide + 1) / totalSlides) * 100 : 0;
   const percentage = Math.round(progress);

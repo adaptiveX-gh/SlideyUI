@@ -361,3 +361,228 @@ export interface SlideNumberProps {
   /** Show format (e.g., "1/10" or just "1") */
   format?: 'fraction' | 'current';
 }
+
+/**
+ * Card aspect ratio options
+ */
+export type CardAspectRatio = '16/9' | '4/3' | '1/1' | '3/2' | 'auto';
+
+/**
+ * Card layout mode
+ */
+export type CardLayoutMode = 'preview' | 'thumbnail' | 'full';
+
+/**
+ * Base card container props
+ */
+export interface CardContainerProps {
+  /** Aspect ratio for the card */
+  aspectRatio?: CardAspectRatio;
+  /** Layout mode */
+  mode?: CardLayoutMode;
+  /** Additional CSS classes */
+  className?: string;
+  /** Child elements */
+  children?: ReactNode;
+  /** Card background color */
+  backgroundColor?: string;
+  /** Card background image */
+  backgroundImage?: string;
+  /** Whether to show card border */
+  bordered?: boolean;
+  /** Whether to show shadow */
+  shadow?: boolean;
+  /** Interactive state (for AI apps to style differently) */
+  interactive?: boolean;
+  /** Custom data attributes (for AI apps) */
+  'data-card-id'?: string;
+  'data-card-state'?: string;
+}
+
+/**
+ * Card grid layout props
+ */
+export interface CardGridProps {
+  /** Number of columns (responsive object or single number) */
+  columns?: number | { sm?: number; md?: number; lg?: number; xl?: number };
+  /** Gap between cards */
+  gap?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Additional CSS classes */
+  className?: string;
+  /** Child card elements */
+  children?: ReactNode;
+  /** Auto-flow behavior */
+  autoFlow?: 'row' | 'column' | 'dense';
+  /** Minimum card width (for auto-fit grids) */
+  minCardWidth?: string;
+}
+
+/**
+ * Card stack props (for layered/overlapping cards)
+ */
+export interface CardStackProps {
+  /** Stack direction */
+  direction?: 'horizontal' | 'vertical';
+  /** Offset between stacked cards */
+  offset?: 'sm' | 'md' | 'lg';
+  /** Additional CSS classes */
+  className?: string;
+  /** Child card elements */
+  children?: ReactNode;
+  /** Whether cards should fan out on hover */
+  expandOnHover?: boolean;
+}
+
+/**
+ * Content card props (text-heavy presentations)
+ */
+export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Card title */
+  title?: string;
+  /** Card subtitle */
+  subtitle?: string;
+  /** Card body content */
+  children?: ReactNode;
+  /** Badge/tag content */
+  badge?: ReactNode;
+  /** Footer content */
+  footer?: ReactNode;
+  /** Header icon */
+  icon?: ReactNode;
+  /** Layout variant */
+  variant?: 'default' | 'minimal' | 'featured';
+}
+
+/**
+ * Media card props (image/video focused)
+ */
+export interface MediaCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Media source (image or video URL) */
+  src: string;
+  /** Alt text for accessibility */
+  alt?: string;
+  /** Media type */
+  mediaType?: 'image' | 'video';
+  /** Title overlay */
+  title?: string;
+  /** Caption */
+  caption?: ReactNode;
+  /** Object fit for media */
+  objectFit?: 'cover' | 'contain' | 'fill';
+  /** Overlay content */
+  overlay?: ReactNode;
+  /** Whether media should be a background */
+  asBackground?: boolean;
+  /** Child content (if asBackground is true) */
+  children?: ReactNode;
+}
+
+/**
+ * Split card props (two-column layouts)
+ */
+export interface SplitCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Left side content */
+  left: ReactNode;
+  /** Right side content */
+  right: ReactNode;
+  /** Split ratio (percentage for left side) */
+  split?: 50 | 60 | 40 | 70 | 30;
+  /** Layout direction */
+  direction?: 'horizontal' | 'vertical';
+  /** Visual divider between sections */
+  divider?: boolean;
+  /** Reverse the order */
+  reverse?: boolean;
+}
+
+/**
+ * Data card props (metrics/charts/tables)
+ */
+export interface DataCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Card title */
+  title?: string;
+  /** Metric value */
+  value?: string | number;
+  /** Value label */
+  label?: string;
+  /** Trend indicator */
+  trend?: 'up' | 'down' | 'neutral';
+  /** Trend value */
+  trendValue?: string;
+  /** Chart or visualization content */
+  children?: ReactNode;
+  /** Footer info */
+  footer?: ReactNode;
+  /** Icon or avatar */
+  icon?: ReactNode;
+  /** Variant style */
+  variant?: 'metric' | 'chart' | 'table';
+}
+
+/**
+ * Quote card props (pull quotes, testimonials)
+ */
+export interface QuoteCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Quote text */
+  quote: ReactNode;
+  /** Quote author */
+  author?: string;
+  /** Author title/source */
+  source?: string;
+  /** Author avatar */
+  avatar?: string;
+  /** Quote variant */
+  variant?: 'default' | 'large' | 'minimal' | 'testimonial';
+}
+
+/**
+ * Presentation wrapper props (replaces Deck)
+ */
+export interface PresentationProps {
+  /** Card children to present */
+  children: ReactNode;
+  /** Theme */
+  theme?: SlideTheme;
+  /** Additional CSS classes */
+  className?: string;
+  /** Initial card index */
+  initialCard?: number;
+  /** Enable keyboard navigation */
+  enableKeyboard?: boolean;
+  /** Show progress indicator */
+  showProgress?: boolean;
+  /** Progress indicator position */
+  progressPosition?: 'top' | 'bottom';
+  /** Show card numbers */
+  showCardNumbers?: boolean;
+  /** Card number position */
+  cardNumberPosition?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+  /** Callback when card changes */
+  onCardChange?: (cardIndex: number) => void;
+  /** Enable presenter mode (speaker notes, controls) */
+  presenterMode?: boolean;
+}
+
+/**
+ * Presentation context (replaces SlideContext)
+ */
+export interface PresentationContextValue {
+  /** Current card index (0-based) */
+  currentCard: number;
+  /** Total number of cards */
+  totalCards: number;
+  /** Current theme */
+  theme: SlideTheme;
+  /** Navigate to specific card */
+  goToCard: (index: number) => void;
+  /** Navigate to next card */
+  nextCard: () => void;
+  /** Navigate to previous card */
+  previousCard: () => void;
+  /** Whether presenter mode is active */
+  presenterMode: boolean;
+  /** Toggle presenter mode */
+  togglePresenterMode: () => void;
+  /** Whether in presentation mode (full-screen) */
+  isPresentationMode: boolean;
+}

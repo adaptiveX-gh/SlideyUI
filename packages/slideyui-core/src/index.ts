@@ -68,18 +68,14 @@ function getAspectRatioStyles() {
 
 /**
  * Generate layout component styles
+ *
+ * ARCHITECTURE NOTE:
+ * This generates CSS-in-JS for commonly used layout patterns.
+ * Deprecated slide-specific layouts have been removed - legacy components
+ * now use Tailwind utilities directly.
  */
 function getLayoutStyles() {
   return {
-    '.slide-layout-title': {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-      gap: 'calc(var(--slidey-spacing-gap) * 2)',
-      padding: 'var(--slidey-spacing-padding)',
-    },
     '.slide-layout-content': {
       display: 'flex',
       flexDirection: 'column',

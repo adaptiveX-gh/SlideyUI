@@ -2,7 +2,7 @@
 
 ## Overview
 
-**SlideyUI** is a complete presentation-first component library built on Tailwind CSS. Inspired by DaisyUI's architecture, it provides everything needed to create professional, projection-optimized presentations.
+**SlideyUI** is a complete AI-first presentation component library. Inspired by DaisyUI's architecture, it provides everything needed to create professional, projection-optimized presentations.
 
 ## What Was Built
 
@@ -72,7 +72,7 @@ A fully functional documentation website similar to daisyui.com:
 
 ## Key Features
 
-### Presentation-First Design
+### AI-First Presentation Design
 - 24px minimum font size for readability
 - 5% safe padding (keeps content away from screen edges)
 - High contrast colors (WCAG AAA)

@@ -1,7 +1,7 @@
 # SlideyUI
 
 <div align="center">
-  <h3>A presentation-first component library built on Tailwind CSS</h3>
+  <h3>An AI-first presentation component library</h3>
   <p>Build beautiful, readable presentations optimized for projection</p>
 </div>
 
@@ -9,19 +9,78 @@
 
 ## What is SlideyUI?
 
-SlideyUI reimagines UI components for the unique constraints and opportunities of presentations. Instead of building web pages, you're building slides. Every component is optimized for:
+**SlideyUI is an AI-First presentation component library built on Tailwind CSS.** Unlike traditional UI frameworks designed for web applications, SlideyUI reimagines every component for the unique constraints and opportunities of building presentations through MCP servers and AI code generation tools.
 
-- **Readability at distance** - Conference rooms, large screens, projectors
-- **Visual hierarchy** - Clear reading order (what reads first, second, third)
-- **Presentation flow** - Smooth transitions, builds, and reveals
-- **Export-friendly** - PDF, PowerPoint, Keynote compatible
+Built with a **card-based architecture** for modern, AI-first presentation apps (think [Gamma.app](https://gamma.app)), SlideyUI provides presentation-optimized components that work seamlessly with:
+
+- **🤖 AI Code Generation** - Designed for LLMs to generate presentations programmatically
+- **🔌 MCP Servers** - Native support for Model Context Protocol integration
+- **📡 Streaming Content** - Real-time updates as AI generates slides
+- **🎯 State Tracking** - Built-in data attributes for generation states (generating, complete, error)
+- **🧩 Composable Primitives** - Layer 0 components that AI can reason about and combine
+
+### Why AI-First?
+
+Traditional UI libraries optimize for human developers building web apps. SlideyUI optimizes for **AI agents building presentations**:
+
+- **Semantic Component Names** - `ContentCard`, `MediaCard`, `DataCard` are obvious to LLMs
+- **Minimal Configuration** - Sensible defaults reduce token usage in prompts
+- **Presentation Constraints** - 24px+ fonts, high contrast, aspect ratios handled automatically
+- **State-Aware Styling** - `data-card-state` attributes provide visual feedback during generation
+- **MCP-Ready** - Easy integration with Claude Desktop, Cline, and other MCP clients
+
+Every component is also optimized for human-readable presentations:
+
+- **📺 Readability at Distance** - Conference rooms, large screens, projectors
+- **📐 Visual Hierarchy** - Clear reading order (what reads first, second, third)
+- **✏️ Card-Based Editing** - Individual cards that can be rearranged and edited
+- **📤 Export-Friendly** - PDF, PowerPoint, Keynote compatible
+
+## Architecture Overview
+
+SlideyUI uses a **cards-only architecture** designed for modern presentation apps:
+
+```
+┌─────────────────────────────────────────────────┐
+│ Application Layer (Your AI/Editing App)        │
+├─────────────────────────────────────────────────┤
+│ Card Components (Layer 0 Primitives)           │
+│ - ContentCard, MediaCard, DataCard, etc.       │
+├─────────────────────────────────────────────────┤
+│ Layout Primitives                               │
+│ - CardContainer, CardGrid, CardStack           │
+├─────────────────────────────────────────────────┤
+│ Presentation System                             │
+│ - Presentation context, keyboard nav, states    │
+├─────────────────────────────────────────────────┤
+│ Tailwind CSS Plugin (Core Styles)              │
+│ - Themes, utilities, presentation defaults      │
+└─────────────────────────────────────────────────┘
+```
+
+### Modern API (Recommended)
+- **Cards**: ContentCard, MediaCard, SplitCard, DataCard, QuoteCard
+- **Layouts**: CardContainer, CardGrid, CardStack
+- **Container**: Presentation (replaces Deck)
+
+### Legacy API (Deprecated)
+- Deck, TitleSlide, ContentSlide, ComparisonSlide, DataSlide
+- **Note**: These will be removed in v1.0.0. See migration guide below.
 
 ## Features
 
+### AI & MCP Integration
+- 🤖 **LLM-Optimized Components** - Semantic naming and minimal config for AI code generation
+- 🔌 **MCP Server Ready** - Built-in support for Model Context Protocol
+- 📡 **Streaming Support** - Real-time card updates during AI generation
+- 🎯 **State Management** - Visual feedback via `data-card-state` attributes
+- 🧠 **Token Efficient** - Sensible defaults reduce prompt complexity
+
+### Presentation Excellence
 - 🎨 **Presentation Themes** - Corporate, Pitch Deck, Academic, Workshop, Startup
-- 📐 **Smart Layouts** - Title slides, content slides, comparisons, data visualizations
+- 📐 **Card-Based Layouts** - ContentCard, MediaCard, SplitCard, DataCard, QuoteCard
 - 📝 **Optimized Typography** - Large, readable fonts with proper spacing (minimum 24px)
-- 🎯 **Slide Utilities** - Animations, progress indicators, speaker notes
+- 🎯 **Presentation Utilities** - Animations, progress indicators, speaker notes
 - 🧩 **Specialized Components** - Callouts, quotes, timelines, code blocks, polls
 - 📱 **Multiple Aspect Ratios** - 16:9, 4:3, 16:10, vertical (9:16)
 - ♿ **Accessible** - WCAG compliant with proper contrast and readability
@@ -31,7 +90,11 @@ SlideyUI reimagines UI components for the unique constraints and opportunities o
 ### Installation
 
 ```bash
-npm install slideyui tailwindcss
+# For React applications
+npm install @slideyui/react @slideyui/core tailwindcss
+
+# For SvelteKit applications (docs/demos)
+npm install @slideyui/svelte @slideyui/core tailwindcss
 ```
 
 ### Tailwind CSS Configuration
@@ -51,44 +114,187 @@ export default {
 };
 ```
 
-### React Usage
+### React Usage (Modern API)
 
 ```jsx
-import { Deck, TitleSlide, ContentSlide, ComparisonSlide } from '@slideyui/react';
+import { Presentation, ContentCard, MediaCard, SplitCard } from '@slideyui/react';
 import 'slideyui/dist/index.css';
 
 function MyPresentation() {
   return (
-    <Deck theme="pitch-deck" showProgress showSlideNumbers>
-      <TitleSlide
+    <Presentation theme="pitch-deck" showProgress showCardNumbers>
+      {/* Hero card */}
+      <ContentCard
         title="The Future of AI"
         subtitle="Building Tomorrow, Today"
-        author="Jane Doe"
-        date="October 2024"
+        variant="featured"
+        footer={
+          <div className="text-center">
+            <p className="text-2xl font-medium">Jane Doe</p>
+            <p className="text-xl opacity-70">October 2024</p>
+          </div>
+        }
+        aspectRatio="16/9"
       />
 
-      <ContentSlide title="Key Points">
+      {/* Content card */}
+      <ContentCard title="Key Points" aspectRatio="16/9">
         <ul className="slide-list">
           <li>AI will transform every industry</li>
           <li>Focus on responsible development</li>
           <li>Human-AI collaboration is key</li>
         </ul>
-      </ContentSlide>
+      </ContentCard>
 
-      <ComparisonSlide
-        title="Traditional vs AI-Powered"
-        left={{
-          title: "Before",
-          content: <ul><li>Manual processes</li><li>High costs</li></ul>
-        }}
-        right={{
-          title: "After",
-          content: <ul><li>Automation</li><li>Efficiency gains</li></ul>
-        }}
+      {/* Split comparison card */}
+      <SplitCard
+        divider
+        aspectRatio="16/9"
+        left={
+          <div className="p-8">
+            <h3 className="text-3xl font-bold mb-4">Before</h3>
+            <ul className="slide-list">
+              <li>Manual processes</li>
+              <li>High costs</li>
+            </ul>
+          </div>
+        }
+        right={
+          <div className="p-8">
+            <h3 className="text-3xl font-bold mb-4">After</h3>
+            <ul className="slide-list">
+              <li>Automation</li>
+              <li>Efficiency gains</li>
+            </ul>
+          </div>
+        }
       />
-    </Deck>
+    </Presentation>
   );
 }
+```
+
+### Card Grid Layout (AI-First Apps)
+
+Build Gamma-style card interfaces for editing:
+
+```jsx
+import { CardGrid, ContentCard, MediaCard } from '@slideyui/react';
+
+function PresentationEditor({ slides }) {
+  return (
+    <CardGrid columns={{ sm: 1, md: 2, lg: 3 }} gap="lg">
+      {slides.map(slide => (
+        <ContentCard
+          key={slide.id}
+          title={slide.title}
+          aspectRatio="16/9"
+          interactive
+          data-card-id={slide.id}
+          data-card-state={slide.isGenerating ? 'generating' : 'complete'}
+        >
+          {slide.content}
+        </ContentCard>
+      ))}
+    </CardGrid>
+  );
+}
+```
+
+### AI Code Generation Example
+
+SlideyUI is designed to be generated by AI tools and MCP servers:
+
+```typescript
+// Example: AI-generated presentation via MCP server
+// The AI can easily reason about card types and generate appropriate content
+
+import { Presentation, ContentCard, DataCard, SplitCard } from '@slideyui/react';
+
+function AIGeneratedPresentation({ topic, data }) {
+  return (
+    <Presentation theme="startup" showProgress>
+      {/* AI generates hero card */}
+      <ContentCard
+        title={data.title}
+        subtitle={data.subtitle}
+        variant="featured"
+        aspectRatio="16/9"
+        data-card-id="hero"
+        data-card-state="complete"
+      />
+
+      {/* AI streams content into cards */}
+      {data.sections.map((section, i) => (
+        <ContentCard
+          key={section.id}
+          title={section.title}
+          aspectRatio="16/9"
+          data-card-id={section.id}
+          data-card-state={section.isGenerating ? 'generating' : 'complete'}
+        >
+          {section.content}
+        </ContentCard>
+      ))}
+
+      {/* AI generates data visualizations */}
+      <DataCard
+        variant="metric"
+        title="Key Metrics"
+        value={data.metrics.revenue}
+        trend="up"
+        trendValue="+24%"
+        aspectRatio="16/9"
+      />
+    </Presentation>
+  );
+}
+```
+
+### MCP Server Integration
+
+Use SlideyUI with Claude Desktop, Cline, or custom MCP clients:
+
+```typescript
+// Example MCP tool for generating SlideyUI presentations
+{
+  name: "create_presentation_card",
+  description: "Generate a presentation card with SlideyUI",
+  inputSchema: {
+    type: "object",
+    properties: {
+      cardType: {
+        type: "string",
+        enum: ["ContentCard", "MediaCard", "DataCard", "SplitCard", "QuoteCard"]
+      },
+      title: { type: "string" },
+      content: { type: "string" },
+      aspectRatio: { type: "string", default: "16/9" }
+    }
+  }
+}
+```
+
+### Migration from Legacy API
+
+If you're using the old Deck/Slide components:
+
+```jsx
+// ❌ Old (Deprecated)
+import { Deck, TitleSlide, ContentSlide } from '@slideyui/react';
+
+<Deck theme="pitch-deck">
+  <TitleSlide title="My Talk" subtitle="An overview" />
+  <ContentSlide title="Key Points">...</ContentSlide>
+</Deck>
+
+// ✅ New (Recommended)
+import { Presentation, ContentCard } from '@slideyui/react';
+
+<Presentation theme="pitch-deck">
+  <ContentCard title="My Talk" subtitle="An overview" variant="featured" aspectRatio="16/9" />
+  <ContentCard title="Key Points" aspectRatio="16/9">...</ContentCard>
+</Presentation>
 ```
 
 ## Documentation
@@ -106,9 +312,10 @@ Visit the [documentation site](http://localhost:5173) for full documentation, ex
 
 This monorepo contains:
 
-- **`slideyui`** - Core Tailwind CSS plugin with themes and utilities
-- **`@slideyui/react`** - React components for building presentations
-- **`docs`** - Documentation website (SvelteKit)
+- **`@slideyui/core`** (formerly `slideyui`) - Core Tailwind CSS plugin with themes and utilities
+- **`@slideyui/react`** - React components for building full presentation applications
+- **`@slideyui/svelte`** - SvelteKit components for documentation and demos
+- **`docs`** - Documentation website (SvelteKit with live demos)
 
 ## Available Themes
 
@@ -200,33 +407,82 @@ npm run build:docs    # Build documentation site
 ```
 slideyui/
 ├── packages/
-│   ├── slideyui-core/      # Tailwind CSS plugin
+│   ├── slideyui-core/          # Tailwind CSS plugin
 │   │   ├── src/
-│   │   │   ├── index.ts
-│   │   │   ├── themes.ts
-│   │   │   ├── base.css
-│   │   │   ├── components.css
-│   │   │   ├── typography.css
-│   │   │   └── animations.css
+│   │   │   ├── index.ts        # Main plugin entry, CSS-in-JS generation
+│   │   │   ├── themes.ts       # 5 presentation themes
+│   │   │   ├── types.ts        # TypeScript types
+│   │   │   ├── utils.ts        # Config resolution, theme helpers
+│   │   │   ├── base.css        # Base slide styles
+│   │   │   ├── components.css  # Component utilities (callouts, cards, etc.)
+│   │   │   ├── layouts.css     # Layout utilities (content, two-column, etc.)
+│   │   │   ├── typography.css  # Typography scale
+│   │   │   └── animations.css  # Animations and transitions
 │   │   └── package.json
 │   │
-│   └── slideyui-react/     # React components
-│       ├── src/
+│   ├── slideyui-react/         # React components
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── cards/      # ✨ Modern card components (START HERE)
+│   │   │   │   │   ├── CardContainer.tsx
+│   │   │   │   │   ├── CardGrid.tsx
+│   │   │   │   │   ├── ContentCard.tsx
+│   │   │   │   │   ├── MediaCard.tsx
+│   │   │   │   │   ├── SplitCard.tsx
+│   │   │   │   │   ├── DataCard.tsx
+│   │   │   │   │   └── QuoteCard.tsx
+│   │   │   │   ├── Presentation.tsx  # Modern presentation container
+│   │   │   │   ├── Deck.tsx          # ⚠️ Deprecated (wraps Presentation)
+│   │   │   │   ├── TitleSlide.tsx    # ⚠️ Deprecated (wraps ContentCard)
+│   │   │   │   └── ...               # Other content components
+│   │   │   ├── context/
+│   │   │   │   ├── PresentationContext.tsx  # ✅ Active context
+│   │   │   │   └── BuildStepContext.tsx     # ✅ Active context
+│   │   │   ├── hooks/
+│   │   │   │   ├── useBuildSteps.ts
+│   │   │   │   └── usePresenterMode.ts
+│   │   │   └── types/
+│   │   │       └── index.ts    # All TypeScript types
+│   │   ├── CARDS.md            # 📖 Card system documentation
+│   │   ├── REFACTOR_PLAN.md    # 📖 Migration guide
+│   │   └── package.json
+│   │
+│   └── slideyui-svelte/        # 🆕 SvelteKit components (for docs/demos)
+│       ├── src/lib/
 │       │   ├── components/
-│       │   ├── hooks/
-│       │   ├── context/
-│       │   └── types/
+│       │   │   ├── CardContainer.svelte
+│       │   │   ├── CardGrid.svelte
+│       │   │   ├── ContentCard.svelte
+│       │   │   ├── MediaCard.svelte
+│       │   │   └── DataCard.svelte
+│       │   └── index.ts        # Component exports
+│       ├── README.md           # Svelte package documentation
 │       └── package.json
 │
-├── docs/                   # Documentation site
+├── docs/                       # Documentation site (SvelteKit)
 │   ├── src/
 │   │   ├── routes/
+│   │   │   ├── docs/
+│   │   │   │   ├── components/
+│   │   │   │   ├── examples/
+│   │   │   │   └── cards/      # Card component showcase
+│   │   │   └── +page.svelte
 │   │   └── lib/
+│   │       └── components/
+│   │           ├── LiveCardDemo.svelte      # 🆕 Interactive card demo
+│   │           └── ComponentPreview.svelte  # Preview wrapper
+│   ├── USING_SLIDEYUI_SVELTE.md  # 📖 Guide for using Svelte components
 │   └── package.json
 │
-├── examples/              # Example presentations
-└── package.json          # Workspace root
+├── CLAUDE.md                   # 🤖 Project instructions for AI assistants
+└── package.json                # Workspace root
 ```
+
+**Key Files for Onboarding:**
+- `CLAUDE.md` - Project overview and conventions
+- `packages/slideyui-react/CARDS.md` - Card system documentation
+- `packages/slideyui-react/REFACTOR_PLAN.md` - Migration guide from legacy API
+- `packages/slideyui-react/src/components/index.tsx` - Component exports with helpful comments
 
 ## Philosophy
 

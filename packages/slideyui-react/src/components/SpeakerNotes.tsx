@@ -1,13 +1,17 @@
 /**
  * SpeakerNotes Component
  * Speaker notes overlay for presenter mode
+ *
+ * @deprecated Use CardNotes instead for modern card-based presentations
  */
 
 import { SpeakerNotesProps } from '../types';
-import { useSlideContext } from '../hooks/useSlideContext';
+import { usePresentationContext } from './Presentation';
 
 /**
  * Speaker notes component that appears in presenter mode
+ *
+ * @deprecated Use CardNotes instead for modern card-based presentations
  *
  * @example
  * ```tsx
@@ -24,7 +28,7 @@ export function SpeakerNotes({
   children,
   className = '',
 }: SpeakerNotesProps) {
-  const { presenterMode } = useSlideContext();
+  const { presenterMode } = usePresentationContext();
 
   if (!presenterMode) {
     return null;

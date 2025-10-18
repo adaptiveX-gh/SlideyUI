@@ -1,7 +1,7 @@
 {
   "name": "slideyui",
   "version": "0.1.0",
-  "description": "A presentation-first component library built on Tailwind CSS",
+  "description": "An AI-first presentation component library",
   "private": true,
   "workspaces": [
     "packages/*",

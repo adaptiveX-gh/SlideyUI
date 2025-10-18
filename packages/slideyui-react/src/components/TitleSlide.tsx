@@ -1,9 +1,14 @@
 /**
  * TitleSlide Component
  * Hero slide for presentation opening
+ *
+ * @deprecated Use ContentCard with variant="featured" instead for modern card-based presentations
+ * @see {@link ContentCard}
  */
 
 import { ReactNode } from 'react';
+import { ContentCard } from './cards/ContentCard';
+import clsx from 'clsx';
 
 export interface TitleSlideProps {
   title: string;
@@ -16,6 +21,41 @@ export interface TitleSlideProps {
   children?: ReactNode;
 }
 
+/**
+ * Hero slide for presentation opening
+ *
+ * @deprecated Use ContentCard with variant="featured" instead. This component is maintained for backwards compatibility.
+ *
+ * Migration:
+ * ```tsx
+ * // Old (deprecated):
+ * <TitleSlide
+ *   title="My Presentation"
+ *   subtitle="An amazing talk"
+ *   author="John Doe"
+ *   backgroundImage="/hero.jpg"
+ * />
+ *
+ * // New (recommended):
+ * <ContentCard
+ *   title="My Presentation"
+ *   subtitle="An amazing talk"
+ *   variant="featured"
+ *   backgroundImage="/hero.jpg"
+ *   footer={<p className="text-center">John Doe</p>}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * <TitleSlide
+ *   title="My Presentation"
+ *   subtitle="An amazing talk"
+ *   author="John Doe"
+ *   date="October 2025"
+ * />
+ * ```
+ */
 export function TitleSlide({
   title,
   subtitle,
@@ -26,40 +66,37 @@ export function TitleSlide({
   className = '',
   children,
 }: TitleSlideProps) {
-  return (
-    <div className={`slide slide-layout-title ${className}`}>
-      {backgroundImage && (
-        <div
-          className="slide-bleed slide-overlay-gradient"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-      )}
-
-      <div className="slide-content-center z-10">
-        <h1 className="slide-title-hero">{title}</h1>
-        {subtitle && <h2 className="slide-subtitle mt-4">{subtitle}</h2>}
-
-        {(author || date) && (
-          <div className="slide-meta mt-8 space-y-2">
-            {author && <p className="slide-author text-2xl">{author}</p>}
-            {date && <p className="slide-date text-xl text-slide-muted">{date}</p>}
-          </div>
-        )}
-
-        {children}
-      </div>
-
-      {logo && (
-        <img
-          className="slide-logo-corner absolute top-8 right-8 h-16 w-auto"
-          src={logo}
-          alt="Logo"
-        />
-      )}
+  // Build footer content with author and date
+  const footerContent = (author || date) ? (
+    <div className="text-center space-y-2">
+      {author && <p className="text-2xl font-medium">{author}</p>}
+      {date && <p className="text-xl opacity-70">{date}</p>}
     </div>
+  ) : undefined;
+
+  // Build badge/logo if provided
+  const badge = logo ? (
+    <img
+      className="h-12 w-auto"
+      src={logo}
+      alt="Logo"
+    />
+  ) : undefined;
+
+  return (
+    <ContentCard
+      title={title}
+      subtitle={subtitle}
+      variant="featured"
+      backgroundImage={backgroundImage}
+      badge={badge}
+      footer={footerContent}
+      className={clsx('flex flex-col justify-center items-center text-center gap-8', className)}
+      // Force slide-like appearance
+      mode="full"
+      aspectRatio="16/9"
+    >
+      {children}
+    </ContentCard>
   );
 }

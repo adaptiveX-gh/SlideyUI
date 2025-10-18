@@ -1,0 +1,84 @@
+/**
+ * ContentCard Component
+ * Text-heavy presentation card with header, body, and footer sections
+ * Optimized for readability at presentation scale
+ */
+
+import { ContentCardProps } from '../../types';
+import { CardContainer } from './CardContainer';
+import clsx from 'clsx';
+
+/**
+ * Content-focused card for text-heavy slides
+ *
+ * @example
+ * ```tsx
+ * <ContentCard
+ *   title="Key Features"
+ *   subtitle="What makes us different"
+ *   badge={<span className="slide-badge">New</span>}
+ *   footer={<p className="text-sm">Learn more →</p>}
+ * >
+ *   <ul className="slide-list">
+ *     <li>Feature 1</li>
+ *     <li>Feature 2</li>
+ *   </ul>
+ * </ContentCard>
+ * ```
+ */
+export function ContentCard({
+  title,
+  subtitle,
+  children,
+  badge,
+  footer,
+  icon,
+  variant = 'default',
+  className = '',
+  ...containerProps
+}: ContentCardProps) {
+  return (
+    <CardContainer {...containerProps} className={clsx('flex flex-col', className)}>
+      {/* Header */}
+      {(title || subtitle || badge || icon) && (
+        <div className={clsx('slide-card-header', variant === 'featured' && 'bg-slidey-accent/10')}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              {icon && <div className="flex-shrink-0 mt-1">{icon}</div>}
+              <div className="flex-1">
+                {title && (
+                  <h3
+                    className={clsx(
+                      'slide-card-title',
+                      variant === 'minimal' && 'text-2xl font-normal'
+                    )}
+                  >
+                    {title}
+                  </h3>
+                )}
+                {subtitle && (
+                  <p className="slide-card-description mt-1">{subtitle}</p>
+                )}
+              </div>
+            </div>
+            {badge && <div className="flex-shrink-0">{badge}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* Body */}
+      {children && (
+        <div className="slide-card-body flex-1 overflow-auto">
+          {children}
+        </div>
+      )}
+
+      {/* Footer */}
+      {footer && (
+        <div className="mt-auto pt-4 border-t border-slidey-border">
+          {footer}
+        </div>
+      )}
+    </CardContainer>
+  );
+}

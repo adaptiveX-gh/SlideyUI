@@ -80,7 +80,7 @@
           <span class="text-primary">Slidey</span><span>UI</span>
         </p>
       </div>
-      <p class="text-sm max-w-md">A presentation-first component library built on Tailwind CSS. Create professional presentations optimized for readability and visual impact.</p>
+  <p class="text-sm max-w-md">An AI-first presentation component library. Create professional presentations optimized for readability and visual impact.</p>
       <p class="text-xs opacity-60 mt-2">Copyright © 2024-2025 SlideyUI - MIT Licensed</p>
     </aside>
     <nav class="mt-4">

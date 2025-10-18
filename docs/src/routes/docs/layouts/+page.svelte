@@ -84,7 +84,7 @@
       <h3 class="text-2xl font-bold mb-2">{layout.name}</h3>
       <p class="text-base-content/70 mb-4">{layout.description}</p>
 
-      <ComponentPreview code={layout.code}>
+      <ComponentPreview title="{layout.name} Example" code={layout.code}>
         <div class="slide-preview p-8">
           <div class="text-center">
             <div class="badge badge-primary mb-4">{layout.name} Preview</div>

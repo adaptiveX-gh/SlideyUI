@@ -1,6 +1,7 @@
 <script lang="ts">
   import CodeBlock from '$lib/components/CodeBlock.svelte';
   import ComponentPreview from '$lib/components/ComponentPreview.svelte';
+  import { CardGrid, ContentCard, DataCard, MediaCard } from '@slideyui/svelte';
 
   const calloutCode = `<div class="callout callout-info">
   <div class="callout-title">Key Insight</div>
@@ -28,6 +29,54 @@
     </div>
   </div>
 </div>`;
+
+  const contentCardCode = `import { ContentCard } from 'slideyui-react';
+
+<ContentCard
+  title="Welcome"
+  subtitle="Getting started with cards"
+  badge={<span className="badge badge-primary">New</span>}
+  footer={<p>Learn more →</p>}
+>
+  <p className="slide-body">Card content goes here</p>
+</ContentCard>`;
+
+  const splitCardCode = `import { SplitCard } from 'slideyui-react';
+
+<SplitCard
+  title="Comparison"
+  leftContent={
+    <>
+      <h3>Option A</h3>
+      <ul><li>Feature 1</li><li>Feature 2</li></ul>
+    </>
+  }
+  rightContent={
+    <>
+      <h3>Option B</h3>
+      <ul><li>Feature 1</li><li>Feature 2</li></ul>
+    </>
+  }
+/>`;
+
+  const dataCardCode = `import { DataCard } from 'slideyui-react';
+
+<DataCard title="Metrics">
+  <div className="stats shadow">
+    <div className="stat">
+      <div className="stat-title">Revenue</div>
+      <div className="stat-value">$2.4M</div>
+    </div>
+  </div>
+</DataCard>`;
+
+  const quoteCardCode = `import { QuoteCard } from 'slideyui-react';
+
+<QuoteCard
+  quote="Design is not just what it looks like. Design is how it works."
+  author="Steve Jobs"
+  title="On Design"
+/>`;
 </script>
 
 <svelte:head>
@@ -37,11 +86,142 @@
 <h1>Component Library</h1>
 
 <p class="lead text-xl text-base-content/80 my-6">
-  Specialized components designed for presentations. Every component is optimized for readability,
-  visual impact, and presentation flow.
+  Card-based components designed for modern presentations. Every component works in both editing (CardGrid)
+  and presentation (Presentation) modes, optimized for readability and visual impact.
 </p>
 
-<h2>Callouts</h2>
+<div class="alert alert-success my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+  <div>
+    <h4 class="font-bold">New Card Architecture</h4>
+    <p class="text-sm">SlideyUI now focuses on flexible card components that adapt to both editing and presentation contexts.</p>
+  </div>
+</div>
+
+<h2>Card Components (Primary)</h2>
+
+<p class="my-4">
+  Card components are the foundation of SlideyUI. They work seamlessly in both CardGrid (editing) and
+  Presentation (full-screen) modes.
+</p>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">ContentCard</h3>
+<p>General-purpose card for text content with header, body, and footer sections.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <CardGrid columns={{ sm: 1, md: 2 }} gap="lg">
+    <ContentCard
+      title="Example Card"
+      subtitle="With subtitle"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <div slot="badge">
+        <span class="badge badge-primary">New</span>
+      </div>
+      <p class="text-xl">This is the card content area. Use it for lists, paragraphs, or any content.</p>
+      <div slot="footer">
+        <p class="text-sm">Footer content here →</p>
+      </div>
+    </ContentCard>
+
+    <ContentCard
+      title="Minimal Variant"
+      aspectRatio="16/9"
+      interactive={true}
+      variant="minimal"
+    >
+      <p class="text-xl">Cards support different variants for different visual styles.</p>
+    </ContentCard>
+  </CardGrid>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (React)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={contentCardCode} lang="tsx" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">SplitCard</h3>
+<p>Two-column card for comparisons, before/after, or side-by-side content.</p>
+<CodeBlock code={splitCardCode} lang="tsx" />
+
+<h3 class="text-2xl font-bold mt-8 mb-4">DataCard</h3>
+<p>Optimized for displaying metrics, charts, and data visualizations.</p>
+
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <CardGrid columns={{ sm: 1, md: 3 }} gap="lg">
+    <DataCard
+      variant="metric"
+      title="Revenue"
+      value="$2.4M"
+      label="Total Revenue"
+      trend="up"
+      trendValue="+24%"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    />
+
+    <DataCard
+      variant="metric"
+      title="Users"
+      value="12.4K"
+      label="Active Users"
+      trend="up"
+      trendValue="+22%"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    />
+
+    <DataCard
+      variant="metric"
+      title="Satisfaction"
+      value="98%"
+      label="Customer Rating"
+      trend="neutral"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    />
+  </CardGrid>
+</div>
+
+<details class="collapse collapse-arrow bg-base-200 my-4">
+  <summary class="collapse-title font-medium">View Code (React)</summary>
+  <div class="collapse-content">
+    <CodeBlock code={dataCardCode} lang="tsx" />
+  </div>
+</details>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">QuoteCard</h3>
+<p>Display testimonials, quotes, or featured text with proper attribution.</p>
+<CodeBlock code={quoteCardCode} lang="tsx" />
+
+<div class="divider my-12"></div>
+
+<div class="alert alert-warning my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+  <div>
+    <h4 class="font-bold">Legacy Components Deprecated</h4>
+    <p class="text-sm">The following components are deprecated: <strong>Deck, TitleSlide, ContentSlide, ComparisonSlide, DataSlide, SpeakerNotes</strong>. Use card components with Presentation wrapper instead.</p>
+  </div>
+</div>
+
+<h2>Supporting Components</h2>
+
+<p class="my-4">
+  These components can be used inside card content or as standalone elements.
+</p>
+
+<h3 class="text-2xl font-bold mt-8 mb-4">Callouts</h3>
 
 <p>
   Highlight important information with visual callouts. Available in multiple variants for
@@ -162,47 +342,56 @@
   <div class="badge badge-outline">Outline</div>
 </div>
 
-<h2>Cards</h2>
+<h3 class="text-2xl font-bold mt-8 mb-4">MediaCard</h3>
 
-<p>Group related content in visual containers.</p>
+<p>Display images, videos, or visual content with optional captions and overlays.</p>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-  <div class="card bg-base-200 shadow-xl">
-    <figure class="px-10 pt-10">
-      <div class="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-4xl">
+<div class="bg-gradient-to-br from-base-100 to-base-200 p-8 rounded-lg my-6">
+  <CardGrid columns={{ sm: 1, md: 3 }} gap="lg">
+    <MediaCard
+      title="Fast"
+      caption="Lightning quick performance"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <div class="w-full h-48 bg-primary/20 flex items-center justify-center text-6xl">
         🚀
       </div>
-    </figure>
-    <div class="card-body items-center text-center">
-      <h3 class="card-title">Fast</h3>
-      <p>Lightning quick performance</p>
-    </div>
-  </div>
+    </MediaCard>
 
-  <div class="card bg-base-200 shadow-xl">
-    <figure class="px-10 pt-10">
-      <div class="w-24 h-24 rounded-full bg-secondary flex items-center justify-center text-4xl">
+    <MediaCard
+      title="Beautiful"
+      caption="Stunning visual design"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <div class="w-full h-48 bg-secondary/20 flex items-center justify-center text-6xl">
         🎨
       </div>
-    </figure>
-    <div class="card-body items-center text-center">
-      <h3 class="card-title">Beautiful</h3>
-      <p>Stunning visual design</p>
-    </div>
-  </div>
+    </MediaCard>
 
-  <div class="card bg-base-200 shadow-xl">
-    <figure class="px-10 pt-10">
-      <div class="w-24 h-24 rounded-full bg-accent flex items-center justify-center text-4xl">
+    <MediaCard
+      title="Powerful"
+      caption="Feature-rich capabilities"
+      aspectRatio="16/9"
+      interactive={true}
+      bordered={true}
+      shadow={true}
+    >
+      <div class="w-full h-48 bg-accent/20 flex items-center justify-center text-6xl">
         ⚡
       </div>
-    </figure>
-    <div class="card-body items-center text-center">
-      <h3 class="card-title">Powerful</h3>
-      <p>Feature-rich capabilities</p>
-    </div>
-  </div>
+    </MediaCard>
+  </CardGrid>
 </div>
+
+<p class="text-sm text-base-content/70 mt-4">
+  💡 Hover over the cards to see interactive effects! MediaCard works with images, videos, or custom media elements.
+</p>
 
 <h2>Steps & Timelines</h2>
 

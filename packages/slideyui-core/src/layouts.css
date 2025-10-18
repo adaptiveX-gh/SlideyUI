@@ -1,29 +1,19 @@
 /**
  * SlideyUI Layout Utilities
- * Predefined slide layouts for common presentation patterns
+ * Core layout classes for card-based presentations
+ *
+ * ARCHITECTURE NOTE FOR NEW DEVS:
+ * This file contains only layouts actively used by modern card components.
+ * Deprecated slide-specific layouts have been removed to reduce bundle size.
+ * Legacy slide components (TitleSlide, ComparisonSlide, DataSlide) apply
+ * their own layout styles via className prop.
  */
 
 @layer components {
-  /* Title Slide - Centered hero content */
-  .slide-layout-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: calc(var(--slidey-spacing-gap) * 2);
-    padding: var(--slidey-spacing-padding);
-  }
+  /* === ACTIVE LAYOUTS (Used by Card Components) === */
 
-  .slide-layout-title > :first-child {
-    margin-top: auto;
-  }
-
-  .slide-layout-title > :last-child {
-    margin-bottom: auto;
-  }
-
-  /* Content Slide - Header + body content */
+  /* Content Layout - Header + body content */
+  /* Used by: ContentCard, ContentSlide (via ContentCard) */
   .slide-layout-content {
     display: flex;
     flex-direction: column;
@@ -43,6 +33,7 @@
   }
 
   /* Two Column Layout */
+  /* Used by: SplitCard (via ContentSlide backward compat) */
   .slide-layout-two-column {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -59,40 +50,8 @@
     grid-template-columns: 1fr 2fr;
   }
 
-  /* Comparison Layout - Side by side with divider */
-  .slide-layout-comparison {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: var(--slidey-spacing-gap);
-    padding: var(--slidey-spacing-padding);
-    align-items: center;
-  }
-
-  .slide-layout-comparison > :nth-child(2) {
-    width: 2px;
-    height: 100%;
-    background: var(--slidey-border);
-  }
-
-  /* Data Slide - Optimized for charts and metrics */
-  .slide-layout-data {
-    display: flex;
-    flex-direction: column;
-    gap: var(--slidey-spacing-gap);
-    padding: var(--slidey-spacing-padding);
-  }
-
-  .slide-layout-data > header {
-    flex-shrink: 0;
-  }
-
-  .slide-layout-data > main {
-    flex: 1;
-    display: grid;
-    place-items: center;
-  }
-
   /* Split Media Layout - Image/Video + Content */
+  /* Used by: MediaCard */
   .slide-layout-split-media {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -117,27 +76,8 @@
     order: -1;
   }
 
-  /* Code Focus Layout - Large code block with optional annotation */
-  .slide-layout-code-focus {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: var(--slidey-spacing-gap);
-    padding: var(--slidey-spacing-padding);
-  }
-
-  .slide-layout-code-focus > header {
-    flex-shrink: 0;
-  }
-
-  .slide-layout-code-focus > .code-container {
-    position: relative;
-    overflow: auto;
-    background: var(--slidey-muted);
-    border-radius: 0.5rem;
-    padding: calc(var(--slidey-spacing-gap) * 0.75);
-  }
-
   /* Grid Layout - Multiple items in grid */
+  /* Used by: ContentSlide (via backward compat with layout="grid") */
   .slide-layout-grid {
     display: grid;
     gap: var(--slidey-spacing-gap);
@@ -157,41 +97,6 @@
   .slide-layout-grid.grid-2x3 {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
-  }
-
-  /* Section Break Layout - Visual separator between sections */
-  .slide-layout-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: var(--slidey-spacing-padding);
-    gap: calc(var(--slidey-spacing-gap) * 1.5);
-  }
-
-  .slide-layout-section::before {
-    content: '';
-    width: 20%;
-    height: 4px;
-    background: var(--slidey-accent);
-    border-radius: 2px;
-  }
-
-  /* Full Bleed Layout - Edge to edge content */
-  .slide-layout-full-bleed {
-    padding: 0;
-    position: relative;
-  }
-
-  .slide-layout-full-bleed > .overlay-content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--slidey-spacing-padding);
-    z-index: 1;
   }
 }
 

@@ -12,7 +12,7 @@
 <h2>What is SlideyUI?</h2>
 
 <p>
-  SlideyUI is a presentation-first component library built on Tailwind CSS. Unlike traditional UI frameworks designed for web applications, SlideyUI reimagines every component for the unique constraints and opportunities of presentations.
+  SlideyUI is an AI-first presentation component library. Unlike traditional UI frameworks designed for web applications, SlideyUI reimagines every component for the unique constraints and opportunities of presentations.
 </p>
 
 <h2>Why SlideyUI?</h2>

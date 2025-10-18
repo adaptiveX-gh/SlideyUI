@@ -1,40 +1,45 @@
 <script lang="ts">
-  import CodeBlock from './CodeBlock.svelte';
+	/**
+	 * ComponentPreview
+	 * Wrapper for showing live component examples in documentation
+	 */
 
-  let { title = '', code = '', children } = $props<{
-    title?: string;
-    code?: string;
-    children?: any;
-  }>();
+	import CodeBlock from './CodeBlock.svelte';
 
-  let showCode = $state(false);
+	export let title: string;
+	export let description: string | undefined = undefined;
+	export let code: string | undefined = undefined;
 </script>
 
-<div class="card bg-base-100 shadow-xl my-6">
-  <div class="card-body">
-    {#if title}
-      <h3 class="card-title text-xl mb-4">{title}</h3>
-    {/if}
+<div class="component-preview my-8">
+	<div class="preview-header mb-4">
+		<h3 class="text-2xl font-bold">{title}</h3>
+		{#if description}
+			<p class="text-base-content/70 mt-2">{description}</p>
+		{/if}
+	</div>
 
-    <div class="p-6 bg-base-200 rounded-lg">
-      {@render children?.()}
-    </div>
+	<div class="preview-body">
+		<slot />
+	</div>
 
-    {#if code}
-      <div class="card-actions justify-end mt-4">
-        <button
-          onclick={() => (showCode = !showCode)}
-          class="btn btn-sm btn-outline"
-        >
-          {showCode ? 'Hide' : 'Show'} Code
-        </button>
-      </div>
-
-      {#if showCode}
-        <div class="mt-4">
-          <CodeBlock {code} lang="html" />
-        </div>
-      {/if}
-    {/if}
-  </div>
+	{#if code || $$slots.code}
+		<div class="preview-code mt-4">
+			{#if code}
+				<CodeBlock {code} lang="html" />
+			{:else}
+				<slot name="code" />
+			{/if}
+		</div>
+	{/if}
 </div>
+
+<style>
+	.component-preview {
+		@apply border border-base-300 rounded-lg p-6;
+	}
+
+	.preview-body {
+		@apply bg-base-100 rounded-lg p-4;
+	}
+</style>

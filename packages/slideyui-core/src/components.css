@@ -1,6 +1,37 @@
 /**
  * SlideyUI Component Styles
  * Reusable component styles for common presentation elements
+ *
+ * ARCHITECTURE NOTE FOR NEW DEVELOPERS:
+ *
+ * This file contains presentation-optimized CSS classes for common UI patterns.
+ * These classes are used by both card and legacy slide components.
+ *
+ * KEY DESIGN PRINCIPLES:
+ * - 24px minimum font size for slide content (16px minimum for metadata)
+ * - High contrast colors for projection readability
+ * - Responsive sizing using clamp() for fluid typography
+ * - CSS custom properties for theme consistency
+ *
+ * ORGANIZATION:
+ * - Callout boxes (.slide-callout-*)
+ * - Quote blocks (.slide-quote-*)
+ * - Timeline (.slide-timeline-*)
+ * - Code blocks (.slide-code-*)
+ * - Polls (.slide-poll-*)
+ * - Progress indicators (.slide-progress-*)
+ * - Badges (.slide-badge-*)
+ * - Cards (.slide-card-*) - Core card styling
+ * - Lists (.slide-list-*)
+ * - Dividers (.slide-divider-*)
+ * - Card state utilities ([data-card-state]) - For AI app integration
+ *
+ * CARD STATE SYSTEM:
+ * Cards support data-attributes for visual feedback in AI apps:
+ * - [data-card-state="generating"] - Pulse animation during AI generation
+ * - [data-card-state="selected"] - Ring highlight for selected cards
+ * - [data-card-state="error"] - Red border for errors
+ * - [data-card-state="complete"] - Green border for completion
  */
 
 @layer components {
@@ -353,5 +384,38 @@
 
   .slide-divider-accent {
     background: var(--slidey-accent);
+  }
+
+  /* Card Mode Variants - Layer 0 primitives for AI apps */
+  .slide-card-preview {
+    /* Preview mode: Smaller cards for editing/organizing */
+    @apply min-h-[200px];
+  }
+
+  .slide-card-thumbnail {
+    /* Thumbnail mode: Extra small for galleries */
+    @apply min-h-[120px] text-sm;
+  }
+
+  .slide-card-full {
+    /* Full mode: Presentation-ready */
+    @apply min-h-[400px];
+  }
+
+  /* Card State Utilities - For AI apps to style card states */
+  .slide-card[data-card-state="generating"] {
+    @apply animate-pulse;
+  }
+
+  .slide-card[data-card-state="selected"] {
+    @apply ring-2 ring-slidey-accent ring-offset-2;
+  }
+
+  .slide-card[data-card-state="error"] {
+    @apply border-red-500 bg-red-50;
+  }
+
+  .slide-card[data-card-state="complete"] {
+    @apply border-green-500;
   }
 }

@@ -3,7 +3,7 @@
  */
 
 import { useEffect } from 'react';
-import { useSlideContext } from './useSlideContext';
+import { usePresentationContext } from '../components/Presentation';
 
 export interface UsePresenterModeOptions {
   /** Keyboard shortcut to toggle presenter mode */
@@ -19,7 +19,7 @@ export interface UsePresenterModeOptions {
  *
  * @example
  * ```tsx
- * function MyDeck() {
+ * function MyPresentation() {
  *   const { presenterMode, togglePresenterMode } = usePresenterMode({
  *     toggleKey: 'p',
  *     enableShortcut: true,
@@ -27,7 +27,7 @@ export interface UsePresenterModeOptions {
  *
  *   return (
  *     <div>
- *       {presenterMode && <SpeakerNotes>Notes here</SpeakerNotes>}
+ *       {presenterMode && <CardNotes>Notes here</CardNotes>}
  *     </div>
  *   );
  * }
@@ -35,7 +35,7 @@ export interface UsePresenterModeOptions {
  */
 export function usePresenterMode(options: UsePresenterModeOptions = {}) {
   const { toggleKey = 'p', enableShortcut = true } = options;
-  const { presenterMode, togglePresenterMode } = useSlideContext();
+  const { presenterMode, togglePresenterMode } = usePresentationContext();
 
   useEffect(() => {
     if (!enableShortcut) return;
