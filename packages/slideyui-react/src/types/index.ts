@@ -434,6 +434,11 @@ export interface CardStackProps {
 }
 
 /**
+ * Text density options for content cards
+ */
+export type TextDensity = 'minimal' | 'concise' | 'detailed' | 'extensive';
+
+/**
  * Content card props (text-heavy presentations)
  */
 export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
@@ -451,6 +456,8 @@ export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
   icon?: ReactNode;
   /** Layout variant */
   variant?: 'default' | 'minimal' | 'featured';
+  /** Text density for content (affects font size, line height, and spacing) */
+  density?: TextDensity;
 }
 
 /**
@@ -536,6 +543,16 @@ export interface QuoteCardProps extends Omit<CardContainerProps, 'children'> {
 }
 
 /**
+ * Embedded card props (hierarchical card nesting)
+ */
+export interface EmbeddedCardProps {
+  /** Nested card content (typically other CardContainer-based components) */
+  children: ReactNode;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+/**
  * Presentation wrapper props (replaces Deck)
  */
 export interface PresentationProps {
@@ -585,4 +602,22 @@ export interface PresentationContextValue {
   togglePresenterMode: () => void;
   /** Whether in presentation mode (full-screen) */
   isPresentationMode: boolean;
+}
+
+/**
+ * Collapsible section props (expandable content areas)
+ */
+export interface CollapsibleSectionProps {
+  /** Section title */
+  title: string;
+  /** Whether section is open by default */
+  defaultOpen?: boolean;
+  /** HTML id for deep linking */
+  id?: string;
+  /** Callback when section is toggled */
+  onToggle?: (open: boolean) => void;
+  /** Content to show/hide */
+  children: ReactNode;
+  /** Additional CSS classes */
+  className?: string;
 }

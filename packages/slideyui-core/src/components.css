@@ -22,6 +22,8 @@
  * - Progress indicators (.slide-progress-*)
  * - Badges (.slide-badge-*)
  * - Cards (.slide-card-*) - Core card styling
+ * - Embedded cards (.slide-card-embedded) - Nested card hierarchy
+ * - Collapsible sections (.slide-collapsible-*) - Expandable content
  * - Lists (.slide-list-*)
  * - Dividers (.slide-divider-*)
  * - Card state utilities ([data-card-state]) - For AI app integration
@@ -336,6 +338,59 @@
     font-size: clamp(1rem, 2vw, 1.5rem);
   }
 
+  /* Text Density Variants */
+  .slide-card-density-minimal {
+    --density-font-scale: 0.85;
+    --density-line-height: 1.3;
+    --density-spacing: 0.5rem;
+    --density-list-gap: 0.25rem;
+  }
+
+  .slide-card-density-concise {
+    --density-font-scale: 0.9;
+    --density-line-height: 1.4;
+    --density-spacing: 0.75rem;
+    --density-list-gap: 0.5rem;
+  }
+
+  .slide-card-density-detailed {
+    --density-font-scale: 1.0;
+    --density-line-height: 1.6;
+    --density-spacing: 1rem;
+    --density-list-gap: 0.75rem;
+  }
+
+  .slide-card-density-extensive {
+    --density-font-scale: 1.1;
+    --density-line-height: 1.8;
+    --density-spacing: 1.5rem;
+    --density-list-gap: 1rem;
+  }
+
+  /* Apply density to card body content */
+  .slide-card-body[class*="slide-card-density"] {
+    font-size: calc(clamp(1rem, 2vw, 1.5rem) * var(--density-font-scale));
+    line-height: var(--density-line-height);
+  }
+
+  .slide-card-body[class*="slide-card-density"] p,
+  .slide-card-body[class*="slide-card-density"] ul,
+  .slide-card-body[class*="slide-card-density"] ol {
+    margin-bottom: var(--density-spacing);
+  }
+
+  .slide-card-body[class*="slide-card-density"] li {
+    margin-bottom: var(--density-list-gap);
+  }
+
+  .slide-card-body[class*="slide-card-density"] h1,
+  .slide-card-body[class*="slide-card-density"] h2,
+  .slide-card-body[class*="slide-card-density"] h3,
+  .slide-card-body[class*="slide-card-density"] h4 {
+    margin-bottom: calc(var(--density-spacing) * 1.25);
+    line-height: calc(var(--density-line-height) * 0.9);
+  }
+
   /* List Styles */
   .slide-list {
     list-style: none;
@@ -400,6 +455,108 @@
   .slide-card-full {
     /* Full mode: Presentation-ready */
     @apply min-h-[400px];
+  }
+
+  /* Embedded Card - For nested cards with hierarchical styling */
+  .slide-card-embedded {
+    padding: calc(var(--slidey-spacing-gap) * 1);
+    background: var(--slidey-muted);
+    border: 1px solid var(--slidey-border);
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin: calc(var(--slidey-spacing-gap) * 0.75) 0;
+  }
+
+  .slide-card-embedded .slide-card-title {
+    font-size: clamp(1.125rem, 2.25vw, 1.75rem);
+    font-weight: 600;
+  }
+
+  .slide-card-embedded .slide-card-description {
+    font-size: clamp(0.875rem, 1.75vw, 1.25rem);
+    color: var(--slidey-muted-foreground);
+  }
+
+  .slide-card-embedded .slide-card-body {
+    font-size: clamp(0.875rem, 1.75vw, 1.25rem);
+  }
+
+  /* Nested embedded cards get even lighter styling */
+  .slide-card-embedded .slide-card-embedded {
+    background: var(--slidey-background);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    padding: calc(var(--slidey-spacing-gap) * 0.75);
+  }
+
+  /* Collapsible Section - Expandable content areas */
+  .slide-collapsible {
+    border: 1px solid var(--slidey-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: calc(var(--slidey-spacing-gap) * 0.75) 0;
+  }
+
+  .slide-collapsible-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(var(--slidey-spacing-gap) * 1);
+    background: var(--slidey-muted);
+    border: none;
+    cursor: pointer;
+    font-size: clamp(1.125rem, 2.25vw, 1.75rem);
+    font-weight: 600;
+    color: var(--slidey-foreground);
+    transition: background-color 200ms ease;
+    text-align: left;
+  }
+
+  .slide-collapsible-trigger:hover {
+    background: var(--slidey-background);
+  }
+
+  .slide-collapsible-trigger:focus-visible {
+    outline: 2px solid var(--slidey-accent);
+    outline-offset: -2px;
+  }
+
+  .slide-collapsible-trigger::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 0.5em solid transparent;
+    border-right: 0.5em solid transparent;
+    border-top: 0.5em solid currentColor;
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .slide-collapsible-trigger[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+  }
+
+  .slide-collapsible-content {
+    overflow: hidden;
+    transition: max-height 300ms ease, opacity 300ms ease;
+  }
+
+  .slide-collapsible-content[data-state="open"] {
+    max-height: 2000px;
+    opacity: 1;
+  }
+
+  .slide-collapsible-content[data-state="closed"] {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .slide-collapsible-body {
+    padding: calc(var(--slidey-spacing-gap) * 1);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.6;
   }
 
   /* Card State Utilities - For AI apps to style card states */

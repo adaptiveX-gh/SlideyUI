@@ -85,7 +85,7 @@ export function usePresentationContext() {
  * Hook for keyboard navigation
  */
 export function usePresentationKeyboard() {
-  const { nextCard, previousCard, togglePresenterMode } = usePresentationContext();
+  const { nextCard, previousCard, togglePresenterMode, goToCard, totalCards } = usePresentationContext();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -110,11 +110,11 @@ export function usePresentationKeyboard() {
           break;
         case 'Home':
           event.preventDefault();
-          // Go to first card - need to expose this
+          goToCard(0);
           break;
         case 'End':
           event.preventDefault();
-          // Go to last card - need to expose this
+          goToCard(totalCards - 1);
           break;
         default:
           break;
@@ -123,5 +123,5 @@ export function usePresentationKeyboard() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextCard, previousCard, togglePresenterMode]);
+  }, [nextCard, previousCard, togglePresenterMode, goToCard, totalCards]);
 }

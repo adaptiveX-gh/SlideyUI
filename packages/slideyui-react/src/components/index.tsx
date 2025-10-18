@@ -44,6 +44,7 @@ export {
   DataCard,
   QuoteCard,
   CardNotes,
+  EmbeddedCard,
 } from './cards';
 
 // Content Components (Work with both cards and legacy slides)
@@ -52,6 +53,7 @@ export { Quote } from './Quote';
 export { Timeline } from './Timeline';
 export { CodeBlock } from './CodeBlock';
 export { Poll } from './Poll';
+export { CollapsibleSection } from './CollapsibleSection';
 
 // Interactive Components
 export { BuildStep } from './BuildStep';
@@ -93,8 +95,10 @@ export type {
   SplitCardProps,
   DataCardProps,
   QuoteCardProps,
+  EmbeddedCardProps,
   CardAspectRatio,
   CardLayoutMode,
+  TextDensity,
   // Legacy slide types (DEPRECATED)
   /** @deprecated */
   DeckProps,
@@ -122,4 +126,5 @@ export type {
   SlideTheme,
   CalloutType,
   Alignment,
+  CollapsibleSectionProps,
 } from '../types';

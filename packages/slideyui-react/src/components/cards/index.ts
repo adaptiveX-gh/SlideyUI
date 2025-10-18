@@ -71,3 +71,4 @@ export { QuoteCard } from './QuoteCard';
 // ============================================================================
 
 export { CardNotes } from './CardNotes';
+export { EmbeddedCard } from './EmbeddedCard';

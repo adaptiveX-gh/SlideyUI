@@ -18,6 +18,7 @@ import clsx from 'clsx';
  *   subtitle="What makes us different"
  *   badge={<span className="slide-badge">New</span>}
  *   footer={<p className="text-sm">Learn more →</p>}
+ *   density="concise"
  * >
  *   <ul className="slide-list">
  *     <li>Feature 1</li>
@@ -34,6 +35,7 @@ export function ContentCard({
   footer,
   icon,
   variant = 'default',
+  density = 'detailed',
   className = '',
   ...containerProps
 }: ContentCardProps) {
@@ -68,7 +70,7 @@ export function ContentCard({
 
       {/* Body */}
       {children && (
-        <div className="slide-card-body flex-1 overflow-auto">
+        <div className={clsx('slide-card-body flex-1 overflow-auto', `slide-card-density-${density}`)}>
           {children}
         </div>
       )}
