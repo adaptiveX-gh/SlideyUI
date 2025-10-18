@@ -65,6 +65,7 @@ export { MediaCard } from './MediaCard';
 export { SplitCard } from './SplitCard';
 export { DataCard } from './DataCard';
 export { QuoteCard } from './QuoteCard';
+export { EmbedCard } from './EmbedCard';
 
 // ============================================================================
 // Card Utilities

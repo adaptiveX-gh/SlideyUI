@@ -7,3 +7,7 @@
 
 export { useBuildSteps } from './useBuildSteps';
 export { usePresenterMode } from './usePresenterMode';
+
+// Analytics hooks
+export { useCardView, useCardDwell, useCardInteraction } from './useCardAnalytics';
+export type { UseCardViewOptions, CardDwellResult } from './useCardAnalytics';

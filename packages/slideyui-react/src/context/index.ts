@@ -6,3 +6,5 @@
  */
 
 export { BuildStepContext, BuildStepProvider } from './BuildStepContext';
+export { AnalyticsProvider, useAnalytics } from './AnalyticsContext';
+export type { AnalyticsProviderProps } from './AnalyticsContext';

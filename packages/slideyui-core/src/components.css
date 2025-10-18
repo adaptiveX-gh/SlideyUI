@@ -489,6 +489,33 @@
     padding: calc(var(--slidey-spacing-gap) * 0.75);
   }
 
+  /* Embed Card - Rich media embedding */
+  .slide-embed-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--slidey-muted);
+  }
+
+  .slide-embed-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .slide-embed-caption {
+    padding: calc(var(--slidey-spacing-gap) * 0.75);
+    font-size: clamp(0.875rem, 1.75vw, 1.25rem);
+    color: var(--slidey-muted-foreground);
+    background: var(--slidey-background);
+    border-top: 1px solid var(--slidey-border);
+    max-height: 20vh;
+    overflow-y: auto;
+    line-height: 1.5;
+  }
+
   /* Collapsible Section - Expandable content areas */
   .slide-collapsible {
     border: 1px solid var(--slidey-border);

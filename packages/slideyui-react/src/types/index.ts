@@ -621,3 +621,82 @@ export interface CollapsibleSectionProps {
   /** Additional CSS classes */
   className?: string;
 }
+
+/**
+ * Analytics event types for tracking card interactions
+ */
+export interface AnalyticsEvent {
+  /** Type of analytics event */
+  type: 'view' | 'interaction' | 'dwell';
+  /** Unique identifier for the card */
+  cardId: string;
+  /** Timestamp when event occurred */
+  timestamp: number;
+  /** Optional metadata about the event */
+  metadata?: Record<string, any>;
+}
+
+/**
+ * Configuration for analytics tracking
+ */
+export interface AnalyticsConfig {
+  /** Whether analytics tracking is enabled (default: true) */
+  enabled?: boolean;
+  /** Minimum time in ms before a view is counted (default: 1000) */
+  dwellThreshold?: number;
+  /** Callback function to handle analytics events */
+  onEvent?: (event: AnalyticsEvent) => void;
+}
+
+/**
+ * Embed provider types
+ */
+export type EmbedProvider = 'youtube' | 'vimeo' | 'tiktok' | 'custom';
+
+/**
+ * Embed card props (rich media embedding)
+ */
+export interface EmbedCardProps extends Omit<CardContainerProps, 'children'> {
+  /** Embed provider type */
+  provider: EmbedProvider;
+  /** Embed iframe source URL */
+  embedUrl: string;
+  /** Title for accessibility and optional display */
+  title?: string;
+  /** Caption below embed */
+  caption?: ReactNode;
+  /** Allow fullscreen */
+  allowFullscreen?: boolean;
+  /** Autoplay media */
+  autoplay?: boolean;
+  /** Fallback content if embed fails */
+  children?: ReactNode;
+}
+
+/**
+ * Card metrics tracked by analytics
+ */
+export interface CardMetrics {
+  /** Number of times the card has been viewed */
+  views: number;
+  /** Number of interactions (clicks, hovers, etc.) */
+  interactions: number;
+  /** Total time spent viewing the card in milliseconds */
+  totalDwellTime: number;
+}
+
+/**
+ * Analytics context value provided by AnalyticsProvider
+ */
+export interface AnalyticsContextValue {
+  /** Current analytics configuration */
+  config: AnalyticsConfig;
+  /** Track when a card becomes visible */
+  trackView: (cardId: string, metadata?: Record<string, any>) => void;
+  /** Track user interaction with a card */
+  trackInteraction: (cardId: string, interactionType: string, metadata?: Record<string, any>) => void;
+  /** Track time spent viewing a card */
+  trackDwell: (cardId: string, duration: number, metadata?: Record<string, any>) => void;
+  /** Get analytics metrics for a specific card */
+  getCardMetrics: (cardId: string) => CardMetrics;
+}

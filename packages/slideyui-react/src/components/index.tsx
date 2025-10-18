@@ -33,6 +33,10 @@
 // Presentation System (Cards-Based)
 export { Presentation, usePresentationContext } from './Presentation';
 
+// Analytics System
+export { AnalyticsProvider, useAnalytics } from '../context/AnalyticsContext';
+export type { AnalyticsProviderProps } from '../context/AnalyticsContext';
+
 // Card Components (Layer 0 primitives for AI-first apps)
 export {
   CardContainer,
@@ -43,6 +47,7 @@ export {
   SplitCard,
   DataCard,
   QuoteCard,
+  EmbedCard,
   CardNotes,
   EmbeddedCard,
 } from './cards';
@@ -86,6 +91,11 @@ export type {
   // Presentation types (NEW)
   PresentationProps,
   PresentationContextValue,
+  // Analytics types
+  AnalyticsEvent,
+  AnalyticsConfig,
+  AnalyticsContextValue,
+  CardMetrics,
   // Card types
   CardContainerProps,
   CardGridProps,
@@ -95,6 +105,8 @@ export type {
   SplitCardProps,
   DataCardProps,
   QuoteCardProps,
+  EmbedCardProps,
+  EmbedProvider,
   EmbeddedCardProps,
   CardAspectRatio,
   CardLayoutMode,
