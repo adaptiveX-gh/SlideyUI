@@ -6,17 +6,26 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let provider: 'youtube' | 'vimeo' | 'tiktok' | 'custom';
 	export let embedUrl: string;
 	export let title: string | undefined = undefined;
 	export let caption: string | undefined = undefined;
+	export let padding: CardPadding = 'none';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let allowFullscreen: boolean = true;
 	export let autoplay: boolean = false;
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 
 	let loadError = false;
 
@@ -121,7 +130,7 @@
 </script>
 
 {#if !finalEmbedUrl || loadError}
-	<CardContainer {aspectRatio} class="slide-embed-card {className}">
+	<CardContainer {aspectRatio} class="slide-embed-card {paddingClass} {className}">
 		<div class="flex flex-col items-center justify-center p-8 text-slidey-muted-foreground">
 			<slot>
 				<p class="text-lg mb-2">Failed to load embed</p>
@@ -130,7 +139,7 @@
 		</div>
 	</CardContainer>
 {:else}
-	<CardContainer {aspectRatio} class="slide-embed-card {className}">
+	<CardContainer {aspectRatio} class="slide-embed-card {paddingClass} {className}">
 		<div class="relative w-full h-full">
 			<iframe
 				src={finalEmbedUrl}

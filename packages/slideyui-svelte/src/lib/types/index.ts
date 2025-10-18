@@ -32,6 +32,11 @@ export type CardLayoutMode = 'preview' | 'thumbnail' | 'full';
 export type TextDensity = 'minimal' | 'concise' | 'detailed' | 'extensive';
 
 /**
+ * Card padding size options
+ */
+export type CardPadding = 'compact' | 'default' | 'spacious' | 'none';
+
+/**
  * Presentation context value
  */
 export interface PresentationContextValue {

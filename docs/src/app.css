@@ -20,4 +20,28 @@
   .slide-preview {
     @apply aspect-video bg-base-200 rounded-lg overflow-hidden shadow-lg;
   }
+
+  /* TEMPORARY FIX: Add .slide-card padding directly until plugin issue is resolved */
+  .slide-card {
+    padding: 2rem; /* 32px default */
+    background: var(--slidey-background, white);
+    border: 1px solid var(--slidey-border, #e2e8f0);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .slide-card-compact {
+    padding: 1.5rem; /* 24px */
+  }
+
+  .slide-card-spacious {
+    padding: 3rem; /* 48px */
+  }
+
+  .slide-card-flush {
+    padding: 0;
+  }
 }
+/* trigger rebuild */

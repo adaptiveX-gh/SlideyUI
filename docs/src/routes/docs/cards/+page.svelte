@@ -236,6 +236,136 @@
     </div>
   </section>
 
+  <!-- Padding Variants -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold mb-6">Padding Variants</h2>
+    <p class="text-lg mb-8">
+      Every card component accepts a <code class="bg-base-200 px-2 py-1 rounded">padding</code> prop to control internal spacing. This gives you fine-grained control over card density and visual impact.
+    </p>
+
+    <div class="space-y-8">
+      <!-- Comparison Grid -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Side-by-Side Comparison</h3>
+        <CardGrid columns={{ sm: 1, md: 2, lg: 4 }} gap="md">
+          <ContentCard title="Compact" padding="compact" aspectRatio="4/3">
+            <p class="text-base">Tight spacing (24px)</p>
+          </ContentCard>
+          <ContentCard title="Default" padding="default" aspectRatio="4/3">
+            <p class="text-base">Balanced (32px)</p>
+          </ContentCard>
+          <ContentCard title="Spacious" padding="spacious" aspectRatio="4/3">
+            <p class="text-base">Generous (48px)</p>
+          </ContentCard>
+          <MediaCard
+            src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&auto=format&fit=crop"
+            alt="Team"
+            padding="none"
+            aspectRatio="4/3"
+          />
+        </CardGrid>
+      </div>
+
+      <!-- Use Case Examples -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Real-World Use Cases</h3>
+
+        <!-- Compact for Dense Information -->
+        <div class="mb-6">
+          <h4 class="text-lg font-semibold mb-2">Compact: Information-Dense Dashboards</h4>
+          <CardGrid columns={{ sm: 1, md: 3 }} gap="sm">
+            <DataCard title="Users" value="2,847" label="Active" trend="up" trendValue="+12%" padding="compact" variant="metric" aspectRatio="4/3" />
+            <DataCard title="Revenue" value="$48K" label="This Month" trend="up" trendValue="+8%" padding="compact" variant="metric" aspectRatio="4/3" />
+            <DataCard title="Conversion" value="3.2%" label="Rate" trend="down" trendValue="-0.5%" padding="compact" variant="metric" aspectRatio="4/3" />
+          </CardGrid>
+        </div>
+
+        <!-- Spacious for Impact -->
+        <div class="mb-6">
+          <h4 class="text-lg font-semibold mb-2">Spacious: Impactful Messaging</h4>
+          <QuoteCard
+            quote="SlideyUI transformed how we build presentations. The AI-first approach is revolutionary."
+            author="Sarah Johnson"
+            source="CEO, TechCorp"
+            padding="spacious"
+            aspectRatio="16/9"
+          />
+        </div>
+
+        <!-- None for Media -->
+        <div class="mb-6">
+          <h4 class="text-lg font-semibold mb-2">None: Full-Bleed Media</h4>
+          <CardGrid columns={{ sm: 1, md: 2 }} gap="md">
+            <MediaCard
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop"
+              alt="Team collaboration"
+              padding="none"
+              aspectRatio="16/9"
+            />
+            <SplitCard split={40} padding="none" aspectRatio="16/9">
+              <div slot="left" class="bg-gradient-to-br from-blue-500 to-purple-600 h-full flex items-center justify-center">
+                <span class="text-white text-4xl font-bold">40%</span>
+              </div>
+              <div slot="right" class="p-6 flex flex-col justify-center">
+                <h3 class="text-2xl font-bold mb-2">Growth Rate</h3>
+                <p>Custom layouts with manual padding control.</p>
+              </div>
+            </SplitCard>
+          </CardGrid>
+        </div>
+      </div>
+
+      <!-- Code Example -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Code Example</h3>
+        <CodeBlock code={`<!-- Compact padding for dense layouts -->
+<DataCard
+  title="Revenue"
+  value="$1.2M"
+  padding="compact"
+  variant="metric"
+/>
+
+<!-- Default padding (balanced) -->
+<ContentCard
+  title="Overview"
+  padding="default"
+>
+  <p>Most presentations use default padding.</p>
+</ContentCard>
+
+<!-- Spacious padding for impact -->
+<QuoteCard
+  quote="Amazing product!"
+  author="Customer"
+  padding="spacious"
+/>
+
+<!-- No padding for full-bleed -->
+<MediaCard
+  src="/image.jpg"
+  padding="none"
+/>`} lang="svelte" />
+      </div>
+
+      <!-- Best Practices Alert -->
+      <div class="alert alert-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+          <h4 class="font-bold">Padding Best Practices</h4>
+          <ul class="text-sm list-disc list-inside mt-2">
+            <li><strong>Compact:</strong> Use for dashboards, metrics grids, or when showing many cards at once</li>
+            <li><strong>Default:</strong> Safe choice for most content cards and mixed layouts</li>
+            <li><strong>Spacious:</strong> Use for quotes, key messages, hero cards, or when you want visual impact</li>
+            <li><strong>None:</strong> Use for full-bleed images, videos, or when you need complete layout control</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Documentation Link -->
   <section class="card bg-primary text-primary-content">
     <div class="card-body">

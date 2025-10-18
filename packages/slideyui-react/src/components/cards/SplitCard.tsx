@@ -48,13 +48,21 @@ export function SplitCard({
   direction = 'horizontal',
   divider = false,
   reverse = false,
+  padding = 'none',
   className = '',
   ...containerProps
 }: SplitCardProps) {
   const content = reverse ? [right, left] : [left, right];
 
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
+
   return (
-    <CardContainer {...containerProps} className={clsx('overflow-hidden', className)}>
+    <CardContainer {...containerProps} className={clsx('overflow-hidden', paddingClass, className)}>
       <div
         className={clsx(
           'grid h-full',

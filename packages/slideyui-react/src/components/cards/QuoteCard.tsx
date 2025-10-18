@@ -36,16 +36,24 @@ export function QuoteCard({
   source,
   avatar,
   variant = 'default',
+  padding = 'spacious',
   className = '',
   ...containerProps
 }: QuoteCardProps) {
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
+
   return (
     <CardContainer
       {...containerProps}
       className={clsx(
-        'flex flex-col justify-between p-8',
-        variant === 'large' && 'p-12',
-        variant === 'minimal' && 'p-6 border-none shadow-none',
+        'flex flex-col justify-between card-quote-card',
+        paddingClass,
+        variant === 'minimal' && 'border-none shadow-none',
         className
       )}
     >

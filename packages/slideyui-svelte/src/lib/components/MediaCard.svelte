@@ -5,12 +5,14 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let src: string | undefined = undefined;
 	export let alt: string = '';
 	export let title: string | undefined = undefined;
 	export let caption: string | undefined = undefined;
 	export let asBackground: boolean = false;
+	export let padding: CardPadding = 'none';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -21,6 +23,13 @@
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 </script>
 
 {#if asBackground}
@@ -33,7 +42,7 @@
 		{cardId}
 		{cardState}
 		backgroundImage={src}
-		class="relative {className}"
+		class="relative {paddingClass} {className}"
 	>
 		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 		<div class="relative z-10 p-8 flex flex-col justify-end h-full">
@@ -52,7 +61,7 @@
 		{interactive}
 		{cardId}
 		{cardState}
-		class="flex flex-col {className}"
+		class="flex flex-col {paddingClass} {className}"
 	>
 		<div class="relative flex-1 overflow-hidden">
 			{#if src}

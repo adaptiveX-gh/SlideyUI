@@ -96,11 +96,19 @@ export function EmbedCard({
   allowFullscreen = true,
   autoplay = false,
   children,
+  padding = 'none',
   className = '',
   ...containerProps
 }: EmbedCardProps) {
   const [loadError, setLoadError] = useState(false);
   const finalEmbedUrl = getEmbedUrl(provider, embedUrl, autoplay);
+
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
 
   // Build iframe allow attribute based on props
   const allowAttributes = [
@@ -114,7 +122,7 @@ export function EmbedCard({
 
   if (!finalEmbedUrl || loadError) {
     return (
-      <CardContainer {...containerProps} className={clsx('card-embed', className)}>
+      <CardContainer {...containerProps} className={clsx('card-embed', paddingClass, className)}>
         <div className="flex flex-col items-center justify-center p-8 text-slidey-muted-foreground">
           {children || (
             <>
@@ -131,7 +139,7 @@ export function EmbedCard({
     <CardContainer
       {...containerProps}
       aspectRatio={aspectRatio}
-      className={clsx('card-embed', className)}
+      className={clsx('card-embed', paddingClass, className)}
     >
       <div className="relative w-full h-full">
         <iframe

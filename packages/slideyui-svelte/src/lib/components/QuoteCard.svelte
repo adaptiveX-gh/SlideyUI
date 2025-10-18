@@ -25,12 +25,14 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let quote: string;
 	export let author: string | undefined = undefined;
 	export let source: string | undefined = undefined;
 	export let avatar: string | undefined = undefined;
 	export let variant: 'default' | 'large' | 'minimal' | 'testimonial' = 'default';
+	export let padding: CardPadding = 'spacious';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -43,6 +45,13 @@
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 
 	$$restProps; // Allow passing through other props
 </script>
@@ -57,9 +66,10 @@
 	{backgroundImage}
 	{cardId}
 	{cardState}
-	class="flex flex-col justify-between p-8 {variant === 'large'
-		? 'p-12'
-		: ''} {variant === 'minimal' ? 'p-6 border-none shadow-none' : ''} {className}"
+	class="flex flex-col justify-between card-quote-card {paddingClass} {variant ===
+	'minimal'
+		? 'border-none shadow-none'
+		: ''} {className}"
 >
 	<!-- Quote Mark (for non-minimal variants) -->
 	{#if variant !== 'minimal'}

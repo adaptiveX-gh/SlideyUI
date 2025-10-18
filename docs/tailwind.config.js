@@ -1,8 +1,13 @@
-import slideyUI from 'slideyui';
+import slideyUI from '@slideyui/core';
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{html,js,svelte,ts,tsx}'],
+  safelist: [
+    // SlideyUI component classes that must always be included
+    { pattern: /^slide-.*/ },
+    { pattern: /^card-.*/ },
+  ],
   theme: {
     extend: {
       colors: {

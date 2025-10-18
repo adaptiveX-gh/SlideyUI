@@ -24,11 +24,13 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let split: 30 | 40 | 50 | 60 | 70 = 50;
 	export let direction: 'horizontal' | 'vertical' = 'horizontal';
 	export let divider: boolean = false;
 	export let reverse: boolean = false;
+	export let padding: CardPadding = 'none';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -41,6 +43,13 @@
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 
 	const splitRatioStyles: Record<number, string> = {
 		30: 'grid-cols-[30%_70%]',
@@ -63,7 +72,7 @@
 	{backgroundImage}
 	{cardId}
 	{cardState}
-	class="overflow-hidden {className}"
+	class="overflow-hidden {paddingClass} {className}"
 >
 	<div
 		class="grid h-full {direction === 'horizontal'

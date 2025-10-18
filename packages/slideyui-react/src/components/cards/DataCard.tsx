@@ -44,6 +44,7 @@ export function DataCard({
   footer,
   icon,
   variant = 'metric',
+  padding = 'spacious',
   className = '',
   ...containerProps
 }: DataCardProps) {
@@ -59,9 +60,16 @@ export function DataCard({
     neutral: 'text-gray-600',
   };
 
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
+
   if (variant === 'metric') {
     return (
-      <CardContainer {...containerProps} className={clsx('flex flex-col p-6', className)}>
+      <CardContainer {...containerProps} className={clsx('flex flex-col card-data-metric', paddingClass, className)}>
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           {title && <h4 className="text-lg font-semibold text-slidey-muted-foreground">{title}</h4>}
@@ -92,7 +100,7 @@ export function DataCard({
 
   // Chart or Table variant
   return (
-    <CardContainer {...containerProps} className={clsx('flex flex-col', className)}>
+    <CardContainer {...containerProps} className={clsx('flex flex-col', paddingClass, className)}>
       {/* Header */}
       {title && (
         <div className="px-6 pt-6 pb-4 border-b border-slidey-border">

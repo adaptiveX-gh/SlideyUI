@@ -18,7 +18,21 @@
     --slidey-muted-foreground: theme('colors.slate.500');
     --slidey-border: theme('colors.slate.200');
 
-    /* Spacing */
+    /* Spacing Scale (8pt grid system) */
+    --card-spacing-xs: 0.5rem;   /* 8px - Tight spacing for inline elements */
+    --card-spacing-sm: 0.75rem;  /* 12px - Small gaps and compact layouts */
+    --card-spacing-md: 1rem;     /* 16px - Standard element spacing */
+    --card-spacing-lg: 1.5rem;   /* 24px - Section spacing */
+    --card-spacing-xl: 2rem;     /* 32px - Default card padding */
+    --card-spacing-2xl: 3rem;    /* 48px - Spacious/presentation padding */
+    --card-spacing-3xl: 4rem;    /* 64px - Extra spacious padding */
+
+    /* Card Padding Defaults */
+    --card-padding: var(--card-spacing-xl);                  /* 32px - Default padding */
+    --card-padding-compact: var(--card-spacing-lg);          /* 24px - Compact variant */
+    --card-padding-spacious: var(--card-spacing-2xl);        /* 48px - Spacious variant */
+
+    /* Legacy Spacing (for backwards compatibility) */
     --slidey-spacing-base: 1rem;
     --slidey-spacing-padding: 3rem;
     --slidey-spacing-gap: 2rem;

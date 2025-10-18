@@ -19,6 +19,7 @@ import clsx from 'clsx';
  *   badge={<span className="card-badge">New</span>}
  *   footer={<p className="text-sm">Learn more →</p>}
  *   density="concise"
+ *   padding="default"
  * >
  *   <ul className="card-list">
  *     <li>Feature 1</li>
@@ -36,11 +37,19 @@ export function ContentCard({
   icon,
   variant = 'default',
   density = 'detailed',
+  padding = 'default',
   className = '',
   ...containerProps
 }: ContentCardProps) {
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
+
   return (
-    <CardContainer {...containerProps} className={clsx('flex flex-col', className)}>
+    <CardContainer {...containerProps} className={clsx('flex flex-col', paddingClass, className)}>
       {/* Header */}
       {(title || subtitle || badge || icon) && (
         <div className={clsx('slide-card-header', variant === 'featured' && 'bg-slidey-accent/10')}>
@@ -77,7 +86,7 @@ export function ContentCard({
 
       {/* Footer */}
       {footer && (
-        <div className="mt-auto pt-4 border-t border-slidey-border">
+        <div className="slide-card-footer">
           {footer}
         </div>
       )}

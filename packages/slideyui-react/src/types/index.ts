@@ -439,6 +439,11 @@ export interface CardStackProps {
 export type TextDensity = 'minimal' | 'concise' | 'detailed' | 'extensive';
 
 /**
+ * Card padding size options
+ */
+export type CardPadding = 'compact' | 'default' | 'spacious' | 'none';
+
+/**
  * Content card props (text-heavy presentations)
  */
 export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
@@ -458,6 +463,8 @@ export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
   variant?: 'default' | 'minimal' | 'featured';
   /** Text density for content (affects font size, line height, and spacing) */
   density?: TextDensity;
+  /** Padding size variant */
+  padding?: CardPadding;
 }
 
 /**
@@ -482,6 +489,8 @@ export interface MediaCardProps extends Omit<CardContainerProps, 'children'> {
   asBackground?: boolean;
   /** Child content (if asBackground is true) */
   children?: ReactNode;
+  /** Padding size variant (typically 'none' for full-bleed media) */
+  padding?: CardPadding;
 }
 
 /**
@@ -500,6 +509,8 @@ export interface SplitCardProps extends Omit<CardContainerProps, 'children'> {
   divider?: boolean;
   /** Reverse the order */
   reverse?: boolean;
+  /** Padding size variant */
+  padding?: CardPadding;
 }
 
 /**
@@ -524,6 +535,8 @@ export interface DataCardProps extends Omit<CardContainerProps, 'children'> {
   icon?: ReactNode;
   /** Variant style */
   variant?: 'metric' | 'chart' | 'table';
+  /** Padding size variant (metrics often use 'spacious') */
+  padding?: CardPadding;
 }
 
 /**
@@ -540,6 +553,8 @@ export interface QuoteCardProps extends Omit<CardContainerProps, 'children'> {
   avatar?: string;
   /** Quote variant */
   variant?: 'default' | 'large' | 'minimal' | 'testimonial';
+  /** Padding size variant */
+  padding?: CardPadding;
 }
 
 /**
@@ -671,6 +686,8 @@ export interface EmbedCardProps extends Omit<CardContainerProps, 'children'> {
   autoplay?: boolean;
   /** Fallback content if embed fails */
   children?: ReactNode;
+  /** Padding size variant (often 'none' for full-bleed embeds) */
+  padding?: CardPadding;
 }
 
 /**

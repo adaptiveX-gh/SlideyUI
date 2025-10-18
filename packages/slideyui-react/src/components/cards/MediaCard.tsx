@@ -46,16 +46,24 @@ export function MediaCard({
   overlay,
   asBackground = false,
   children,
+  padding = 'none',
   className = '',
   ...containerProps
 }: MediaCardProps) {
+  const paddingClass = {
+    compact: 'slide-card-compact',
+    default: '',
+    spacious: 'slide-card-spacious',
+    none: 'slide-card-flush',
+  }[padding];
+
   if (asBackground) {
     // Use media as background with content overlay
     return (
       <CardContainer
         {...containerProps}
         backgroundImage={src}
-        className={clsx('relative flex items-center justify-center', className)}
+        className={clsx('relative flex items-center justify-center', paddingClass, className)}
       >
         {overlay && (
           <div className="absolute inset-0 flex items-center justify-center p-8">
@@ -68,7 +76,7 @@ export function MediaCard({
   }
 
   return (
-    <CardContainer {...containerProps} className={clsx('relative overflow-hidden', className)}>
+    <CardContainer {...containerProps} className={clsx('relative overflow-hidden', paddingClass, className)}>
       {/* Media Content */}
       <div className="relative w-full h-full">
         {mediaType === 'video' ? (

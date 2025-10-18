@@ -145,11 +145,42 @@ function getComponentStyles() {
       gap: 'calc(var(--slidey-spacing-gap) * 0.5)',
     },
     '.slide-card': {
-      padding: 'calc(var(--slidey-spacing-gap) * 1.5)',
+      padding: 'var(--card-padding) !important',
       background: 'var(--slidey-background)',
       border: '1px solid var(--slidey-border)',
       borderRadius: '0.5rem',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+    },
+    '.slide-card-compact': {
+      padding: 'var(--card-padding-compact)',
+    },
+    '.slide-card-spacious': {
+      padding: 'var(--card-padding-spacious)',
+    },
+    '.slide-card-flush': {
+      padding: '0',
+    },
+    '.slide-card-header': {
+      marginBottom: 'var(--card-spacing-md)',
+      padding: '0',
+    },
+    '.slide-card-title': {
+      fontSize: 'clamp(1.25rem, 2.5vw, 2rem)',
+      fontWeight: '600',
+    },
+    '.slide-card-description': {
+      fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+      color: 'var(--slidey-muted-foreground)',
+    },
+    '.slide-card-body': {
+      fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+    },
+    '.slide-card-footer': {
+      marginTop: 'var(--card-spacing-lg)',
+      paddingTop: 'var(--card-spacing-md)',
+      borderTop: '1px solid var(--slidey-border)',
     },
     '.slide-badge': {
       display: 'inline-flex',
@@ -224,6 +255,18 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
           '--slidey-danger-zone': '2%',
           '--slidey-font-min': '24px',
           '--slidey-line-height-base': '1.4',
+          // Card spacing scale (8pt grid system)
+          '--card-spacing-xs': '0.5rem',   // 8px
+          '--card-spacing-sm': '0.75rem',  // 12px
+          '--card-spacing-md': '1rem',     // 16px
+          '--card-spacing-lg': '1.5rem',   // 24px
+          '--card-spacing-xl': '2rem',     // 32px
+          '--card-spacing-2xl': '3rem',    // 48px
+          '--card-spacing-3xl': '4rem',    // 64px
+          // Card padding defaults
+          '--card-padding': 'var(--card-spacing-xl)',          // 32px default
+          '--card-padding-compact': 'var(--card-spacing-lg)',  // 24px compact
+          '--card-padding-spacious': 'var(--card-spacing-2xl)', // 48px spacious
         },
       });
 
@@ -243,12 +286,15 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
 
       // Add component styles
       if (config.includeComponents) {
-        addComponents({
+        const componentStyles = {
           ...getAspectRatioStyles(),
           ...getLayoutStyles(),
           ...getComponentStyles(),
           ...getAnimationStyles(),
-        });
+        };
+        console.log('🔍 SlideyUI: Adding', Object.keys(componentStyles).length, 'component classes');
+        console.log('🔍 SlideyUI: .slide-card class defined:', !!componentStyles['.slide-card']);
+        addComponents(componentStyles);
       }
 
       // Add utility styles

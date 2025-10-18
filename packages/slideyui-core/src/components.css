@@ -81,17 +81,18 @@
   /* Quote Blocks */
   .card-quote {
     position: relative;
-    padding: calc(var(--slidey-spacing-gap) * 1.5);
+    padding: var(--card-spacing-2xl);
+    padding-left: var(--card-spacing-2xl); /* Extra left padding for quote mark */
     font-style: italic;
     border-left: 4px solid var(--slidey-accent);
-    margin: calc(var(--slidey-spacing-gap) * 1.5) 0;
+    margin: var(--card-spacing-2xl) 0;
   }
 
   .card-quote::before {
     content: '\201C';
     position: absolute;
     top: 0;
-    left: -0.25em;
+    left: var(--card-spacing-lg); /* Position within padding, not outside */
     font-size: 4em;
     color: var(--slidey-accent);
     opacity: 0.3;
@@ -313,15 +314,32 @@
 
   /* Card Component */
   .slide-card {
-    padding: calc(var(--slidey-spacing-gap) * 1.5);
+    /* Use new spacing system with responsive padding */
+    padding: var(--card-padding);
     background: var(--slidey-background);
     border: 1px solid var(--slidey-border);
     border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content from bleeding outside borders */
+  }
+
+  /* Responsive padding based on card size */
+  @media (max-width: 400px) {
+    .slide-card {
+      --card-padding: var(--card-spacing-lg); /* 24px for small screens */
+    }
+  }
+
+  @media (min-width: 800px) {
+    .slide-card {
+      --card-padding: var(--card-spacing-2xl); /* 48px for large screens */
+    }
   }
 
   .slide-card-header {
-    margin-bottom: calc(var(--slidey-spacing-gap) * 0.75);
+    margin-bottom: var(--card-spacing-md);
+    padding: 0; /* Remove any conflicting padding */
   }
 
   .slide-card-title {
@@ -336,6 +354,111 @@
 
   .slide-card-body {
     font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  /* Ensure proper spacing between card body elements */
+  .slide-card-body > * + * {
+    margin-top: var(--card-spacing-md);
+  }
+
+  /* List spacing within cards */
+  .slide-card-body ul,
+  .slide-card-body ol {
+    padding-left: var(--card-spacing-lg);
+  }
+
+  .slide-card-body li + li {
+    margin-top: var(--card-spacing-sm);
+  }
+
+  /* Paragraph spacing within cards */
+  .slide-card-body p {
+    margin-bottom: var(--card-spacing-md);
+  }
+
+  .slide-card-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Card footer spacing */
+  .slide-card-footer {
+    margin-top: var(--card-spacing-lg);
+    padding-top: var(--card-spacing-md);
+    border-top: 1px solid var(--slidey-border);
+  }
+
+  /* Padding Variants */
+  .slide-card-compact {
+    padding: var(--card-padding-compact); /* 24px */
+  }
+
+  .slide-card-spacious {
+    padding: var(--card-padding-spacious); /* 48px */
+  }
+
+  .slide-card-flush {
+    padding: 0; /* For special cases like full-bleed images */
+  }
+
+  /* Responsive padding variants override media queries */
+  @media (max-width: 400px) {
+    .slide-card-compact {
+      padding: var(--card-spacing-md); /* 16px for small screens */
+    }
+    .slide-card-spacious {
+      padding: var(--card-spacing-xl); /* 32px for small screens */
+    }
+  }
+
+  @media (min-width: 800px) {
+    .slide-card-compact {
+      padding: var(--card-spacing-xl); /* 32px for large screens */
+    }
+    .slide-card-spacious {
+      padding: var(--card-spacing-3xl); /* 64px for large screens */
+    }
+  }
+
+  /* Data Card Metric Variant - Extra padding for large numbers */
+  .card-data-metric {
+    padding: var(--card-spacing-2xl);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+
+  .card-data-metric .card-metric-value {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--slidey-foreground);
+  }
+
+  .card-data-metric .card-metric-label {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--slidey-muted-foreground);
+    margin-top: var(--card-spacing-sm);
+  }
+
+  /* Quote Card - Extra left padding for quote mark */
+  .card-quote-card {
+    padding: var(--card-spacing-2xl);
+    padding-left: calc(var(--card-spacing-2xl) * 1.5); /* Extra room for quote mark */
+    position: relative;
+  }
+
+  .card-quote-card::before {
+    content: '\201C';
+    position: absolute;
+    top: var(--card-spacing-md);
+    left: var(--card-spacing-md); /* Stays within padding */
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--slidey-accent);
+    opacity: 0.2;
+    line-height: 1;
   }
 
   /* Text Density Variants */
@@ -459,12 +582,12 @@
 
   /* Embedded Card - For nested cards with hierarchical styling */
   .card-embedded {
-    padding: calc(var(--slidey-spacing-gap) * 1);
+    padding: var(--card-spacing-lg); /* 24px - Reduced padding for nested cards */
     background: var(--slidey-muted);
     border: 1px solid var(--slidey-border);
     border-radius: 0.375rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-    margin: calc(var(--slidey-spacing-gap) * 0.75) 0;
+    margin: var(--card-spacing-md) 0;
   }
 
   .card-embedded .slide-card-title {
@@ -481,12 +604,17 @@
     font-size: clamp(0.875rem, 1.75vw, 1.25rem);
   }
 
-  /* Nested embedded cards get even lighter styling */
+  /* Nested embedded cards get even lighter styling and less padding */
   .card-embedded .card-embedded {
     background: var(--slidey-background);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
-    padding: calc(var(--slidey-spacing-gap) * 0.75);
+    padding: var(--card-spacing-md); /* 16px - Even less padding for double-nested */
+  }
+
+  /* Triple nesting (if it happens) */
+  .card-embedded .card-embedded .card-embedded {
+    padding: var(--card-spacing-sm); /* 12px - Minimal padding */
   }
 
   /* Embed Card - Rich media embedding */
@@ -584,6 +712,30 @@
     padding: calc(var(--slidey-spacing-gap) * 1);
     font-size: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.6;
+  }
+
+  /* Presentation Mode Padding Enhancements */
+  .presentation-mode .slide-card,
+  .slide-card[data-presentation-mode="true"] {
+    --card-padding: var(--card-spacing-2xl); /* Increase to 48px in presentation mode */
+  }
+
+  @media (min-width: 1920px) {
+    .presentation-mode .slide-card,
+    .slide-card[data-presentation-mode="true"] {
+      --card-padding: calc(var(--card-spacing-2xl) * 1.5); /* 72px for large displays */
+    }
+  }
+
+  /* Presentation mode overrides for variants */
+  .presentation-mode .slide-card-compact,
+  .slide-card-compact[data-presentation-mode="true"] {
+    padding: var(--card-spacing-2xl); /* Compact becomes normal in presentation */
+  }
+
+  .presentation-mode .slide-card-spacious,
+  .slide-card-spacious[data-presentation-mode="true"] {
+    padding: var(--card-spacing-3xl); /* Spacious becomes extra spacious in presentation */
   }
 
   /* Card State Utilities - For AI apps to style card states */

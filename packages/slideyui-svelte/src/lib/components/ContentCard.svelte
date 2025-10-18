@@ -6,11 +6,13 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let title: string | undefined = undefined;
 	export let subtitle: string | undefined = undefined;
 	export let variant: 'default' | 'featured' | 'minimal' = 'default';
 	export let density: 'minimal' | 'concise' | 'detailed' | 'extensive' = 'detailed';
+	export let padding: CardPadding = 'default';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -23,6 +25,13 @@
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 
 	$$restProps; // Allow passing through other props
 </script>
@@ -37,7 +46,7 @@
 	{backgroundImage}
 	{cardId}
 	{cardState}
-	class="flex flex-col {className}"
+	class="flex flex-col {paddingClass} {className}"
 >
 	{#if title || subtitle}
 		<div class="slide-card-header {variant === 'featured' ? 'bg-slidey-accent/10' : ''}">

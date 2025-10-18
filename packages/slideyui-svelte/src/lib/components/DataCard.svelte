@@ -5,6 +5,7 @@
 	 */
 
 	import CardContainer from './CardContainer.svelte';
+	import type { CardPadding } from '../types';
 
 	export let title: string | undefined = undefined;
 	export let value: string | number | undefined = undefined;
@@ -12,6 +13,7 @@
 	export let trend: 'up' | 'down' | 'neutral' | undefined = undefined;
 	export let trendValue: string | undefined = undefined;
 	export let variant: 'metric' | 'chart' = 'metric';
+	export let padding: CardPadding = 'spacious';
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
 	export let bordered: boolean = true;
@@ -22,6 +24,13 @@
 
 	let className: string = '';
 	export { className as class };
+
+	const paddingClass = {
+		compact: 'slide-card-compact',
+		default: '',
+		spacious: 'slide-card-spacious',
+		none: 'slide-card-flush',
+	}[padding];
 
 	const trendIcons: Record<string, string> = {
 		up: '↑',
@@ -45,7 +54,7 @@
 		{interactive}
 		{cardId}
 		{cardState}
-		class="flex flex-col p-6 {className}"
+		class="flex flex-col card-data-metric {paddingClass} {className}"
 	>
 		<!-- Header -->
 		<div class="flex items-start justify-between mb-4">
@@ -80,7 +89,7 @@
 	</CardContainer>
 {:else}
 	<!-- Chart variant -->
-	<CardContainer {aspectRatio} {mode} {cardId} {cardState} class="flex flex-col {className}">
+	<CardContainer {aspectRatio} {mode} {cardId} {cardState} class="flex flex-col {paddingClass} {className}">
 		{#if title}
 			<div class="px-6 pt-6 pb-4 border-b border-slidey-border">
 				<div class="flex items-start justify-between">

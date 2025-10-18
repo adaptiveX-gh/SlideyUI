@@ -103,10 +103,10 @@ npx tailwindcss init`;
 <p>SlideyUI works with any framework that supports Tailwind CSS. Here are guides for popular frameworks:</p>
 
 <div class="tabs tabs-boxed my-6">
-  <a class="tab tab-active">React</a>
-  <a class="tab">Vue</a>
-  <a class="tab">Svelte</a>
-  <a class="tab">Next.js</a>
+  <button class="tab tab-active">React</button>
+  <button class="tab">Vue</button>
+  <button class="tab">Svelte</button>
+  <button class="tab">Next.js</button>
 </div>
 
 <h3>React</h3>
