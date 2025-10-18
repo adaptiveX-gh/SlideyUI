@@ -120,7 +120,7 @@
               <div
                 class="slide-poll-option-bar"
                 style="width: {percentage}%"
-              />
+              ></div>
             </div>
           {/if}
 
@@ -151,7 +151,7 @@
                   class:slide-poll-radio-checked={isSelected}
                 >
                   {#if isSelected}
-                    <div class="slide-poll-radio-dot" />
+                    <div class="slide-poll-radio-dot"></div>
                   {/if}
                 </div>
               {/if}

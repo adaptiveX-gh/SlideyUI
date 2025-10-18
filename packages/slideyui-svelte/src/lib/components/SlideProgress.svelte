@@ -52,7 +52,7 @@
   <div
     class="slide-progress-bar"
     style="width: {progress}%"
-  />
+  ></div>
   {#if showPercentage}
     <span class="slide-progress-text">
       {percentage}%

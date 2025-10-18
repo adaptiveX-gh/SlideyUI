@@ -27,7 +27,7 @@
     </svg>
     <span class="hidden sm:inline">Theme</span>
   </div>
-  <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-52 mt-3">
+  <ul class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-52 mt-3">
     {#each themes as theme}
       <li>
         <button

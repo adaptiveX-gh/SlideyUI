@@ -44,7 +44,7 @@
 		backgroundImage={src}
 		class="relative {paddingClass} {className}"
 	>
-		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 		<div class="relative z-10 p-8 flex flex-col justify-end h-full">
 			{#if title}
 				<h3 class="text-2xl font-bold mb-2 text-white">{title}</h3>

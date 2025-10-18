@@ -10,11 +10,6 @@
   export let type: 'info' | 'key' | 'warning' | 'success' | 'question' = 'info';
 
   /**
-   * Callout title
-   */
-  export let title: string | undefined = undefined;
-
-  /**
    * Additional CSS classes
    */
   let className: string = '';

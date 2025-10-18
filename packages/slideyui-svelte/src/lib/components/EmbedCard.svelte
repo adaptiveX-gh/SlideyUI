@@ -150,7 +150,7 @@
 				loading="lazy"
 				sandbox="allow-scripts allow-same-origin allow-presentation"
 				on:error={() => (loadError = true)}
-			/>
+			></iframe>
 
 			<!-- Fallback content if embed fails -->
 			<noscript>

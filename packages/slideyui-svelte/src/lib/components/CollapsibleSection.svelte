@@ -93,7 +93,6 @@
 		on:keydown={handleKeyDown}
 		aria-expanded={isOpen}
 		aria-controls={contentId}
-		role="button"
 	>
 		{title}
 	</button>

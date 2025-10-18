@@ -51,7 +51,7 @@
   {#each events as event, index}
     <div class="slide-timeline-item">
       <div class="slide-timeline-marker">
-        <div class="slide-timeline-dot" />
+        <div class="slide-timeline-dot"></div>
       </div>
 
       <div class="slide-timeline-content">
@@ -65,7 +65,7 @@
       </div>
 
       {#if index < events.length - 1}
-        <div class="slide-timeline-connector" />
+        <div class="slide-timeline-connector"></div>
       {/if}
     </div>
   {/each}
