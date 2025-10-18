@@ -85,11 +85,11 @@ export function CollapsibleSection({
   const contentId = id ? `${id}-content` : undefined;
 
   return (
-    <div className={clsx('slide-collapsible', className)}>
+    <div className={clsx('card-collapsible', className)}>
       {/* Trigger Button */}
       <button
         type="button"
-        className="slide-collapsible-trigger"
+        className="card-collapsible-trigger"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
         aria-expanded={isOpen}
@@ -102,10 +102,10 @@ export function CollapsibleSection({
       {/* Content Area */}
       <div
         id={contentId}
-        className="slide-collapsible-content"
+        className="card-collapsible-content"
         data-state={isOpen ? 'open' : 'closed'}
       >
-        <div className="slide-collapsible-body">{children}</div>
+        <div className="card-collapsible-body">{children}</div>
       </div>
     </div>
   );

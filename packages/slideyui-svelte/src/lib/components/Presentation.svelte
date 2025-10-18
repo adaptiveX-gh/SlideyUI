@@ -104,7 +104,23 @@
     const unsubscribe = presentation.subscribe((state) => {
       currentCard = state.currentCard;
       currentCardStyle = `--current-card: ${state.currentCard}`;
+      updateActiveCard();
     });
+  }
+
+  // Update active card class on children
+  function updateActiveCard() {
+    if (containerElement) {
+      const children = containerElement.children;
+      // Remove active-card class from all children
+      for (let i = 0; i < children.length; i++) {
+        children[i].classList.remove('active-card');
+      }
+      // Add active-card class to current card
+      if (children[currentCard]) {
+        children[currentCard].classList.add('active-card');
+      }
+    }
   }
 
   // Count children on mount and when they change
@@ -120,6 +136,9 @@
       if (currentCard >= totalCards) {
         presentation.goToCard(Math.max(0, totalCards - 1));
       }
+
+      // Update active card visibility
+      updateActiveCard();
     }
   }
 
@@ -151,6 +170,7 @@
     <div
       bind:this={containerElement}
       class="presentation-cards w-full max-w-[90vw] max-h-[90vh]"
+      style="--current-card: {currentCard}"
     >
       <slot />
     </div>
@@ -178,8 +198,8 @@
     height: 100%;
   }
 
-  /* Show only the current card using CSS counter */
-  .presentation-cards :global(> *:nth-child(calc(var(--current-card) + 1))) {
+  /* Show the active card (controlled by JavaScript) */
+  .presentation-cards :global(> *.active-card) {
     display: flex;
     flex-direction: column;
   }

@@ -48,7 +48,7 @@ export function EmbeddedCard({
 }: EmbeddedCardProps) {
   return (
     <div
-      className={clsx('slide-card-embedded', className)}
+      className={clsx('card-embedded', className)}
     >
       {children}
     </div>

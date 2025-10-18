@@ -16,11 +16,11 @@ import clsx from 'clsx';
  * <ContentCard
  *   title="Key Features"
  *   subtitle="What makes us different"
- *   badge={<span className="slide-badge">New</span>}
+ *   badge={<span className="card-badge">New</span>}
  *   footer={<p className="text-sm">Learn more →</p>}
  *   density="concise"
  * >
- *   <ul className="slide-list">
+ *   <ul className="card-list">
  *     <li>Feature 1</li>
  *     <li>Feature 2</li>
  *   </ul>

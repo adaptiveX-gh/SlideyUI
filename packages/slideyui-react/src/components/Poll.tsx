@@ -54,97 +54,28 @@ export function Poll({
     }
   };
 
-  const getTotalVotes = () => {
-    return options.reduce((sum, option) => sum + (option.percentage || 0), 0);
-  };
-
   return (
-    <div className={`slide-poll ${className}`}>
-      <h3 className="slide-poll-question">{question}</h3>
+    <div className={`card-poll ${className}`}>
+      <h3 className="card-poll-question">{question}</h3>
 
-      <div className="slide-poll-options">
-        {options.map((option) => {
+      <div className="card-poll-options">
+        {options.map((option, index) => {
           const isSelected = selectedValues.includes(option.value);
-          const percentage = option.percentage || 0;
+          const letter = String.fromCharCode(65 + index); // A, B, C, D...
 
           return (
-            <div
+            <button
               key={option.value}
-              className={`slide-poll-option ${isSelected ? 'slide-poll-option-selected' : ''} ${
-                showResults ? 'slide-poll-option-results' : ''
-              }`}
+              className={`card-poll-option ${isSelected ? 'selected' : ''}`}
+              onClick={() => handleOptionClick(option.value)}
+              disabled={showResults}
             >
-              <button
-                className="slide-poll-option-button"
-                onClick={() => handleOptionClick(option.value)}
-                disabled={showResults}
-                aria-pressed={isSelected}
-              >
-                <div className="slide-poll-option-content">
-                  <span className="slide-poll-option-label">{option.label}</span>
-
-                  {showResults && (
-                    <span className="slide-poll-option-percentage">
-                      {percentage}%
-                    </span>
-                  )}
-                </div>
-
-                {showResults && (
-                  <div className="slide-poll-option-bar-container">
-                    <div
-                      className="slide-poll-option-bar"
-                      style={{ width: `${percentage}%` }}
-                    />
-                  </div>
-                )}
-
-                {!showResults && (
-                  <div className="slide-poll-option-indicator">
-                    {multiple ? (
-                      <div
-                        className={`slide-poll-checkbox ${
-                          isSelected ? 'slide-poll-checkbox-checked' : ''
-                        }`}
-                      >
-                        {isSelected && (
-                          <svg
-                            className="slide-poll-check-icon"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        )}
-                      </div>
-                    ) : (
-                      <div
-                        className={`slide-poll-radio ${
-                          isSelected ? 'slide-poll-radio-checked' : ''
-                        }`}
-                      >
-                        {isSelected && <div className="slide-poll-radio-dot" />}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </button>
-            </div>
+              <span className="card-poll-option-letter">{letter}</span>
+              <span className="card-poll-option-text">{option.label}</span>
+            </button>
           );
         })}
       </div>
-
-      {showResults && (
-        <div className="slide-poll-footer">
-          <p className="slide-poll-total">
-            Total responses: {getTotalVotes()}
-          </p>
-        </div>
-      )}
     </div>
   );
 }

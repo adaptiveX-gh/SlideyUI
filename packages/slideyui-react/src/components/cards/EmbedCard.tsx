@@ -114,7 +114,7 @@ export function EmbedCard({
 
   if (!finalEmbedUrl || loadError) {
     return (
-      <CardContainer {...containerProps} className={clsx('slide-embed-card', className)}>
+      <CardContainer {...containerProps} className={clsx('card-embed', className)}>
         <div className="flex flex-col items-center justify-center p-8 text-slidey-muted-foreground">
           {children || (
             <>
@@ -131,13 +131,13 @@ export function EmbedCard({
     <CardContainer
       {...containerProps}
       aspectRatio={aspectRatio}
-      className={clsx('slide-embed-card', className)}
+      className={clsx('card-embed', className)}
     >
       <div className="relative w-full h-full">
         <iframe
           src={finalEmbedUrl}
           title={title || `${provider} embed`}
-          className="slide-embed-iframe"
+          className="card-embed-iframe"
           allow={allowAttributes}
           allowFullScreen={allowFullscreen}
           loading="lazy"
@@ -157,7 +157,7 @@ export function EmbedCard({
 
       {/* Caption below embed */}
       {caption && (
-        <div className="slide-embed-caption">
+        <div className="card-embed-caption">
           {caption}
         </div>
       )}

@@ -29,7 +29,7 @@ export function SlideNumber({
 
   return (
     <div
-      className={`slide-number slide-number-${position} ${className}`}
+      className={`presentation-number presentation-number-${position} ${className}`}
       aria-label={`Slide ${currentSlide + 1} of ${totalSlides}`}
     >
       {displayNumber}

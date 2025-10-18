@@ -28,7 +28,7 @@ export function SlideProgress({
 
   return (
     <div
-      className={`slide-progress slide-progress-${position} ${className}`}
+      className={`presentation-progress presentation-progress-${position} ${className}`}
       role="progressbar"
       aria-valuenow={percentage}
       aria-valuemin={0}
@@ -36,11 +36,11 @@ export function SlideProgress({
       aria-label={`Slide ${currentSlide + 1} of ${totalSlides}`}
     >
       <div
-        className="slide-progress-bar"
+        className="presentation-progress-bar"
         style={{ width: `${progress}%` }}
       />
       {showPercentage && (
-        <span className="slide-progress-text">
+        <span className="presentation-progress-text">
           {percentage}%
         </span>
       )}

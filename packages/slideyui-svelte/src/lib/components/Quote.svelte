@@ -43,19 +43,14 @@
   ```
 -->
 
-<blockquote class="slide-quote slide-quote-{variant} {className}">
-  <div class="slide-quote-mark">"</div>
-  <div class="slide-quote-content">
+<blockquote class="card-quote card-quote-{variant} {className}">
+  <div class="card-quote-text">
     <slot />
   </div>
   {#if author || source}
-    <footer class="slide-quote-footer">
-      {#if author}
-        <cite class="slide-quote-author">{author}</cite>
-      {/if}
-      {#if source}
-        <span class="slide-quote-source">{source}</span>
-      {/if}
+    <footer class="card-quote-author">
+      {author}
+      {#if source}<span> — {source}</span>{/if}
     </footer>
   {/if}
 </blockquote>

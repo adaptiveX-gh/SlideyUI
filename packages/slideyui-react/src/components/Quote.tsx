@@ -27,15 +27,14 @@ export function Quote({
   className = '',
 }: SlideQuoteProps) {
   return (
-    <blockquote className={`slide-quote slide-quote-${variant} ${className}`}>
-      <div className="slide-quote-mark">"</div>
-      <div className="slide-quote-content">
+    <blockquote className={`card-quote card-quote-${variant} ${className}`}>
+      <div className="card-quote-text">
         {children}
       </div>
       {(author || source) && (
-        <footer className="slide-quote-footer">
-          {author && <cite className="slide-quote-author">{author}</cite>}
-          {source && <span className="slide-quote-source">{source}</span>}
+        <footer className="card-quote-author">
+          {author}
+          {source && <span> — {source}</span>}
         </footer>
       )}
     </blockquote>
