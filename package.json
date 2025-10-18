@@ -1,0 +1,37 @@
+{
+  "name": "slideyui",
+  "version": "0.1.0",
+  "description": "A presentation-first component library built on Tailwind CSS",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "docs",
+    "examples/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=docs",
+    "dev:example": "npm run dev --workspace=examples/react-demo",
+    "build": "npm run build --workspaces --if-present",
+    "build:core": "npm run build --workspace=packages/slideyui-core",
+    "build:react": "npm run build --workspace=packages/slideyui-react",
+    "build:docs": "npm run build --workspace=docs",
+    "lint": "npm run lint --workspaces --if-present",
+    "type-check": "npm run type-check --workspaces --if-present"
+  },
+  "keywords": [
+    "tailwindcss",
+    "plugin",
+    "presentation",
+    "slides",
+    "components",
+    "ui",
+    "design-system"
+  ],
+  "author": "SlideyUI Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "prettier": "^3.1.0"
+  }
+}

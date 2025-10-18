@@ -1,0 +1,47 @@
+/**
+ * SlideProgress Component
+ * Progress bar showing presentation progress
+ */
+
+import { SlideProgressProps } from '../types';
+import { useSlideContext } from '../hooks/useSlideContext';
+
+/**
+ * Progress indicator showing current position in presentation
+ *
+ * @example
+ * ```tsx
+ * <SlideProgress position="top" showPercentage />
+ * ```
+ */
+export function SlideProgress({
+  position = 'top',
+  showPercentage = false,
+  className = '',
+}: SlideProgressProps) {
+  const { currentSlide, totalSlides } = useSlideContext();
+
+  const progress = totalSlides > 0 ? ((currentSlide + 1) / totalSlides) * 100 : 0;
+  const percentage = Math.round(progress);
+
+  return (
+    <div
+      className={`slide-progress slide-progress-${position} ${className}`}
+      role="progressbar"
+      aria-valuenow={percentage}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={`Slide ${currentSlide + 1} of ${totalSlides}`}
+    >
+      <div
+        className="slide-progress-bar"
+        style={{ width: `${progress}%` }}
+      />
+      {showPercentage && (
+        <span className="slide-progress-text">
+          {percentage}%
+        </span>
+      )}
+    </div>
+  );
+}

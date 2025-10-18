@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .prose-slidey {
+    @apply prose prose-slate max-w-none prose-headings:font-bold prose-a:text-primary prose-code:text-secondary;
+  }
+
+  .slide-preview {
+    @apply aspect-video bg-base-200 rounded-lg overflow-hidden shadow-lg;
+  }
+}

@@ -1,0 +1,251 @@
+/**
+ * SlideyUI Typography Utilities
+ * Slide-specific text sizing optimized for projection and readability
+ */
+
+@layer components {
+  /* Hero Text - Main slide titles */
+  .slide-text-hero {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* Header Text - Section headers */
+  .slide-text-header {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  /* Subheader Text */
+  .slide-text-subheader {
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  /* Body Text - Main content */
+  .slide-text-body {
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* List Text - Optimized for bullet points */
+  .slide-text-list {
+    font-size: clamp(1.125rem, 2.25vw, 1.75rem);
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* Caption Text - Small annotations */
+  .slide-text-caption {
+    font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--slidey-muted-foreground);
+  }
+
+  /* Code Text */
+  .slide-text-code {
+    font-family: theme('fontFamily.mono');
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* Quote Text */
+  .slide-text-quote {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0;
+  }
+}
+
+@layer utilities {
+  /* Font Families */
+  .slide-font-display {
+    font-family: var(--slidey-font-display, theme('fontFamily.sans'));
+  }
+
+  .slide-font-body {
+    font-family: var(--slidey-font-body, theme('fontFamily.sans'));
+  }
+
+  .slide-font-mono {
+    font-family: var(--slidey-font-mono, theme('fontFamily.mono'));
+  }
+
+  /* Line Height Utilities - Optimized for projection */
+  .slide-leading-tight {
+    line-height: 1.1;
+  }
+
+  .slide-leading-snug {
+    line-height: 1.25;
+  }
+
+  .slide-leading-normal {
+    line-height: 1.4;
+  }
+
+  .slide-leading-relaxed {
+    line-height: 1.6;
+  }
+
+  .slide-leading-loose {
+    line-height: 1.8;
+  }
+
+  /* Letter Spacing for Readability */
+  .slide-tracking-tighter {
+    letter-spacing: -0.04em;
+  }
+
+  .slide-tracking-tight {
+    letter-spacing: -0.02em;
+  }
+
+  .slide-tracking-normal {
+    letter-spacing: 0;
+  }
+
+  .slide-tracking-wide {
+    letter-spacing: 0.02em;
+  }
+
+  .slide-tracking-wider {
+    letter-spacing: 0.04em;
+  }
+
+  .slide-tracking-widest {
+    letter-spacing: 0.08em;
+  }
+
+  /* Text Balancing */
+  .slide-text-balance {
+    text-wrap: balance;
+  }
+
+  .slide-text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Highlight and Emphasis Styles */
+  .slide-highlight {
+    background: linear-gradient(
+      to right,
+      var(--slidey-accent) 0%,
+      var(--slidey-accent) 100%
+    );
+    background-position: 0 85%;
+    background-repeat: no-repeat;
+    background-size: 100% 0.3em;
+    padding: 0 0.2em;
+  }
+
+  .slide-highlight-bold {
+    background: var(--slidey-accent);
+    color: var(--slidey-accent-foreground);
+    padding: 0.1em 0.4em;
+    border-radius: 0.25em;
+    font-weight: 600;
+  }
+
+  .slide-emphasis {
+    color: var(--slidey-primary);
+    font-weight: 600;
+  }
+
+  .slide-emphasis-accent {
+    color: var(--slidey-accent);
+    font-weight: 600;
+  }
+
+  /* Gradient Text */
+  .slide-text-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--slidey-primary) 0%,
+      var(--slidey-accent) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Text Shadow for Contrast on Images */
+  .slide-text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .slide-text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  .slide-text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Uppercase Headings with Proper Spacing */
+  .slide-text-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Number Styles for Lists */
+  .slide-numbers-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .slide-numbers-proportional {
+    font-variant-numeric: proportional-nums;
+  }
+
+  /* Text Overflow Handling */
+  .slide-text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .slide-text-clip {
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
+  /* Multi-line Truncation */
+  .slide-line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .slide-line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .slide-line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

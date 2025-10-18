@@ -1,0 +1,233 @@
+/**
+ * SlideyUI Base Styles
+ * Core styles for slide containers, aspect ratios, and safe zones
+ */
+
+@layer base {
+  /* CSS Custom Properties for theming */
+  :root {
+    --slidey-primary: theme('colors.blue.600');
+    --slidey-primary-foreground: theme('colors.white');
+    --slidey-secondary: theme('colors.slate.500');
+    --slidey-secondary-foreground: theme('colors.white');
+    --slidey-accent: theme('colors.cyan.600');
+    --slidey-accent-foreground: theme('colors.white');
+    --slidey-background: theme('colors.white');
+    --slidey-foreground: theme('colors.slate.900');
+    --slidey-muted: theme('colors.slate.100');
+    --slidey-muted-foreground: theme('colors.slate.500');
+    --slidey-border: theme('colors.slate.200');
+
+    /* Spacing */
+    --slidey-spacing-base: 1rem;
+    --slidey-spacing-padding: 3rem;
+    --slidey-spacing-gap: 2rem;
+
+    /* Safe zones (5% safe padding, 2% danger zone) */
+    --slidey-safe-padding: 5%;
+    --slidey-danger-zone: 2%;
+
+    /* Minimum readable sizes */
+    --slidey-font-min: 24px;
+    --slidey-line-height-base: 1.4;
+
+    /* Aspect ratios */
+    --slidey-ratio-16-9: 56.25%; /* 9/16 * 100 */
+    --slidey-ratio-4-3: 75%; /* 3/4 * 100 */
+    --slidey-ratio-9-16: 177.78%; /* 16/9 * 100 */
+    --slidey-ratio-1-1: 100%;
+  }
+}
+
+@layer components {
+  /* Slide Container Base */
+  .slide {
+    position: relative;
+    width: 100%;
+    background-color: var(--slidey-background);
+    color: var(--slidey-foreground);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  /* Aspect Ratio Utilities */
+  .slide-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  .slide-ratio-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+
+  .slide-ratio-9-16 {
+    aspect-ratio: 9 / 16;
+  }
+
+  .slide-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Legacy browser support using padding-bottom trick */
+  @supports not (aspect-ratio: 16 / 9) {
+    .slide-ratio-16-9::before {
+      content: '';
+      display: block;
+      padding-bottom: var(--slidey-ratio-16-9);
+    }
+
+    .slide-ratio-4-3::before {
+      content: '';
+      display: block;
+      padding-bottom: var(--slidey-ratio-4-3);
+    }
+  }
+
+  /* Safe Zone Container */
+  .slide-safe-zone {
+    padding: var(--slidey-safe-padding);
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Danger Zone Indicator (for development) */
+  .slide-debug .slide-safe-zone {
+    outline: 2px dashed rgba(255, 0, 0, 0.3);
+    outline-offset: calc(-1 * var(--slidey-danger-zone));
+  }
+
+  /* Grid System for Slides */
+  .slide-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--slidey-spacing-gap);
+    height: 100%;
+  }
+
+  /* Safe grid (10 columns, 1 column padding on each side) */
+  .slide-grid-safe {
+    display: grid;
+    grid-template-columns: 1fr repeat(10, minmax(0, 1fr)) 1fr;
+    gap: var(--slidey-spacing-gap);
+    height: 100%;
+  }
+
+  .slide-grid-safe > * {
+    grid-column: 2 / 12;
+  }
+
+  /* Bleed Support for Full-Background Elements */
+  .slide-bleed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .slide-bleed-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Content Container */
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--slidey-spacing-gap);
+    padding: var(--slidey-spacing-padding);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Minimum Readable Sizes */
+  .slide h1,
+  .slide h2,
+  .slide h3,
+  .slide p,
+  .slide li,
+  .slide td,
+  .slide th {
+    min-height: var(--slidey-font-min);
+    line-height: var(--slidey-line-height-base);
+  }
+
+  /* Projection-optimized rendering */
+  .slide {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer utilities {
+  /* Responsive Safe Padding Utilities */
+  .slide-p-safe {
+    padding: var(--slidey-safe-padding);
+  }
+
+  .slide-px-safe {
+    padding-left: var(--slidey-safe-padding);
+    padding-right: var(--slidey-safe-padding);
+  }
+
+  .slide-py-safe {
+    padding-top: var(--slidey-safe-padding);
+    padding-bottom: var(--slidey-safe-padding);
+  }
+
+  .slide-pt-safe {
+    padding-top: var(--slidey-safe-padding);
+  }
+
+  .slide-pb-safe {
+    padding-bottom: var(--slidey-safe-padding);
+  }
+
+  .slide-pl-safe {
+    padding-left: var(--slidey-safe-padding);
+  }
+
+  .slide-pr-safe {
+    padding-right: var(--slidey-safe-padding);
+  }
+
+  /* Margin Safe Utilities */
+  .slide-m-safe {
+    margin: var(--slidey-safe-padding);
+  }
+
+  .slide-mx-safe {
+    margin-left: var(--slidey-safe-padding);
+    margin-right: var(--slidey-safe-padding);
+  }
+
+  .slide-my-safe {
+    margin-top: var(--slidey-safe-padding);
+    margin-bottom: var(--slidey-safe-padding);
+  }
+
+  /* Z-index layers for slide elements */
+  .slide-z-background {
+    z-index: 0;
+  }
+
+  .slide-z-content {
+    z-index: 1;
+  }
+
+  .slide-z-overlay {
+    z-index: 2;
+  }
+
+  .slide-z-controls {
+    z-index: 10;
+  }
+}

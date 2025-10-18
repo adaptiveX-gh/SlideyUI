@@ -1,0 +1,48 @@
+{
+  "name": "@slideyui/core",
+  "version": "0.1.0",
+  "description": "Core Tailwind CSS plugin for presentation slides",
+  "keywords": [
+    "tailwindcss",
+    "tailwindcss-plugin",
+    "presentations",
+    "slides",
+    "ui"
+  ],
+  "author": "SlideyUI",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tailwindcss": "^3.4.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "postcss": "^8.4.33",
+    "postcss-js": "^4.0.1"
+  }
+}
