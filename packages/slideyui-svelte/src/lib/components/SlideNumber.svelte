@@ -25,14 +25,12 @@
   // Get presentation context
   const presentationContext = getPresentationContext();
 
-  const currentSlide = $derived(presentationContext?.state.currentCard ?? 0);
-  const totalSlides = $derived(presentationContext?.state.totalCards ?? 0);
-
-  const displayNumber = $derived(
-    format === 'fraction'
-      ? `${currentSlide + 1} / ${totalSlides}`
-      : `${currentSlide + 1}`
-  );
+  // Calculate slide numbers using reactive statements
+  $: currentSlide = $presentationContext.currentCard;
+  $: totalSlides = $presentationContext.totalCards;
+  $: displayNumber = format === 'fraction'
+    ? `${currentSlide + 1} / ${totalSlides}`
+    : `${currentSlide + 1}`;
 </script>
 
 <!--

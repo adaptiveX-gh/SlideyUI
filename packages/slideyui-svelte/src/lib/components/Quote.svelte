@@ -4,7 +4,6 @@
 -->
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
 
   /**
    * Author name
@@ -27,10 +26,6 @@
   let className: string = '';
   export { className as class };
 
-  /**
-   * Quote content slot
-   */
-  export let children: Snippet | undefined = undefined;
 </script>
 
 <!--
@@ -51,9 +46,7 @@
 <blockquote class="slide-quote slide-quote-{variant} {className}">
   <div class="slide-quote-mark">"</div>
   <div class="slide-quote-content">
-    {#if children}
-      {@render children()}
-    {/if}
+    <slot />
   </div>
   {#if author || source}
     <footer class="slide-quote-footer">

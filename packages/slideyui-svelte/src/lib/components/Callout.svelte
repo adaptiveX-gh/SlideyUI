@@ -4,8 +4,6 @@
 -->
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-
   /**
    * Callout type
    */
@@ -21,16 +19,6 @@
    */
   let className: string = '';
   export { className as class };
-
-  /**
-   * Icon slot for custom icons
-   */
-  export let icon: Snippet | undefined = undefined;
-
-  /**
-   * Default content slot
-   */
-  export let children: Snippet | undefined = undefined;
 </script>
 
 <!--
@@ -50,9 +38,9 @@
 
 <div class="slide-callout slide-callout-{type} {className}">
   <div class="slide-callout-header">
-    {#if icon}
+    {#if $$slots.icon}
       <div class="slide-callout-icon-wrapper">
-        {@render icon()}
+        <slot name="icon" />
       </div>
     {:else}
       <div class="slide-callout-icon-wrapper">
@@ -84,8 +72,6 @@
     {/if}
   </div>
   <div class="slide-callout-body">
-    {#if children}
-      {@render children()}
-    {/if}
+    <slot />
   </div>
 </div>

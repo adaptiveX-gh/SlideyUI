@@ -2,7 +2,7 @@
   import ThemeShowcase from '$lib/components/ThemeShowcase.svelte';
   import CodeBlock from '$lib/components/CodeBlock.svelte';
 
-  const themeUsage = `<div class="slide theme-corporate">
+  const themeUsage = `<div class="card theme-corporate">
   <h1>Corporate Theme</h1>
   <p>Professional and clean</p>
 </div>`;
@@ -91,7 +91,7 @@
 
 <h2>Using Themes</h2>
 
-<p>Apply a theme to any slide or section using the theme class:</p>
+<p>Apply a theme to any card or section using the theme class:</p>
 
 <CodeBlock code={themeUsage} lang="html" />
 
@@ -250,13 +250,13 @@ module.exports = {
 <CodeBlock
   code={`<!-- Different sections, different themes -->
 <section class="theme-corporate">
-  <div class="slide">
+  <div class="card">
     <h1>Q4 Financial Results</h1>
   </div>
 </section>
 
 <section class="theme-pitch">
-  <div class="slide">
+  <div class="card">
     <h1>Our Vision for 2025</h1>
   </div>
 </section>`}

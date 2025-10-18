@@ -5,7 +5,6 @@
 
 <script lang="ts">
   import { fade, fly, scale } from 'svelte/transition';
-  import type { Snippet } from 'svelte';
   import { getBuildStepContext } from '../stores/buildStep';
 
   /**
@@ -24,18 +23,11 @@
   let className: string = '';
   export { className as class };
 
-  /**
-   * Content slot
-   */
-  export let children: Snippet | undefined = undefined;
-
   // Get build step context
   const buildStepContext = getBuildStepContext();
 
   // Determine if this step should be visible
-  const isVisible = $derived(
-    buildStepContext ? buildStepContext.isStepVisible(step) : true
-  );
+  $: isVisible = buildStepContext ? buildStepContext.isStepVisible(step) : true;
 
   // Get animation transition function
   function getTransition(node: HTMLElement) {
@@ -108,18 +100,14 @@
 {#if isVisible}
   {#if animation === 'none'}
     <div class="slide-build-step {className}">
-      {#if children}
-        {@render children()}
-      {/if}
+      <slot />
     </div>
   {:else}
     <div
       class="slide-build-step slide-build-{animation} {className}"
       transition:getTransition
     >
-      {#if children}
-        {@render children()}
-      {/if}
+      <slot />
     </div>
   {/if}
 {/if}

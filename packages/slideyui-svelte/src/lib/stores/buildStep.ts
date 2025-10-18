@@ -59,7 +59,10 @@ export interface BuildStepState {
  * Build step store type
  */
 export interface BuildStepStore {
-  subscribe: typeof writable<BuildStepState>['subscribe'];
+  subscribe: (
+    run: (value: BuildStepState) => void,
+    invalidate?: (value?: BuildStepState) => void
+  ) => () => void;
   /** Whether to show this step */
   isStepVisible: (step: number) => boolean;
   /** Advance to next step */

@@ -23,6 +23,7 @@
 import plugin from 'tailwindcss/plugin';
 import type { SlideyUIConfig } from './types';
 import { resolveConfig, generateCSSVariables, generateThemeExtension } from './utils';
+import { getThemeIds, getTheme } from './themes';
 
 // Import themes for re-export
 export * from './types';
@@ -34,7 +35,7 @@ export { resolveConfig, generateCSSVariables, generateThemeExtension } from './u
  */
 function getBaseStyles() {
   return {
-    '.slide': {
+    '.slide, .card': {
       position: 'relative',
       width: '100%',
       backgroundColor: 'var(--slidey-background)',
@@ -47,7 +48,7 @@ function getBaseStyles() {
       MozOsxFontSmoothing: 'grayscale',
       textRendering: 'optimizeLegibility',
     },
-    '.slide h1, .slide h2, .slide h3, .slide p, .slide li, .slide td, .slide th': {
+    '.slide h1, .slide h2, .slide h3, .slide p, .slide li, .slide td, .slide th, .card h1, .card h2, .card h3, .card p, .card li, .card td, .card th': {
       minHeight: 'var(--slidey-font-min)',
       lineHeight: 'var(--slidey-line-height-base)',
     },
@@ -114,21 +115,21 @@ function getLayoutStyles() {
  */
 function getComponentStyles() {
   return {
-    '.slide-text-hero': {
+    '.slide-text-hero, .card-text-hero': {
       fontSize: 'clamp(3rem, 8vw, 6rem)',
       lineHeight: '1.1',
       fontWeight: '800',
       letterSpacing: '-0.02em',
       textWrap: 'balance',
     },
-    '.slide-text-header': {
+    '.slide-text-header, .card-text-header': {
       fontSize: 'clamp(2rem, 5vw, 4rem)',
       lineHeight: '1.2',
       fontWeight: '700',
       letterSpacing: '-0.01em',
       textWrap: 'balance',
     },
-    '.slide-text-body': {
+    '.slide-text-body, .card-text-body': {
       fontSize: 'clamp(1.25rem, 2.5vw, 2rem)',
       lineHeight: '1.5',
       fontWeight: '400',
@@ -225,6 +226,15 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
           '--slidey-line-height-base': '1.4',
         },
       });
+
+      // Add per-theme variable classes so themes can be applied via class or data attribute
+      const themeSelectors: Record<string, Record<string, string>> = {};
+      for (const id of getThemeIds()) {
+        const tVars = generateCSSVariables(getTheme(id), config.prefix);
+        themeSelectors[`.theme-${id}`] = tVars;
+        themeSelectors[`[data-theme="${id}"]`] = tVars;
+      }
+      addBase(themeSelectors);
 
       // Add base slide styles
       if (config.includeBase) {

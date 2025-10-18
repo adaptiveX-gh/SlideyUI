@@ -4,21 +4,7 @@
 -->
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-
-  /**
-   * Timeline event interface
-   */
-  export interface TimelineEvent {
-    /** Event title */
-    title: string;
-    /** Event description */
-    description?: string;
-    /** Event date/time */
-    date?: string;
-    /** Event icon snippet */
-    icon?: Snippet;
-  }
+  import type { TimelineEvent } from '../types';
 
   /**
    * Timeline events
@@ -65,13 +51,7 @@
   {#each events as event, index}
     <div class="slide-timeline-item">
       <div class="slide-timeline-marker">
-        {#if event.icon}
-          <div class="slide-timeline-icon">
-            {@render event.icon()}
-          </div>
-        {:else}
-          <div class="slide-timeline-dot" />
-        {/if}
+        <div class="slide-timeline-dot" />
       </div>
 
       <div class="slide-timeline-content">

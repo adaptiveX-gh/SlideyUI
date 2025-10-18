@@ -6,7 +6,7 @@
     {
       name: 'Title Slide',
       description: 'Opening slide with large heading and subtitle',
-      code: `<div class="slide slide-title">
+  code: `<div class="card slide-title">
   <h1 class="slide-heading">Presentation Title</h1>
   <p class="slide-subtitle">Your Name | Date</p>
 </div>`,
@@ -14,7 +14,7 @@
     {
       name: 'Content Slide',
       description: 'Standard content slide with heading and body',
-      code: `<div class="slide slide-content">
+  code: `<div class="card slide-content">
   <h2 class="slide-title">Slide Title</h2>
   <div class="slide-body">
     <ul>
@@ -28,7 +28,7 @@
     {
       name: 'Two Column',
       description: 'Split content into two equal columns',
-      code: `<div class="slide slide-two-column">
+  code: `<div class="card slide-two-column">
   <h2 class="slide-title">Comparison</h2>
   <div class="slide-columns">
     <div class="slide-column">
@@ -45,7 +45,7 @@
     {
       name: 'Section Break',
       description: 'Transition slide between major sections',
-      code: `<div class="slide slide-section">
+  code: `<div class="card slide-section">
   <h2 class="slide-heading">Section Title</h2>
   <p class="slide-subtitle">Brief description</p>
 </div>`,
@@ -173,7 +173,7 @@
 
 <CodeBlock
   code={`<!-- Responsive column layout -->
-<div class="slide slide-two-column">
+<div class="card slide-two-column">
   <!-- On mobile: stacks vertically -->
   <!-- On desktop: side by side -->
   <div class="slide-columns">
@@ -189,7 +189,7 @@
 <p>Create your own layouts by combining SlideyUI utilities:</p>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <div class="slide-header">
     <h2 class="slide-title">Custom Layout</h2>
   </div>

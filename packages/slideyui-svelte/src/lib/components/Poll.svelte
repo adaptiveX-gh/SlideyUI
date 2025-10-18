@@ -4,17 +4,7 @@
 -->
 
 <script lang="ts">
-  /**
-   * Poll option interface
-   */
-  export interface PollOption {
-    /** Option label */
-    label: string;
-    /** Option value */
-    value: string;
-    /** Vote percentage (0-100) */
-    percentage?: number;
-  }
+  import type { PollOption } from '../types';
 
   /**
    * Poll question
@@ -48,7 +38,7 @@
   export let onVote: ((value: string | string[]) => void) | undefined = undefined;
 
   // State for selected values
-  let selectedValues = $state<string[]>([]);
+  let selectedValues: string[] = [];
 
   // Handle option click
   function handleOptionClick(value: string) {
@@ -57,7 +47,7 @@
     if (multiple) {
       // Toggle selection for multiple choice
       if (selectedValues.includes(value)) {
-        newSelection = selectedValues.filter((v) => v !== value);
+        newSelection = selectedValues.filter((v: string) => v !== value);
       } else {
         newSelection = [...selectedValues, value];
       }
@@ -111,7 +101,7 @@
       >
         <button
           class="slide-poll-option-button"
-          onclick={() => handleOptionClick(option.value)}
+          on:click={() => handleOptionClick(option.value)}
           disabled={showResults}
           aria-pressed={isSelected}
         >

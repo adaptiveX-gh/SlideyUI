@@ -5,7 +5,7 @@
 
 @layer components {
   /* Hero Text - Main slide titles */
-  .slide-text-hero {
+  .slide-text-hero, .card-text-hero {
     font-size: clamp(3rem, 8vw, 6rem);
     line-height: 1.1;
     font-weight: 800;
@@ -14,7 +14,7 @@
   }
 
   /* Header Text - Section headers */
-  .slide-text-header {
+  .slide-text-header, .card-text-header {
     font-size: clamp(2rem, 5vw, 4rem);
     line-height: 1.2;
     font-weight: 700;
@@ -23,7 +23,7 @@
   }
 
   /* Subheader Text */
-  .slide-text-subheader {
+  .slide-text-subheader, .card-text-subheader {
     font-size: clamp(1.5rem, 3.5vw, 2.5rem);
     line-height: 1.3;
     font-weight: 600;
@@ -32,7 +32,7 @@
   }
 
   /* Body Text - Main content */
-  .slide-text-body {
+  .slide-text-body, .card-text-body {
     font-size: clamp(1.25rem, 2.5vw, 2rem);
     line-height: 1.5;
     font-weight: 400;
@@ -40,7 +40,7 @@
   }
 
   /* List Text - Optimized for bullet points */
-  .slide-text-list {
+  .slide-text-list, .card-text-list {
     font-size: clamp(1.125rem, 2.25vw, 1.75rem);
     line-height: 1.6;
     font-weight: 400;
@@ -48,7 +48,7 @@
   }
 
   /* Caption Text - Small annotations */
-  .slide-text-caption {
+  .slide-text-caption, .card-text-caption {
     font-size: clamp(0.875rem, 1.5vw, 1.25rem);
     line-height: 1.4;
     font-weight: 400;
@@ -57,7 +57,7 @@
   }
 
   /* Code Text */
-  .slide-text-code {
+  .slide-text-code, .card-text-code {
     font-family: theme('fontFamily.mono');
     font-size: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.6;
@@ -66,7 +66,7 @@
   }
 
   /* Quote Text */
-  .slide-text-quote {
+  .slide-text-quote, .card-text-quote {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     line-height: 1.4;
     font-weight: 500;
@@ -77,75 +77,75 @@
 
 @layer utilities {
   /* Font Families */
-  .slide-font-display {
+  .slide-font-display, .card-font-display {
     font-family: var(--slidey-font-display, theme('fontFamily.sans'));
   }
 
-  .slide-font-body {
+  .slide-font-body, .card-font-body {
     font-family: var(--slidey-font-body, theme('fontFamily.sans'));
   }
 
-  .slide-font-mono {
+  .slide-font-mono, .card-font-mono {
     font-family: var(--slidey-font-mono, theme('fontFamily.mono'));
   }
 
   /* Line Height Utilities - Optimized for projection */
-  .slide-leading-tight {
+  .slide-leading-tight, .card-leading-tight {
     line-height: 1.1;
   }
 
-  .slide-leading-snug {
+  .slide-leading-snug, .card-leading-snug {
     line-height: 1.25;
   }
 
-  .slide-leading-normal {
+  .slide-leading-normal, .card-leading-normal {
     line-height: 1.4;
   }
 
-  .slide-leading-relaxed {
+  .slide-leading-relaxed, .card-leading-relaxed {
     line-height: 1.6;
   }
 
-  .slide-leading-loose {
+  .slide-leading-loose, .card-leading-loose {
     line-height: 1.8;
   }
 
   /* Letter Spacing for Readability */
-  .slide-tracking-tighter {
+  .slide-tracking-tighter, .card-tracking-tighter {
     letter-spacing: -0.04em;
   }
 
-  .slide-tracking-tight {
+  .slide-tracking-tight, .card-tracking-tight {
     letter-spacing: -0.02em;
   }
 
-  .slide-tracking-normal {
+  .slide-tracking-normal, .card-tracking-normal {
     letter-spacing: 0;
   }
 
-  .slide-tracking-wide {
+  .slide-tracking-wide, .card-tracking-wide {
     letter-spacing: 0.02em;
   }
 
-  .slide-tracking-wider {
+  .slide-tracking-wider, .card-tracking-wider {
     letter-spacing: 0.04em;
   }
 
-  .slide-tracking-widest {
+  .slide-tracking-widest, .card-tracking-widest {
     letter-spacing: 0.08em;
   }
 
   /* Text Balancing */
-  .slide-text-balance {
+  .slide-text-balance, .card-text-balance {
     text-wrap: balance;
   }
 
-  .slide-text-pretty {
+  .slide-text-pretty, .card-text-pretty {
     text-wrap: pretty;
   }
 
   /* Highlight and Emphasis Styles */
-  .slide-highlight {
+  .slide-highlight, .card-highlight {
     background: linear-gradient(
       to right,
       var(--slidey-accent) 0%,
@@ -157,7 +157,7 @@
     padding: 0 0.2em;
   }
 
-  .slide-highlight-bold {
+  .slide-highlight-bold, .card-highlight-bold {
     background: var(--slidey-accent);
     color: var(--slidey-accent-foreground);
     padding: 0.1em 0.4em;
@@ -165,18 +165,18 @@
     font-weight: 600;
   }
 
-  .slide-emphasis {
+  .slide-emphasis, .card-emphasis {
     color: var(--slidey-primary);
     font-weight: 600;
   }
 
-  .slide-emphasis-accent {
+  .slide-emphasis-accent, .card-emphasis-accent {
     color: var(--slidey-accent);
     font-weight: 600;
   }
 
   /* Gradient Text */
-  .slide-text-gradient {
+  .slide-text-gradient, .card-text-gradient {
     background: linear-gradient(
       135deg,
       var(--slidey-primary) 0%,
@@ -188,62 +188,65 @@
   }
 
   /* Text Shadow for Contrast on Images */
-  .slide-text-shadow-sm {
+  .slide-text-shadow-sm, .card-text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-  .slide-text-shadow {
+  .slide-text-shadow, .card-text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   }
 
-  .slide-text-shadow-lg {
+  .slide-text-shadow-lg, .card-text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
   }
 
   /* Uppercase Headings with Proper Spacing */
-  .slide-text-uppercase {
+  .slide-text-uppercase, .card-text-uppercase {
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
 
   /* Number Styles for Lists */
-  .slide-numbers-tabular {
+  .slide-numbers-tabular, .card-numbers-tabular {
     font-variant-numeric: tabular-nums;
   }
 
-  .slide-numbers-proportional {
+  .slide-numbers-proportional, .card-numbers-proportional {
     font-variant-numeric: proportional-nums;
   }
 
   /* Text Overflow Handling */
-  .slide-text-truncate {
+  .slide-text-truncate, .card-text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .slide-text-clip {
+  .slide-text-clip, .card-text-clip {
     overflow: hidden;
     text-overflow: clip;
   }
 
   /* Multi-line Truncation */
-  .slide-line-clamp-2 {
+  .slide-line-clamp-2, .card-line-clamp-2 {
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .slide-line-clamp-3 {
+  .slide-line-clamp-3, .card-line-clamp-3 {
     display: -webkit-box;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .slide-line-clamp-4 {
+  .slide-line-clamp-4, .card-line-clamp-4 {
     display: -webkit-box;
+    line-clamp: 4;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;

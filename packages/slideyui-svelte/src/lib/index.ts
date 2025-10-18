@@ -139,5 +139,4 @@ export type {
   CalloutType,
   TimelineEvent,
   PollOption,
-  BuildStepState,
 } from './types';

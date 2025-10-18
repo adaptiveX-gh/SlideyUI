@@ -105,7 +105,7 @@
 <h3>Slide Headings</h3>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <h1 class="slide-heading">Main Slide Heading</h1>
   <p class="slide-subtitle">Supporting subtitle text</p>
 </div>`}
@@ -120,7 +120,7 @@
 <h3>Body Content</h3>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <h2 class="slide-title">Section Title</h2>
   <div class="slide-body">
     <p class="slide-body-lg">

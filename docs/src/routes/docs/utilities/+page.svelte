@@ -55,11 +55,11 @@
 </div>
 
 <CodeBlock
-  code={`<div class="slide aspect-16-9">
+  code={`<div class="card aspect-16-9">
   <!-- 16:9 widescreen slide -->
 </div>
 
-<div class="slide aspect-4-3">
+<div class="card aspect-4-3">
   <!-- 4:3 traditional slide -->
 </div>`}
   lang="html"
@@ -102,7 +102,7 @@
 </div>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <h1 class="animate-fade-in">Title appears smoothly</h1>
   <p class="animate-slide-up animation-delay-1">
     Content appears after title
@@ -138,7 +138,7 @@
 <p>Add presenter notes that don't appear in the main presentation:</p>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <h1>Slide Content</h1>
 
   <aside class="speaker-notes">
@@ -162,7 +162,7 @@
 <p>Automatically number slides for easy reference:</p>
 
 <CodeBlock
-  code={`<div class="slide">
+  code={`<div class="card">
   <div class="slide-number">1</div>
   <!-- Slide content -->
 </div>`}

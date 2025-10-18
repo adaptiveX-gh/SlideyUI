@@ -95,6 +95,18 @@
     onCardChange
   );
 
+  // Track current card from store
+  let currentCard = 0;
+  let currentCardStyle = '--current-card: 0';
+
+  // Subscribe to presentation changes
+  $: {
+    const unsubscribe = presentation.subscribe((state) => {
+      currentCard = state.currentCard;
+      currentCardStyle = `--current-card: ${state.currentCard}`;
+    });
+  }
+
   // Count children on mount and when they change
   function updateCardCount() {
     if (containerElement) {
@@ -105,7 +117,7 @@
       presentation.setTotalCards(totalCards);
 
       // Ensure current card is within bounds
-      if ($presentation.currentCard >= totalCards) {
+      if (currentCard >= totalCards) {
         presentation.goToCard(Math.max(0, totalCards - 1));
       }
     }
@@ -122,9 +134,6 @@
 
     return () => observer.disconnect();
   });
-
-  // Reactive style for showing only current card
-  $: currentCardStyle = `--current-card: ${$presentation.currentCard}`;
 </script>
 
 <!--

@@ -4,8 +4,6 @@
 -->
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-
   /**
    * Programming language
    */
@@ -32,17 +30,12 @@
   let className: string = '';
   export { className as class };
 
-  /**
-   * Code content slot
-   */
-  export let children: Snippet | undefined = undefined;
-
   // State for copy button
-  let copied = $state(false);
+  let copied: boolean = false;
 
   // Capture code content from slot
   let codeElement: HTMLElement;
-  let codeContent = $derived(codeElement?.textContent ?? '');
+  $: codeContent = codeElement?.textContent ?? '';
 
   // Handle copy to clipboard
   async function handleCopy() {
@@ -58,7 +51,7 @@
   }
 
   // Parse highlight lines (e.g., "1,3-5" -> Set([1,3,4,5]))
-  const highlightedLines = $derived.by(() => {
+  function parseHighlightLines(highlightLines: string | undefined): Set<number> {
     const lines = new Set<number>();
     if (highlightLines) {
       highlightLines.split(',').forEach((part) => {
@@ -73,10 +66,12 @@
       });
     }
     return lines;
-  });
+  }
+
+  $: highlightedLines = parseHighlightLines(highlightLines);
 
   // Parse lines for line numbers mode
-  const lines = $derived(codeContent.split('\n'));
+  $: lines = codeContent.split('\n');
 </script>
 
 <!--
@@ -102,7 +97,7 @@
 
   <div class="slide-code-container">
     <button
-      onclick={handleCopy}
+      on:click={handleCopy}
       class="slide-code-copy-button"
       aria-label="Copy code"
       title={copied ? 'Copied!' : 'Copy code'}
@@ -138,9 +133,7 @@
             </div>
           {/each}
         {:else}
-          {#if children}
-            {@render children()}
-          {/if}
+          <slot />
         {/if}
       </code>
     </pre>

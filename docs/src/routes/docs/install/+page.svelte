@@ -25,7 +25,7 @@ module.exports = {
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="slide slide-title theme-corporate">
+  <div class="card slide-title theme-corporate">
     <h1 class="slide-heading">Hello SlideyUI</h1>
     <p class="slide-subtitle">Your first presentation slide</p>
   </div>

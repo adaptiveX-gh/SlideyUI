@@ -25,19 +25,11 @@
   // Get presentation context
   const presentationContext = getPresentationContext();
 
-  // Calculate progress
-  const progress = $derived.by(() => {
-    if (!presentationContext) return 0;
-    const state = presentationContext.state;
-    const totalSlides = state.totalCards;
-    const currentSlide = state.currentCard;
-    return totalSlides > 0 ? ((currentSlide + 1) / totalSlides) * 100 : 0;
-  });
-
-  const percentage = $derived(Math.round(progress));
-
-  const currentSlide = $derived(presentationContext?.state.currentCard ?? 0);
-  const totalSlides = $derived(presentationContext?.state.totalCards ?? 0);
+  // Calculate progress using reactive statements
+  $: totalSlides = $presentationContext.totalCards;
+  $: currentSlide = $presentationContext.currentCard;
+  $: progress = totalSlides > 0 ? ((currentSlide + 1) / totalSlides) * 100 : 0;
+  $: percentage = Math.round(progress);
 </script>
 
 <!--
