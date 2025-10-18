@@ -20,7 +20,7 @@ export default {
     require('daisyui'),
     require('@tailwindcss/typography'),
     slideyUI({
-      theme: 'pitch-deck',
+      theme: 'corporate', // Use light theme by default to match DaisyUI light mode
       defaultRatio: '16:9',
     }),
   ],

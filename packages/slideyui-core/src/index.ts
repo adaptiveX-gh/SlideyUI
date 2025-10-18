@@ -277,6 +277,26 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
         themeSelectors[`.theme-${id}`] = tVars;
         themeSelectors[`[data-theme="${id}"]`] = tVars;
       }
+
+      // Add DaisyUI dark theme support (for themes that aren't SlideyUI themes)
+      // These selectors handle DaisyUI's built-in dark themes
+      const daisyDarkThemes = ['dark', 'business', 'night', 'forest', 'black', 'dracula', 'halloween', 'coffee'];
+      for (const darkTheme of daisyDarkThemes) {
+        themeSelectors[`[data-theme="${darkTheme}"]`] = {
+          '--slidey-primary': '#60a5fa', // blue-400
+          '--slidey-primary-foreground': '#ffffff',
+          '--slidey-secondary': '#94a3b8', // slate-400
+          '--slidey-secondary-foreground': '#0f172a',
+          '--slidey-accent': '#22d3ee', // cyan-400
+          '--slidey-accent-foreground': '#0f172a',
+          '--slidey-background': '#0f172a', // slate-900
+          '--slidey-foreground': '#f8fafc', // slate-50
+          '--slidey-muted': '#1e293b', // slate-800
+          '--slidey-muted-foreground': '#94a3b8', // slate-400
+          '--slidey-border': '#334155', // slate-700
+        };
+      }
+
       addBase(themeSelectors);
 
       // Add base slide styles
