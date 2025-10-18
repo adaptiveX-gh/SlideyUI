@@ -47,34 +47,34 @@ function App() {
 
       {/* Solution */}
       <ContentSlide title="Introducing SlideyUI">
-        <p className="slide-body mb-6">
+        <p className="slide-body mb-12 text-center text-3xl opacity-90">
           A presentation-first component library built on Tailwind CSS
         </p>
 
-        <div className="grid grid-cols-2 gap-6 mt-8">
-          <Callout type="key">
-            <strong>Projection-Optimized</strong>
-            <br />
-            24px minimum font size
-          </Callout>
+        <div className="grid grid-cols-2 gap-8 mt-12">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-2xl shadow-xl">
+            <div className="text-6xl mb-4">🎯</div>
+            <h3 className="text-3xl font-bold mb-3">Projection-Optimized</h3>
+            <p className="text-2xl opacity-90">24px minimum font size ensures readability from any distance</p>
+          </div>
 
-          <Callout type="success">
-            <strong>Developer-Friendly</strong>
-            <br />
-            React components + Tailwind
-          </Callout>
+          <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-2xl shadow-xl">
+            <div className="text-6xl mb-4">⚡</div>
+            <h3 className="text-3xl font-bold mb-3">Developer-Friendly</h3>
+            <p className="text-2xl opacity-90">React components with full Tailwind CSS integration</p>
+          </div>
 
-          <Callout type="info">
-            <strong>Theme System</strong>
-            <br />
-            5 professional themes
-          </Callout>
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-2xl shadow-xl">
+            <div className="text-6xl mb-4">🎨</div>
+            <h3 className="text-3xl font-bold mb-3">Theme System</h3>
+            <p className="text-2xl opacity-90">5 professional themes ready to use out of the box</p>
+          </div>
 
-          <Callout type="question">
-            <strong>Export-Ready</strong>
-            <br />
-            PDF, PowerPoint, Web
-          </Callout>
+          <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-8 rounded-2xl shadow-xl">
+            <div className="text-6xl mb-4">📤</div>
+            <h3 className="text-3xl font-bold mb-3">Export-Ready</h3>
+            <p className="text-2xl opacity-90">Works everywhere: PDF, PowerPoint, and web</p>
+          </div>
         </div>
       </ContentSlide>
 
@@ -109,28 +109,34 @@ function App() {
 
       {/* Features */}
       <ContentSlide title="Key Features">
-        <div className="space-y-4">
-          <div className="flex items-start gap-4">
-            <span className="slide-number-huge text-slide-accent">5</span>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Professional Themes</h3>
-              <p className="text-2xl">Corporate, Pitch Deck, Academic, Workshop, Startup</p>
+        <div className="space-y-8">
+          <div className="flex items-center gap-8 bg-white/5 p-8 rounded-2xl backdrop-blur">
+            <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white text-5xl font-black shadow-lg">
+              5
+            </div>
+            <div className="flex-1">
+              <h3 className="text-4xl font-bold mb-3">Professional Themes</h3>
+              <p className="text-2xl opacity-80">Corporate, Pitch Deck, Academic, Workshop, Startup</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-4">
-            <span className="slide-number-huge text-slide-accent">12+</span>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Specialized Components</h3>
-              <p className="text-2xl">Callouts, Quotes, Timelines, Code Blocks, Polls</p>
+          <div className="flex items-center gap-8 bg-white/5 p-8 rounded-2xl backdrop-blur">
+            <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-green-500 to-teal-600 text-white text-4xl font-black shadow-lg">
+              13+
+            </div>
+            <div className="flex-1">
+              <h3 className="text-4xl font-bold mb-3">Specialized Components</h3>
+              <p className="text-2xl opacity-80">Callouts, Quotes, Timelines, Code Blocks, Polls & more</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-4">
-            <span className="slide-number-huge text-slide-accent">∞</span>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Customization Options</h3>
-              <p className="text-2xl">Full Tailwind CSS flexibility</p>
+          <div className="flex items-center gap-8 bg-white/5 p-8 rounded-2xl backdrop-blur">
+            <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-600 text-white text-5xl font-black shadow-lg">
+              ∞
+            </div>
+            <div className="flex-1">
+              <h3 className="text-4xl font-bold mb-3">Customization Options</h3>
+              <p className="text-2xl opacity-80">Full Tailwind CSS flexibility for unlimited possibilities</p>
             </div>
           </div>
         </div>
@@ -197,17 +203,17 @@ function MyPresentation() {
         title="By the Numbers"
         chart={
           <div className="grid grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="slide-number-huge text-slide-primary">10k+</div>
-              <p className="text-2xl mt-4">Downloads</p>
+            <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white p-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform">
+              <div className="text-7xl font-black mb-4">10k+</div>
+              <p className="text-3xl font-semibold">Downloads</p>
             </div>
-            <div>
-              <div className="slide-number-huge text-slide-accent">98%</div>
-              <p className="text-2xl mt-4">Satisfaction</p>
+            <div className="bg-gradient-to-br from-green-500 to-green-700 text-white p-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform">
+              <div className="text-7xl font-black mb-4">98%</div>
+              <p className="text-3xl font-semibold">Satisfaction</p>
             </div>
-            <div>
-              <div className="slide-number-huge text-slide-secondary">500+</div>
-              <p className="text-2xl mt-4">Companies</p>
+            <div className="bg-gradient-to-br from-purple-500 to-purple-700 text-white p-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform">
+              <div className="text-7xl font-black mb-4">500+</div>
+              <p className="text-3xl font-semibold">Companies</p>
             </div>
           </div>
         }
@@ -221,34 +227,34 @@ function MyPresentation() {
 
       {/* Getting Started */}
       <ContentSlide title="Get Started in 3 Steps">
-        <div className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-slide-accent text-white text-2xl font-bold">
+        <div className="space-y-8">
+          <div className="flex items-center gap-8 group">
+            <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white text-4xl font-black shadow-lg group-hover:scale-110 transition-transform">
               1
             </div>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Install</h3>
+            <div className="flex-1 bg-white/5 p-6 rounded-xl backdrop-blur">
+              <h3 className="text-4xl font-bold mb-3">Install</h3>
               <CodeBlock language="bash">npm install slideyui @slideyui/react</CodeBlock>
             </div>
           </div>
 
-          <div className="flex items-start gap-4">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-slide-accent text-white text-2xl font-bold">
+          <div className="flex items-center gap-8 group">
+            <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 text-white text-4xl font-black shadow-lg group-hover:scale-110 transition-transform">
               2
             </div>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Configure</h3>
-              <p className="text-2xl">Add SlideyUI to your Tailwind config</p>
+            <div className="flex-1 bg-white/5 p-6 rounded-xl backdrop-blur">
+              <h3 className="text-4xl font-bold mb-3">Configure</h3>
+              <p className="text-2xl opacity-90">Add SlideyUI to your Tailwind config</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-4">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-slide-accent text-white text-2xl font-bold">
+          <div className="flex items-center gap-8 group">
+            <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white text-4xl font-black shadow-lg group-hover:scale-110 transition-transform">
               3
             </div>
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Build</h3>
-              <p className="text-2xl">Start creating amazing presentations!</p>
+            <div className="flex-1 bg-white/5 p-6 rounded-xl backdrop-blur">
+              <h3 className="text-4xl font-bold mb-3">Build</h3>
+              <p className="text-2xl opacity-90">Start creating amazing presentations! 🚀</p>
             </div>
           </div>
         </div>
@@ -259,11 +265,11 @@ function MyPresentation() {
         title="Ready to Transform Your Presentations?"
         subtitle="Visit slideyui.dev to get started"
       >
-        <div className="mt-12 flex gap-6 justify-center">
-          <button className="px-12 py-4 bg-slide-accent text-white text-2xl font-bold rounded-lg hover:opacity-90 transition-opacity">
-            Get Started
+        <div className="mt-16 flex gap-6 justify-center">
+          <button className="px-16 py-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-3xl font-black rounded-2xl shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transform transition-all">
+            Get Started →
           </button>
-          <button className="px-12 py-4 border-2 border-slide-accent text-slide-accent text-2xl font-bold rounded-lg hover:bg-slide-accent hover:text-white transition-colors">
+          <button className="px-16 py-6 border-4 border-blue-600 text-blue-600 text-3xl font-black rounded-2xl hover:bg-blue-600 hover:text-white hover:scale-105 transform transition-all">
             View Docs
           </button>
         </div>
