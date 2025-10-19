@@ -13,35 +13,192 @@
 }
 
 @layer components {
+  /* Enhanced Prose Styling - DaisyUI inspired */
   .prose-slidey {
-    @apply prose prose-slate max-w-none prose-headings:font-bold prose-a:text-primary prose-code:text-secondary;
+    @apply prose prose-slate max-w-none;
   }
 
+  /* Fix duplicate bullets - remove bullets from prose when inside cards */
+  .prose-slidey ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .prose-slidey li {
+    position: relative;
+    padding-left: 0;
+  }
+
+  /* Remove default prose bullets and margins */
+  .prose-slidey li::before {
+    content: none;
+  }
+
+  /* Style headings */
+  .prose-slidey h1,
+  .prose-slidey h2,
+  .prose-slidey h3,
+  .prose-slidey h4 {
+    @apply font-bold tracking-tight;
+  }
+
+  .prose-slidey a {
+    @apply text-primary no-underline hover:underline transition-all;
+  }
+
+  .prose-slidey code {
+    @apply text-secondary bg-base-200 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  /* Enhanced Slide Preview */
   .slide-preview {
-    @apply aspect-video bg-base-200 rounded-lg overflow-hidden shadow-lg;
+    @apply aspect-video bg-gradient-to-br from-base-100 to-base-200 rounded-xl overflow-hidden shadow-2xl border border-base-300;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* TEMPORARY FIX: Add .slide-card padding directly until plugin issue is resolved */
+  .slide-preview:hover {
+    @apply shadow-xl scale-[1.02];
+  }
+
+  /* ENHANCED CARD DESIGN - DaisyUI Inspired with Visual Polish */
   .slide-card {
-    padding: 2rem; /* 32px default */
-    background: var(--slidey-background, white);
-    border: 1px solid var(--slidey-border, #e2e8f0);
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    background: linear-gradient(to bottom, white, rgb(249, 250, 251));
+    border: 2px solid rgb(229, 231, 235);
+    border-radius: 1rem;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Add subtle gradient overlay for depth */
+  .slide-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #6366f1, #8b5cf6, #f59e0b);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide-card:hover::before {
+    opacity: 1;
+  }
+
+  .slide-card:hover {
+    border-color: rgb(209, 213, 219);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(99, 102, 241, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Dark mode support */
+  [data-theme="dark"] .slide-card {
+    background: linear-gradient(to bottom, rgb(31, 41, 55), rgb(17, 24, 39));
+    border-color: rgb(55, 65, 81);
+  }
+
+  [data-theme="dark"] .slide-card:hover {
+    border-color: rgb(75, 85, 99);
   }
 
   .slide-card-compact {
-    padding: 1.5rem; /* 24px */
+    padding: 1.75rem;
   }
 
   .slide-card-spacious {
-    padding: 3rem; /* 48px */
+    padding: 3.5rem;
   }
 
   .slide-card-flush {
     padding: 0;
   }
+
+  /* Enhanced List Items with Better Typography */
+  .slide-card ul li {
+    @apply flex items-start gap-3 mb-3;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  /* Beautiful checkmarks instead of bullets */
+  .slide-card ul li::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide-card ul li:hover::before {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+  }
+
+  /* Card Headers with Better Typography */
+  .slide-card h1,
+  .slide-card h2,
+  .slide-card h3 {
+    @apply font-bold tracking-tight;
+    background: linear-gradient(135deg, #1f2937, #374151);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  [data-theme="dark"] .slide-card h1,
+  [data-theme="dark"] .slide-card h2,
+  [data-theme="dark"] .slide-card h3 {
+    background: linear-gradient(135deg, #f3f4f6, #d1d5db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Enhanced Paragraph Spacing */
+  .slide-card p {
+    @apply text-base leading-relaxed;
+    color: rgb(75, 85, 99);
+  }
+
+  [data-theme="dark"] .slide-card p {
+    color: rgb(209, 213, 219);
+  }
+
+  /* Card Container enhancements */
+  .card-container {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Better borders for bordered cards */
+  [class*="bordered"] {
+    border-width: 2px;
+    border-style: solid;
+  }
 }
-/* trigger rebuild */
+
+/* Smooth animations for all interactive elements */
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

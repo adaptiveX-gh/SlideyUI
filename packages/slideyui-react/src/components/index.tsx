@@ -99,6 +99,8 @@ export {
   HeroSplit,
   HeroFigure,
 } from './layout/Hero';
+export { List, ListItem } from './List';
+export type { ListProps, ListItemProps } from './List';
 
 // Basic Layout Components
 export {

@@ -111,6 +111,8 @@ export { default as HeroActions } from './components/HeroActions.svelte';
 export { default as HeroButton } from './components/HeroButton.svelte';
 export { default as HeroSplit } from './components/HeroSplit.svelte';
 export { default as HeroFigure } from './components/HeroFigure.svelte';
+export { default as List } from './components/List.svelte';
+export { default as ListItem } from './components/ListItem.svelte';
 
 // ============================================================================
 // Basic Layouts (Card Templates)

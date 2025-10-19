@@ -46,11 +46,18 @@
             { title: 'Footer', href: '/docs/components/footer' },
             { title: 'Header', href: '/docs/components/header' },
             { title: 'Hero', href: '/docs/components/hero' },
+            { title: 'List', href: '/docs/components/list' },
           ],
         },
         { title: 'Analytics', href: '/docs/analytics' },
         { title: 'Utilities', href: '/docs/utilities' },
-        { title: 'Examples', href: '/docs/examples' },
+        {
+          title: 'Examples',
+          href: '/docs/examples',
+          children: [
+            { title: 'Bullet-With-Icons', href: '/docs/examples/bullet-with-icons' },
+          ],
+        },
       ],
     },
     {
