@@ -19,8 +19,9 @@ export default {
   plugins: [
     require('daisyui'),
     require('@tailwindcss/typography'),
+    // SlideyUI loads LAST so its styles override DaisyUI
     slideyUI({
-      theme: 'corporate', // Use light theme by default to match DaisyUI light mode
+      theme: 'corporate',
       defaultRatio: '16:9',
     }),
   ],

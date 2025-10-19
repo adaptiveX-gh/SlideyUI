@@ -18,88 +18,92 @@
 
   <div class="not-prose mb-12">
     <CardContainer aspectRatio="16/9" bordered={true}>
-      <TwoColumnLayout class="p-12">
-        {#snippet left()}
-          <div class="h-full flex flex-col justify-center pr-8">
-            <h2
-              class="text-5xl font-bold leading-tight"
-              style="color: var(--slidey-color-primary)"
-            >
-              Problem
-            </h2>
-          </div>
-        {/snippet}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full p-8 lg:p-12">
+        <!-- Left Column: Title and Description -->
+        <div class="flex flex-col justify-center space-y-6">
+          <h2 class="text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
+            Problem
+          </h2>
+          <p class="text-lg lg:text-xl text-gray-600 leading-relaxed">
+            A problem needs to be discussed further and in detail because this problem is the main
+            foundation in the initial development of a product, service, and decision making.
+            Without a well-defined problem, it will have an impact on a job that is unfocused,
+            unmanaged, and less relevant.
+          </p>
+        </div>
 
-        {#snippet right()}
-          <div class="h-full flex flex-col justify-center space-y-6">
-            <!-- Bullet Point 1 -->
-            <div class="flex items-start gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white text-2xl"
-                style="background-color: var(--slidey-color-primary)"
-              >
-                📊
-              </div>
-              <div class="flex-1 pt-2">
-                <h3 class="text-2xl font-semibold mb-2" style="color: var(--slidey-color-text)">
-                  Data Silos
-                </h3>
-                <p class="text-lg opacity-80" style="color: var(--slidey-color-text)">
-                  Teams struggle with fragmented data across multiple systems
-                </p>
-              </div>
-            </div>
-
-            <!-- Bullet Point 2 -->
-            <div class="flex items-start gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white text-2xl"
-                style="background-color: var(--slidey-color-secondary)"
-              >
-                ⏱️
-              </div>
-              <div class="flex-1 pt-2">
-                <h3 class="text-2xl font-semibold mb-2" style="color: var(--slidey-color-text)">
-                  Manual Processes
-                </h3>
-                <p class="text-lg opacity-80" style="color: var(--slidey-color-text)">
-                  Hours wasted on repetitive tasks that could be automated
-                </p>
-              </div>
-            </div>
-
-            <!-- Bullet Point 3 -->
-            <div class="flex items-start gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white text-2xl"
-                style="background-color: var(--slidey-color-accent)"
-              >
-                💡
-              </div>
-              <div class="flex-1 pt-2">
-                <h3 class="text-2xl font-semibold mb-2" style="color: var(--slidey-color-text)">
-                  Lack of Insights
-                </h3>
-                <p class="text-lg opacity-80" style="color: var(--slidey-color-text)">
-                  Difficulty extracting actionable insights from raw data
-                </p>
-              </div>
+        <!-- Right Column: Clean Cards -->
+        <div class="flex flex-col justify-center space-y-3 lg:space-y-4">
+          <!-- Card 1 -->
+          <div
+            class="flex items-center gap-4 p-4 lg:p-5 rounded-lg lg:rounded-xl bg-white border-2 border-gray-100 hover:border-primary hover:shadow-lg transition-all duration-300"
+          >
+            <div class="flex-shrink-0 text-2xl lg:text-3xl">📊</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base lg:text-lg font-bold text-gray-900 mb-0.5">Data Silos</h3>
+              <p class="text-xs lg:text-sm text-gray-500 leading-snug">
+                Teams struggle with fragmented data across multiple systems
+              </p>
             </div>
           </div>
-        {/snippet}
-      </TwoColumnLayout>
+
+          <!-- Card 2 -->
+          <div
+            class="flex items-center gap-4 p-4 lg:p-5 rounded-lg lg:rounded-xl bg-white border-2 border-gray-100 hover:border-secondary hover:shadow-lg transition-all duration-300"
+          >
+            <div class="flex-shrink-0 text-2xl lg:text-3xl">⏱️</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base lg:text-lg font-bold text-gray-900 mb-0.5">
+                Manual Processes
+              </h3>
+              <p class="text-xs lg:text-sm text-gray-500 leading-snug">
+                Hours wasted on repetitive tasks that could be automated
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="flex items-center gap-4 p-4 lg:p-5 rounded-lg lg:rounded-xl bg-white border-2 border-gray-100 hover:border-accent hover:shadow-lg transition-all duration-300"
+          >
+            <div class="flex-shrink-0 text-2xl lg:text-3xl">💡</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base lg:text-lg font-bold text-gray-900 mb-0.5">Lack of Insights</h3>
+              <p class="text-xs lg:text-sm text-gray-500 leading-snug">
+                Difficulty extracting actionable insights from raw data
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div
+            class="flex items-center gap-4 p-4 lg:p-5 rounded-lg lg:rounded-xl bg-white border-2 border-gray-100 hover:border-primary hover:shadow-lg transition-all duration-300"
+          >
+            <div class="flex-shrink-0 text-2xl lg:text-3xl">🔄</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base lg:text-lg font-bold text-gray-900 mb-0.5">
+                Poor Collaboration
+              </h3>
+              <p class="text-xs lg:text-sm text-gray-500 leading-snug">
+                Disconnected teams working in isolation without visibility
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </CardContainer>
   </div>
 
   <h2>Features</h2>
   <ul>
-    <li><strong>Responsive Design:</strong> Stacks to single column on mobile devices (below 480px)</li>
-    <li><strong>Theme-Aware:</strong> Uses CSS custom properties to adapt to any SlideyUI theme</li>
-    <li>
-      <strong>Icon Highlights:</strong> Colored circular badges draw attention to each point
-    </li>
-    <li><strong>Cards Within Cards:</strong> Uses CardContainer with nested TwoColumnLayout</li>
-    <li><strong>Flexible Content:</strong> Easy to customize text, icons, and number of bullets</li>
+    <li><strong>Clean White Cards:</strong> Light background with subtle gray borders for a professional look</li>
+    <li><strong>Descriptive Paragraph:</strong> Contextual text on the left explains the section</li>
+    <li><strong>Fully Responsive:</strong> All text, spacing, and card sizes adapt to screen size using Tailwind's <code>lg:</code> breakpoints</li>
+    <li><strong>Hover Effects:</strong> Cards respond with colored borders and shadows on hover</li>
+    <li><strong>Icon-First Layout:</strong> Large emoji icons (responsive from 2xl to 3xl) draw immediate attention</li>
+    <li><strong>Compact Cards:</strong> Horizontal layout with titles and descriptions side-by-side with icons</li>
+    <li><strong>Smooth Transitions:</strong> All interactions use smooth 300ms transitions</li>
+    <li><strong>Mobile Optimized:</strong> Grid stacks to single column on small screens</li>
   </ul>
 
   <h2>Usage</h2>
@@ -113,50 +117,49 @@
   </ul>
 
   <h2>Code Example</h2>
-  <pre><code>{`<CardContainer aspectRatio="16/9">
-  <TwoColumnLayout class="p-12">
-    {#snippet left()}
-      <div class="h-full flex flex-col justify-center pr-8">
-        <h2 class="text-5xl font-bold" style="color: var(--slidey-color-primary)">
-          Problem
-        </h2>
-      </div>
-    {/snippet}
+  <pre><code>{`<CardContainer aspectRatio="16/9" bordered={true}>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full p-8 lg:p-12">
+    <!-- Left: Title and Paragraph -->
+    <div class="flex flex-col justify-center space-y-6">
+      <h2 class="text-5xl lg:text-6xl font-bold text-gray-900">
+        Problem
+      </h2>
+      <p class="text-lg lg:text-xl text-gray-600 leading-relaxed">
+        A problem needs to be discussed further and in detail...
+      </p>
+    </div>
 
-    {#snippet right()}
-      <div class="h-full flex flex-col justify-center space-y-6">
-        <div class="flex items-start gap-4">
-          <div
-            class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
-            style="background-color: var(--slidey-color-primary)"
-          >
-            📊
-          </div>
-          <div class="flex-1 pt-2">
-            <h3 class="text-2xl font-semibold mb-2">Data Silos</h3>
-            <p class="text-lg opacity-80">
-              Teams struggle with fragmented data
-            </p>
-          </div>
+    <!-- Right: Clean Cards -->
+    <div class="flex flex-col justify-center space-y-3 lg:space-y-4">
+      <div class="flex items-center gap-4 p-4 lg:p-5 rounded-lg lg:rounded-xl
+                  bg-white border-2 border-gray-100
+                  hover:border-primary hover:shadow-lg
+                  transition-all duration-300">
+        <div class="flex-shrink-0 text-2xl lg:text-3xl">📊</div>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-base lg:text-lg font-bold text-gray-900 mb-0.5">
+            Data Silos
+          </h3>
+          <p class="text-xs lg:text-sm text-gray-500 leading-snug">
+            Teams struggle with fragmented data
+          </p>
         </div>
-        <!-- More bullet points... -->
       </div>
-    {/snippet}
-  </TwoColumnLayout>
+      <!-- More cards... -->
+    </div>
+  </div>
 </CardContainer>`}</code></pre>
 
   <h2>Customization Tips</h2>
   <ul>
     <li>
-      <strong>Change icons:</strong> Replace emoji with SVG icons or icon fonts for more
-      professional look
+      <strong>Change hover colors:</strong> Modify <code>hover:border-primary</code> to use <code>secondary</code> or <code>accent</code> for variety
     </li>
-    <li><strong>Adjust spacing:</strong> Modify <code>space-y-6</code> to control vertical spacing</li>
+    <li><strong>Adjust spacing:</strong> Change <code>space-y-4</code> to control vertical spacing between cards</li>
+    <li><strong>Card padding:</strong> Modify <code>p-5</code> to adjust internal card padding</li>
+    <li><strong>Icon size:</strong> Adjust <code>text-3xl</code> on icons for different sizes</li>
     <li><strong>Add animations:</strong> Combine with SlideyUI's build steps for progressive reveal</li>
-    <li>
-      <strong>Color variations:</strong> Use different theme colors (primary, secondary, accent) for
-      visual hierarchy
-    </li>
+    <li><strong>Shadow intensity:</strong> Change <code>hover:shadow-md</code> to <code>shadow-lg</code> or <code>shadow-xl</code> for more depth</li>
   </ul>
 
   <h2>Responsive Behavior</h2>

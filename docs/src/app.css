@@ -61,15 +61,17 @@
   }
 
   /* ENHANCED CARD DESIGN - DaisyUI Inspired with Visual Polish */
-  .slide-card {
-    padding: 2.5rem;
-    background: linear-gradient(to bottom, white, rgb(249, 250, 251));
-    border: 2px solid rgb(229, 231, 235);
-    border-radius: 1rem;
+  /* Use higher specificity to override any conflicts */
+  .slide-card,
+  div.slide-card {
+    padding: 2.5rem !important;
+    background: linear-gradient(to bottom, white, rgb(249, 250, 251)) !important;
+    border: 2px solid rgb(229, 231, 235) !important;
+    border-radius: 1rem !important;
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
+      0 0 0 1px rgba(0, 0, 0, 0.05) !important;
     box-sizing: border-box;
     overflow: hidden;
     position: relative;
@@ -127,25 +129,27 @@
   /* Enhanced List Items with Better Typography */
   .slide-card ul li {
     @apply flex items-start gap-3 mb-3;
-    font-size: 1.125rem;
-    line-height: 1.6;
+    font-size: 1.125rem !important;
+    line-height: 1.6 !important;
+    list-style-type: none !important;
+    padding-left: 0 !important;
   }
 
   /* Beautiful checkmarks instead of bullets */
   .slide-card ul li::before {
-    content: '✓';
-    display: flex;
+    content: '✓' !important;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-    border-radius: 0.375rem;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    border-radius: 0.375rem !important;
     font-weight: 700;
-    font-size: 0.875rem;
-    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+    font-size: 0.875rem !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3) !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
