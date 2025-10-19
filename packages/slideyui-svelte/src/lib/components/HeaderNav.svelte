@@ -13,16 +13,22 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Children content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
     align = 'left',
-    class: className = ''
+    class: className = '',
+    children
   }: Props = $props();
 
   const alignClass = $derived(`card-header-nav-${align}`);
 </script>
 
 <nav class="card-header-nav {alignClass} {className}">
-  <slot />
+  {@render children?.()}
 </nav>

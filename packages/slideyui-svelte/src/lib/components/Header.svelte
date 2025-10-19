@@ -26,6 +26,11 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Children content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
@@ -33,6 +38,7 @@
     sticky = false,
     backgroundImage = undefined,
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 
@@ -45,5 +51,5 @@
 </script>
 
 <header class={classes} style={styleAttr} {...restProps}>
-  <slot />
+  {@render children?.()}
 </header>

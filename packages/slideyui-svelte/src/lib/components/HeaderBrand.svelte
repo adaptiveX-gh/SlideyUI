@@ -28,6 +28,11 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Children content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
@@ -36,6 +41,7 @@
     logoAlt = 'Logo',
     subtitle = undefined,
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 </script>
@@ -46,7 +52,7 @@
       <img src={logo} alt={logoAlt} class="card-header-logo" />
     {/if}
     <div>
-      <div><slot /></div>
+      <div>{@render children?.()}</div>
       {#if subtitle}
         <div class="card-header-subtitle">{subtitle}</div>
       {/if}
@@ -58,7 +64,7 @@
       <img src={logo} alt={logoAlt} class="card-header-logo" />
     {/if}
     <div>
-      <div><slot /></div>
+      <div>{@render children?.()}</div>
       {#if subtitle}
         <div class="card-header-subtitle">{subtitle}</div>
       {/if}

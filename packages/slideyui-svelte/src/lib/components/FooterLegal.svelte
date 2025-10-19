@@ -15,13 +15,19 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Legal text content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
-    class: className = ''
+    class: className = '',
+    children
   }: Props = $props();
 </script>
 
 <div class="card-footer-legal {className}">
-  <slot />
+  {@render children?.()}
 </div>

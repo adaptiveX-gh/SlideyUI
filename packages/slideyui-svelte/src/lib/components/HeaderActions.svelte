@@ -8,13 +8,19 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Children content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
-    class: className = ''
+    class: className = '',
+    children
   }: Props = $props();
 </script>
 
 <div class="card-header-actions {className}">
-  <slot />
+  {@render children?.()}
 </div>

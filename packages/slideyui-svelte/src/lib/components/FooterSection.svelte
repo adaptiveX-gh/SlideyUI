@@ -21,11 +21,17 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Section content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
     title = undefined,
-    class: className = ''
+    class: className = '',
+    children
   }: Props = $props();
 </script>
 
@@ -33,5 +39,5 @@
   {#if title}
     <h3 class="card-footer-title">{title}</h3>
   {/if}
-  <slot />
+  {@render children?.()}
 </div>

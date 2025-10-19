@@ -52,7 +52,7 @@
   }
 </script>
 
-<form class="card-footer-newsletter {className}" on:submit={handleSubmit}>
+<form class="card-footer-newsletter {className}" onsubmit={handleSubmit}>
   <input
     type="email"
     bind:value={email}

@@ -44,12 +44,18 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Footer content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
     layout = 'default',
     backgroundImage = undefined,
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 
@@ -61,5 +67,5 @@
 </script>
 
 <footer class={classes} style={styleAttr} {...restProps}>
-  <slot />
+  {@render children?.()}
 </footer>

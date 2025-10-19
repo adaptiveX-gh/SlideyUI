@@ -13,15 +13,21 @@
      * Additional CSS classes
      */
     class?: string;
+
+    /**
+     * Link content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
     href,
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 </script>
 
 <a {href} class="card-footer-link {className}" {...restProps}>
-  <slot />
+  {@render children?.()}
 </a>

@@ -18,12 +18,18 @@
      * Button type
      */
     type?: 'button' | 'submit' | 'reset';
+
+    /**
+     * Children content
+     */
+    children?: import('svelte').Snippet;
   }
 
   let {
     variant = 'solid',
     type = 'button',
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 
@@ -31,5 +37,5 @@
 </script>
 
 <button {type} class="card-header-button {variantClass} {className}" {...restProps}>
-  <slot />
+  {@render children?.()}
 </button>
