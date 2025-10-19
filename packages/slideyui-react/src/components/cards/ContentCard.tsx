@@ -33,6 +33,7 @@ export function ContentCard({
   subtitle,
   children,
   badge,
+  header,
   footer,
   icon,
   variant = 'default',
@@ -51,30 +52,34 @@ export function ContentCard({
   return (
     <CardContainer {...containerProps} className={clsx('flex flex-col', paddingClass, className)}>
       {/* Header */}
-      {(title || subtitle || badge || icon) && (
-        <div className={clsx('slide-card-header', variant === 'featured' && 'bg-slidey-accent/10')}>
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-3 flex-1">
-              {icon && <div className="flex-shrink-0 mt-1">{icon}</div>}
-              <div className="flex-1">
-                {title && (
-                  <h3
-                    className={clsx(
-                      'slide-card-title',
-                      variant === 'minimal' && 'text-2xl font-normal'
-                    )}
-                  >
-                    {title}
-                  </h3>
-                )}
-                {subtitle && (
-                  <p className="slide-card-description mt-1">{subtitle}</p>
-                )}
+      {header ? (
+        header
+      ) : (
+        (title || subtitle || badge || icon) && (
+          <div className={clsx('slide-card-header', variant === 'featured' && 'bg-slidey-accent/10')}>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3 flex-1">
+                {icon && <div className="flex-shrink-0 mt-1">{icon}</div>}
+                <div className="flex-1">
+                  {title && (
+                    <h3
+                      className={clsx(
+                        'slide-card-title',
+                        variant === 'minimal' && 'text-2xl font-normal'
+                      )}
+                    >
+                      {title}
+                    </h3>
+                  )}
+                  {subtitle && (
+                    <p className="slide-card-description mt-1">{subtitle}</p>
+                  )}
+                </div>
               </div>
+              {badge && <div className="flex-shrink-0">{badge}</div>}
             </div>
-            {badge && <div className="flex-shrink-0">{badge}</div>}
           </div>
-        </div>
+        )
       )}
 
       {/* Body */}

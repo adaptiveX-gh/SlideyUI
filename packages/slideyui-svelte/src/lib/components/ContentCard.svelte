@@ -54,28 +54,30 @@
 	{fluidScale}
 	class="flex flex-col {paddingClass} {className}"
 >
-	{#if title || subtitle}
-		<div class="slide-card-header {variant === 'featured' ? 'bg-slidey-accent/10' : ''}">
-			<div class="flex items-start justify-between gap-4">
-				<div class="flex items-start gap-3 flex-1">
-					<slot name="icon" />
-					<div class="flex-1">
-						{#if title}
-							<h3
-								class="slide-card-title {variant === 'minimal' ? 'text-2xl font-normal' : ''}"
-							>
-								{title}
-							</h3>
-						{/if}
-						{#if subtitle}
-							<p class="slide-card-description mt-1">{subtitle}</p>
-						{/if}
+	<slot name="header">
+		{#if title || subtitle}
+			<div class="slide-card-header {variant === 'featured' ? 'bg-slidey-accent/10' : ''}">
+				<div class="flex items-start justify-between gap-4">
+					<div class="flex items-start gap-3 flex-1">
+						<slot name="icon" />
+						<div class="flex-1">
+							{#if title}
+								<h3
+									class="slide-card-title {variant === 'minimal' ? 'text-2xl font-normal' : ''}"
+								>
+									{title}
+								</h3>
+							{/if}
+							{#if subtitle}
+								<p class="slide-card-description mt-1">{subtitle}</p>
+							{/if}
+						</div>
 					</div>
+					<slot name="badge" />
 				</div>
-				<slot name="badge" />
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</slot>
 
 	<div class="slide-card-body slide-card-density-{density} flex-1 overflow-auto">
 		<slot />

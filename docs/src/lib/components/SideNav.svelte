@@ -38,6 +38,8 @@
             { title: 'Cards', href: '/docs/components/cards' },
             { title: 'Divider', href: '/docs/components/divider' },
             { title: 'Footer', href: '/docs/components/footer' },
+            { title: 'Header', href: '/docs/components/header' },
+            { title: 'Hero', href: '/docs/components/hero' },
           ],
         },
         { title: 'Analytics', href: '/docs/analytics' },

@@ -77,6 +77,28 @@ export {
   FooterNewsletter,
   FooterLegal,
 } from './layout/Footer';
+export {
+  Header,
+  HeaderBrand,
+  HeaderNav,
+  HeaderLink,
+  HeaderActions,
+  HeaderButton,
+  HeaderSearch,
+  HeaderDropdown,
+  HeaderDropdownItem,
+  HeaderDropdownDivider,
+} from './layout/Header';
+export {
+  Hero,
+  HeroContent,
+  HeroTitle,
+  HeroSubtitle,
+  HeroActions,
+  HeroButton,
+  HeroSplit,
+  HeroFigure,
+} from './layout/Hero';
 
 // ============================================================================
 // LEGACY API (Deprecated - maintained for backwards compatibility only)

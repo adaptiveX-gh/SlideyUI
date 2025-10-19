@@ -93,6 +93,24 @@ export { default as FooterLink } from './components/FooterLink.svelte';
 export { default as FooterSocial } from './components/FooterSocial.svelte';
 export { default as FooterNewsletter } from './components/FooterNewsletter.svelte';
 export { default as FooterLegal } from './components/FooterLegal.svelte';
+export { default as Header } from './components/Header.svelte';
+export { default as HeaderBrand } from './components/HeaderBrand.svelte';
+export { default as HeaderNav } from './components/HeaderNav.svelte';
+export { default as HeaderLink } from './components/HeaderLink.svelte';
+export { default as HeaderActions } from './components/HeaderActions.svelte';
+export { default as HeaderButton } from './components/HeaderButton.svelte';
+export { default as HeaderSearch } from './components/HeaderSearch.svelte';
+export { default as HeaderDropdown } from './components/HeaderDropdown.svelte';
+export { default as HeaderDropdownItem } from './components/HeaderDropdownItem.svelte';
+export { default as HeaderDropdownDivider } from './components/HeaderDropdownDivider.svelte';
+export { default as Hero } from './components/Hero.svelte';
+export { default as HeroContent } from './components/HeroContent.svelte';
+export { default as HeroTitle } from './components/HeroTitle.svelte';
+export { default as HeroSubtitle } from './components/HeroSubtitle.svelte';
+export { default as HeroActions } from './components/HeroActions.svelte';
+export { default as HeroButton } from './components/HeroButton.svelte';
+export { default as HeroSplit } from './components/HeroSplit.svelte';
+export { default as HeroFigure } from './components/HeroFigure.svelte';
 
 // ============================================================================
 // Presentation System

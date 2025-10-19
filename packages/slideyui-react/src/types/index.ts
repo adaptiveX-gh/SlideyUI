@@ -473,6 +473,8 @@ export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
   children?: ReactNode;
   /** Badge/tag content */
   badge?: ReactNode;
+  /** Custom header content (overrides title/subtitle/icon/badge when provided) */
+  header?: ReactNode;
   /** Footer content */
   footer?: ReactNode;
   /** Header icon */
