@@ -52,16 +52,16 @@ export function CardContainer({
         'slide-card',
         aspectRatioClasses[aspectRatio],
         modeClasses[mode],
-        bordered && 'border border-slidey-border',
-        shadow && 'shadow-lg',
         interactive && 'cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02]',
         className
       )}
       style={{
         backgroundColor,
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: backgroundImage ? 'cover' : undefined,
+        backgroundPosition: backgroundImage ? 'center' : undefined,
+        border: bordered ? '1px solid var(--slidey-border)' : undefined,
+        boxShadow: shadow ? '0 2px 8px rgba(0, 0, 0, 0.1)' : undefined,
       }}
       data-card-id={cardId}
       data-card-state={cardState}

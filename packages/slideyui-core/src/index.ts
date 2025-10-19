@@ -147,9 +147,8 @@ function getComponentStyles() {
     '.slide-card': {
       padding: 'var(--card-padding) !important',
       background: 'var(--slidey-background)',
-      border: '1px solid var(--slidey-border)',
+      // Border and shadow are now controlled by component props
       borderRadius: '0.5rem',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       boxSizing: 'border-box',
       overflow: 'hidden',
     },

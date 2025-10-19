@@ -83,6 +83,18 @@ export { default as SlideProgress } from './components/SlideProgress.svelte';
 export { default as SlideNumber } from './components/SlideNumber.svelte';
 
 // ============================================================================
+// Layout Components
+// ============================================================================
+
+export { default as Divider } from './components/Divider.svelte';
+export { default as Footer } from './components/Footer.svelte';
+export { default as FooterSection } from './components/FooterSection.svelte';
+export { default as FooterLink } from './components/FooterLink.svelte';
+export { default as FooterSocial } from './components/FooterSocial.svelte';
+export { default as FooterNewsletter } from './components/FooterNewsletter.svelte';
+export { default as FooterLegal } from './components/FooterLegal.svelte';
+
+// ============================================================================
 // Presentation System
 // ============================================================================
 

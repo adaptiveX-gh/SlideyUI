@@ -67,6 +67,17 @@ export { BuildStep } from './BuildStep';
 export { SlideProgress } from './SlideProgress';
 export { SlideNumber } from './SlideNumber';
 
+// Layout Components
+export { Divider } from './layout/Divider';
+export {
+  Footer,
+  FooterSection,
+  FooterLink,
+  FooterSocial,
+  FooterNewsletter,
+  FooterLegal,
+} from './layout/Footer';
+
 // ============================================================================
 // LEGACY API (Deprecated - maintained for backwards compatibility only)
 // These components will be removed in v1.0.0
@@ -135,6 +146,7 @@ export type {
   BuildStepProps,
   SlideProgressProps,
   SlideNumberProps,
+  DividerProps,
   SlideTheme,
   CalloutType,
   Alignment,

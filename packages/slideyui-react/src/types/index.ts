@@ -363,6 +363,20 @@ export interface SlideNumberProps {
 }
 
 /**
+ * Divider props
+ */
+export interface DividerProps {
+  /** Text content to display in the center of the divider */
+  children?: ReactNode;
+  /** Orientation of the divider */
+  orientation?: 'horizontal' | 'vertical';
+  /** Color variant of the divider */
+  variant?: 'primary' | 'secondary' | 'accent';
+  /** Additional CSS classes */
+  className?: string;
+}
+
+/**
  * Card aspect ratio options
  */
 export type CardAspectRatio = '16/9' | '4/3' | '1/1' | '3/2' | 'auto';

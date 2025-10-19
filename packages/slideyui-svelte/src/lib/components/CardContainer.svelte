@@ -39,23 +39,33 @@
 		full: 'slide-card-full'
 	};
 
+	// Force reactivity by listing dependencies
 	$: computedClasses = [
 		'slide-card',
 		aspectRatioClasses[aspectRatio],
 		modeClasses[mode],
-		bordered && 'border border-slidey-border',
-		shadow && 'shadow-lg',
 		interactive && 'cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02]',
 		className
 	]
 		.filter(Boolean)
 		.join(' ');
 
+	// Force reactivity by explicitly depending on bordered and shadow
+	$: borderStyle = bordered ? 'border: 1px solid var(--slidey-border)' : '';
+	$: shadowStyle = shadow ? 'box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)' : '';
+
+	// Debug logging
+	$: if (typeof window !== 'undefined') {
+		console.log('[CardContainer] bordered:', bordered, 'shadow:', shadow, 'borderStyle:', borderStyle);
+	}
+
 	$: styles = [
 		backgroundColor && `background-color: ${backgroundColor}`,
 		backgroundImage && `background-image: url(${backgroundImage})`,
 		backgroundImage && 'background-size: cover',
-		backgroundImage && 'background-position: center'
+		backgroundImage && 'background-position: center',
+		borderStyle,
+		shadowStyle
 	]
 		.filter(Boolean)
 		.join('; ');

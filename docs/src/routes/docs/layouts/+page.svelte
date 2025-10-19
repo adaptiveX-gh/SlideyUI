@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ContentCard, CardGrid, MediaCard, DataCard } from '@slideyui/svelte';
+  import { ContentCard, CardGrid, MediaCard, DataCard, Divider } from '@slideyui/svelte';
   import CodeBlock from '$lib/components/CodeBlock.svelte';
 
   const flexRowCode = `<div class="flex gap-4">
@@ -122,6 +122,40 @@
     <p>16:9 aspect ratio</p>
   </ContentCard>
 </div>`;
+
+  const dividerHorizontalCode = `<!-- Simple horizontal divider -->
+<Divider />
+
+<!-- Divider with text -->
+<Divider>OR</Divider>
+
+<!-- Colored dividers -->
+<Divider variant="primary">Section Break</Divider>
+<Divider variant="accent">Next Topic</Divider>`;
+
+  const dividerVerticalCode = `<div class="flex gap-4 h-64">
+  <ContentCard title="Left Section" class="flex-1">
+    <p>Content on the left</p>
+  </ContentCard>
+
+  <Divider orientation="vertical" />
+
+  <ContentCard title="Right Section" class="flex-1">
+    <p>Content on the right</p>
+  </ContentCard>
+</div>`;
+
+  const dividerCardCode = `<ContentCard title="Card with Dividers" aspectRatio="16/9">
+  <p>First section of content</p>
+
+  <Divider>Important Note</Divider>
+
+  <p>Second section of content</p>
+
+  <Divider />
+
+  <p>Final section of content</p>
+</ContentCard>`;
 </script>
 
 <svelte:head>
@@ -638,6 +672,142 @@
     </div>
   </section>
 
+  <!-- Divider Component -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold mb-6">Divider Component</h2>
+    <p class="text-lg text-base-content/70 mb-8">
+      The Divider component provides a clean way to separate content sections, both horizontally and vertically, with optional text labels.
+    </p>
+
+    <div class="space-y-12">
+      <!-- Horizontal Dividers -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Horizontal Dividers</h3>
+        <p class="text-base-content/70 mb-4">Separate content sections vertically with horizontal dividers.</p>
+
+        <div class="bg-base-100 p-8 rounded-lg border border-base-300 mb-4">
+          <div class="max-w-2xl mx-auto">
+            <ContentCard title="Section 1" aspectRatio="auto">
+              <p class="text-lg">First section of your presentation</p>
+            </ContentCard>
+
+            <Divider />
+
+            <ContentCard title="Section 2" aspectRatio="auto">
+              <p class="text-lg">Second section after a simple divider</p>
+            </ContentCard>
+
+            <Divider>OR</Divider>
+
+            <ContentCard title="Alternative Section" aspectRatio="auto">
+              <p class="text-lg">Use text in dividers to add context</p>
+            </ContentCard>
+
+            <Divider variant="accent">Key Takeaway</Divider>
+
+            <ContentCard title="Important Section" variant="featured" aspectRatio="auto">
+              <p class="text-lg">Colored dividers draw attention to important sections</p>
+            </ContentCard>
+          </div>
+        </div>
+
+        <CodeBlock code={dividerHorizontalCode} lang="svelte" />
+      </div>
+
+      <!-- Vertical Dividers -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Vertical Dividers</h3>
+        <p class="text-base-content/70 mb-4">Separate content sections horizontally with vertical dividers. Perfect for side-by-side comparisons.</p>
+
+        <div class="bg-base-100 p-8 rounded-lg border border-base-300 mb-4">
+          <div class="flex gap-4 h-80">
+            <ContentCard title="Left Section" class="flex-1" aspectRatio="auto">
+              <p class="text-lg mb-4">Content on the left side</p>
+              <ul class="space-y-2">
+                <li>Feature A</li>
+                <li>Feature B</li>
+                <li>Feature C</li>
+              </ul>
+            </ContentCard>
+
+            <Divider orientation="vertical" />
+
+            <ContentCard title="Right Section" class="flex-1" aspectRatio="auto">
+              <p class="text-lg mb-4">Content on the right side</p>
+              <ul class="space-y-2">
+                <li>Feature X</li>
+                <li>Feature Y</li>
+                <li>Feature Z</li>
+              </ul>
+            </ContentCard>
+          </div>
+        </div>
+
+        <CodeBlock code={dividerVerticalCode} lang="svelte" />
+      </div>
+
+      <!-- Dividers within Cards -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Dividers within Cards</h3>
+        <p class="text-base-content/70 mb-4">Use dividers inside cards to organize content into logical sections.</p>
+
+        <div class="max-w-3xl mx-auto mb-4">
+          <ContentCard title="Product Features" aspectRatio="16/9" variant="featured">
+            <div class="text-lg space-y-4">
+              <div>
+                <h4 class="font-semibold mb-2">Performance</h4>
+                <p>Lightning-fast processing with optimized algorithms</p>
+              </div>
+
+              <Divider>Security</Divider>
+
+              <div>
+                <p>Enterprise-grade encryption and compliance</p>
+              </div>
+
+              <Divider />
+
+              <div>
+                <h4 class="font-semibold mb-2">Scalability</h4>
+                <p>Seamlessly handle growth from startup to enterprise</p>
+              </div>
+            </div>
+          </ContentCard>
+        </div>
+
+        <CodeBlock code={dividerCardCode} lang="svelte" />
+      </div>
+
+      <!-- Color Variants -->
+      <div>
+        <h3 class="text-2xl font-semibold mb-4">Color Variants</h3>
+        <p class="text-base-content/70 mb-4">Use color variants to emphasize different types of content sections.</p>
+
+        <div class="bg-base-100 p-8 rounded-lg border border-base-300 mb-4 space-y-4">
+          <div class="max-w-2xl mx-auto space-y-4">
+            <p class="text-lg">Default divider uses border color</p>
+            <Divider />
+
+            <p class="text-lg">Primary variant for main sections</p>
+            <Divider variant="primary">Main Section</Divider>
+
+            <p class="text-lg">Secondary variant for sub-sections</p>
+            <Divider variant="secondary">Sub-Section</Divider>
+
+            <p class="text-lg">Accent variant for highlights</p>
+            <Divider variant="accent">Highlight</Divider>
+          </div>
+        </div>
+
+        <CodeBlock code={`<!-- Color variants -->
+<Divider />
+<Divider variant="primary">Main Section</Divider>
+<Divider variant="secondary">Sub-Section</Divider>
+<Divider variant="accent">Highlight</Divider>`} lang="svelte" />
+      </div>
+    </div>
+  </section>
+
   <!-- Best Practices -->
   <section class="mb-16">
     <h2 class="text-3xl font-bold mb-6">Best Practices</h2>
@@ -655,6 +825,9 @@
             <li>Use spacious padding for key messages and metrics</li>
             <li>Use compact padding for information-dense slides</li>
             <li>Use padding="none" for full-bleed media</li>
+            <li>Use dividers to separate logical sections within cards</li>
+            <li>Add text to dividers to provide context between sections</li>
+            <li>Use vertical dividers for side-by-side comparisons</li>
           </ul>
         </div>
       </div>
@@ -671,6 +844,9 @@
             <li>Mix padding variants randomly without intent</li>
             <li>Use compact padding for slides with large text</li>
             <li>Forget that padding scales on large displays</li>
+            <li>Overuse dividers - they should clarify, not clutter</li>
+            <li>Use vertical dividers without sufficient height</li>
+            <li>Mix multiple divider color variants on the same slide</li>
           </ul>
         </div>
       </div>
