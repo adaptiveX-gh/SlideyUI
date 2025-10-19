@@ -14,156 +14,49 @@
   } from '@slideyui/svelte';
   import CodeBlock from '$lib/components/CodeBlock.svelte';
 
-  // Code examples
-  const blankLayoutCode = `<BlankLayout>
-  <!-- Your custom content here -->
-  <div class="p-8">
-    <h1>Custom Layout</h1>
-    <p>Build your own layout from scratch</p>
-  </div>
-</BlankLayout>`;
+  // Code examples with proper structure
+  const twoColumnCode = `<CardContainer aspectRatio="16/9" bordered={true}>
+  <TwoColumnLayout class="p-8">
+    {#snippet left()}
+      <div class="bg-primary/10 rounded p-6 h-full flex flex-col justify-center">
+        <h3 class="text-2xl font-bold mb-4">Left Column</h3>
+        <p>Content for the left side</p>
+      </div>
+    {/snippet}
 
-  const twoColumnCode = `<TwoColumnLayout>
-  {#snippet left()}
-    <h3>Left Column</h3>
-    <p>Content for the left side</p>
-  {/snippet}
+    {#snippet right()}
+      <div class="bg-secondary/10 rounded p-6 h-full flex flex-col justify-center">
+        <h3 class="text-2xl font-bold mb-4">Right Column</h3>
+        <p>Content for the right side</p>
+      </div>
+    {/snippet}
+  </TwoColumnLayout>
+</CardContainer>`;
 
-  {#snippet right()}
-    <h3>Right Column</h3>
-    <p>Content for the right side</p>
-  {/snippet}
-</TwoColumnLayout>`;
+  const threeColumnCode = `<CardContainer aspectRatio="16/9" bordered={true}>
+  <ThreeColumnLayout class="p-8">
+    {#snippet first()}
+      <div class="bg-primary/10 rounded p-4 h-full flex flex-col justify-center">
+        <h3 class="text-xl font-bold mb-2">Column 1</h3>
+        <p>First column</p>
+      </div>
+    {/snippet}
 
-  const threeColumnCode = `<ThreeColumnLayout>
-  {#snippet first()}
-    <h3>Column 1</h3>
-    <p>First column content</p>
-  {/snippet}
+    {#snippet second()}
+      <div class="bg-accent/10 rounded p-4 h-full flex flex-col justify-center">
+        <h3 class="text-xl font-bold mb-2">Column 2</h3>
+        <p>Second column</p>
+      </div>
+    {/snippet}
 
-  {#snippet second()}
-    <h3>Column 2</h3>
-    <p>Second column content</p>
-  {/snippet}
-
-  {#snippet third()}
-    <h3>Column 3</h3>
-    <p>Third column content</p>
-  {/snippet}
-</ThreeColumnLayout>`;
-
-  const fourColumnCode = `<FourColumnLayout>
-  {#snippet first()}
-    <h3>Column 1</h3>
-  {/snippet}
-
-  {#snippet second()}
-    <h3>Column 2</h3>
-  {/snippet}
-
-  {#snippet third()}
-    <h3>Column 3</h3>
-  {/snippet}
-
-  {#snippet fourth()}
-    <h3>Column 4</h3>
-  {/snippet}
-</FourColumnLayout>`;
-
-  const twoColumnWithHeadingsCode = `<TwoColumnWithHeadingsLayout>
-  {#snippet leftHeading()}
-    Features
-  {/snippet}
-
-  {#snippet leftContent()}
-    <ul>
-      <li>Easy to use</li>
-      <li>Fully responsive</li>
-    </ul>
-  {/snippet}
-
-  {#snippet rightHeading()}
-    Benefits
-  {/snippet}
-
-  {#snippet rightContent()}
-    <ul>
-      <li>Save time</li>
-      <li>Look professional</li>
-    </ul>
-  {/snippet}
-</TwoColumnWithHeadingsLayout>`;
-
-  const threeColumnWithHeadingsCode = `<ThreeColumnWithHeadingsLayout>
-  {#snippet firstHeading()}
-    Step 1
-  {/snippet}
-
-  {#snippet firstContent()}
-    <p>First step description</p>
-  {/snippet}
-
-  {#snippet secondHeading()}
-    Step 2
-  {/snippet}
-
-  {#snippet secondContent()}
-    <p>Second step description</p>
-  {/snippet}
-
-  {#snippet thirdHeading()}
-    Step 3
-  {/snippet}
-
-  {#snippet thirdContent()}
-    <p>Third step description</p>
-  {/snippet}
-</ThreeColumnWithHeadingsLayout>`;
-
-  const imageAndTextCode = `<ImageAndTextLayout
-  image="https://images.unsplash.com/photo-1..."
-  imageAlt="Description"
->
-  <h2>Image on Left</h2>
-  <p>Text content appears on the right side.</p>
-  <p>Perfect for product showcases.</p>
-</ImageAndTextLayout>`;
-
-  const textAndImageCode = `<TextAndImageLayout
-  image="https://images.unsplash.com/photo-1..."
-  imageAlt="Description"
->
-  <h2>Text on Left</h2>
-  <p>Image appears on the right side.</p>
-  <p>Great for feature highlights.</p>
-</TextAndImageLayout>`;
-
-  const titleWithBulletsCode = `<TitleWithBulletsLayout
-  items={[
-    'First bullet point',
-    'Second bullet point',
-    'Third bullet point',
-    'Fourth bullet point'
-  ]}
->
-  {#snippet title()}
-    Key Takeaways
-  {/snippet}
-</TitleWithBulletsLayout>`;
-
-  const titleWithBulletsAndImageCode = `<TitleWithBulletsAndImageLayout
-  image="https://images.unsplash.com/photo-1..."
-  imageAlt="Description"
-  items={[
-    'Feature one',
-    'Feature two',
-    'Feature three'
-  ]}
->
-  {#snippet title()}
-    Product Features
-  {/snippet}
-</TitleWithBulletsAndImageLayout>`;
+    {#snippet third()}
+      <div class="bg-secondary/10 rounded p-4 h-full flex flex-col justify-center">
+        <h3 class="text-xl font-bold mb-2">Column 3</h3>
+        <p>Third column</p>
+      </div>
+    {/snippet}
+  </ThreeColumnLayout>
+</CardContainer>`;
 </script>
 
 <svelte:head>
@@ -173,55 +66,40 @@
 <h1>Basic Layouts</h1>
 
 <p class="lead">
-  Pre-built layout components for common presentation patterns. These layouts work perfectly
-  inside cards and slides, optimized for 16:9 presentations.
+  Pre-built layout components for common presentation patterns. These layouts use CSS Grid
+  to create responsive, flexible layouts optimized for 16:9 presentations.
 </p>
 
-<div class="divider my-8"></div>
-
-<!-- Blank Layout -->
-<h2 id="blank-layout">Blank Layout</h2>
-<p>
-  An empty canvas for building custom layouts. Just a simple wrapper with full width and height.
-</p>
-
-<div class="my-6">
-  <CardContainer aspectRatio="16/9" bordered={true}>
-    <BlankLayout>
-      <div class="flex items-center justify-center h-full bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div class="text-center">
-          <h2 class="text-4xl font-bold mb-4">Custom Content</h2>
-          <p class="text-xl">Build anything you want</p>
-        </div>
-      </div>
-    </BlankLayout>
-  </CardContainer>
+<div class="alert alert-info my-6">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+  <div>
+    <h3 class="font-bold">Important!</h3>
+    <div class="text-sm">All layouts must be wrapped in a CardContainer with an aspect ratio. Content should have background colors or borders to visualize the grid structure.</div>
+  </div>
 </div>
-
-<CodeBlock code={blankLayoutCode} language="svelte" />
 
 <div class="divider my-8"></div>
 
 <!-- Two Column Layout -->
 <h2 id="two-column">Two Column Layout</h2>
 <p>
-  Simple two-column layout with equal width columns.
+  Creates two equal-width columns using CSS Grid. Perfect for comparisons or side-by-side content.
 </p>
 
 <div class="my-6">
   <CardContainer aspectRatio="16/9" bordered={true}>
     <TwoColumnLayout class="p-8">
       {#snippet left()}
-        <div class="p-6 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-2xl font-bold mb-4">Left Column</h3>
-          <p>Content for the left side of the layout.</p>
+        <div class="bg-primary/10 border-2 border-primary/30 rounded-lg p-6 h-full flex flex-col justify-center">
+          <h3 class="text-2xl font-bold mb-4 text-primary">Left Column</h3>
+          <p>This is the left side content. The grid automatically creates equal-width columns.</p>
         </div>
       {/snippet}
 
       {#snippet right()}
-        <div class="p-6 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-2xl font-bold mb-4">Right Column</h3>
-          <p>Content for the right side of the layout.</p>
+        <div class="bg-secondary/10 border-2 border-secondary/30 rounded-lg p-6 h-full flex flex-col justify-center">
+          <h3 class="text-2xl font-bold mb-4 text-secondary">Right Column</h3>
+          <p>This is the right side content. Both columns stretch to fill the container height.</p>
         </div>
       {/snippet}
     </TwoColumnLayout>
@@ -235,30 +113,30 @@
 <!-- Three Column Layout -->
 <h2 id="three-column">Three Column Layout</h2>
 <p>
-  Three equal-width columns for organizing content.
+  Three equal-width columns for organizing related content.
 </p>
 
 <div class="my-6">
   <CardContainer aspectRatio="16/9" bordered={true}>
     <ThreeColumnLayout class="p-8">
       {#snippet first()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-xl font-bold mb-2">Column 1</h3>
-          <p>First column content</p>
+        <div class="bg-primary/10 border-2 border-primary/30 rounded-lg p-4 h-full flex flex-col justify-center text-center">
+          <h3 class="text-xl font-bold mb-2 text-primary">Column 1</h3>
+          <p class="text-sm">First column content</p>
         </div>
       {/snippet}
 
       {#snippet second()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-xl font-bold mb-2">Column 2</h3>
-          <p>Second column content</p>
+        <div class="bg-accent/10 border-2 border-accent/30 rounded-lg p-4 h-full flex flex-col justify-center text-center">
+          <h3 class="text-xl font-bold mb-2 text-accent">Column 2</h3>
+          <p class="text-sm">Second column content</p>
         </div>
       {/snippet}
 
       {#snippet third()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-xl font-bold mb-2">Column 3</h3>
-          <p>Third column content</p>
+        <div class="bg-secondary/10 border-2 border-secondary/30 rounded-lg p-4 h-full flex flex-col justify-center text-center">
+          <h3 class="text-xl font-bold mb-2 text-secondary">Column 3</h3>
+          <p class="text-sm">Third column content</p>
         </div>
       {/snippet}
     </ThreeColumnLayout>
@@ -279,44 +157,42 @@
   <CardContainer aspectRatio="16/9" bordered={true}>
     <FourColumnLayout class="p-8">
       {#snippet first()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-lg font-bold mb-2">Col 1</h3>
-          <p class="text-sm">Content</p>
+        <div class="bg-primary/10 border border-primary/30 rounded-lg p-3 h-full flex flex-col justify-center items-center text-center">
+          <div class="text-4xl mb-2">📊</div>
+          <h3 class="text-lg font-bold">Stats</h3>
         </div>
       {/snippet}
 
       {#snippet second()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-lg font-bold mb-2">Col 2</h3>
-          <p class="text-sm">Content</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-3 h-full flex flex-col justify-center items-center text-center">
+          <div class="text-4xl mb-2">⚡</div>
+          <h3 class="text-lg font-bold">Speed</h3>
         </div>
       {/snippet}
 
       {#snippet third()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-lg font-bold mb-2">Col 3</h3>
-          <p class="text-sm">Content</p>
+        <div class="bg-secondary/10 border border-secondary/30 rounded-lg p-3 h-full flex flex-col justify-center items-center text-center">
+          <div class="text-4xl mb-2">🎯</div>
+          <h3 class="text-lg font-bold">Goals</h3>
         </div>
       {/snippet}
 
       {#snippet fourth()}
-        <div class="p-4 bg-base-200 rounded-lg h-full flex flex-col justify-center">
-          <h3 class="text-lg font-bold mb-2">Col 4</h3>
-          <p class="text-sm">Content</p>
+        <div class="bg-info/10 border border-info/30 rounded-lg p-3 h-full flex flex-col justify-center items-center text-center">
+          <div class="text-4xl mb-2">✨</div>
+          <h3 class="text-lg font-bold">Magic</h3>
         </div>
       {/snippet}
     </FourColumnLayout>
   </CardContainer>
 </div>
 
-<CodeBlock code={fourColumnCode} language="svelte" />
-
 <div class="divider my-8"></div>
 
 <!-- Two Column With Headings -->
 <h2 id="two-column-headings">Two Column with Headings</h2>
 <p>
-  Two columns, each with its own heading - perfect for comparisons or feature lists.
+  Two columns with styled headings - uses the <code>.card-layout-col</code> class for proper structure.
 </p>
 
 <div class="my-6">
@@ -327,10 +203,10 @@
       {/snippet}
 
       {#snippet leftContent()}
-        <ul class="list-disc list-inside space-y-2">
-          <li>Easy to use</li>
-          <li>Fully responsive</li>
-          <li>Customizable</li>
+        <ul class="space-y-2">
+          <li>✓ Easy to use</li>
+          <li>✓ Fully responsive</li>
+          <li>✓ Customizable</li>
         </ul>
       {/snippet}
 
@@ -339,114 +215,22 @@
       {/snippet}
 
       {#snippet rightContent()}
-        <ul class="list-disc list-inside space-y-2">
-          <li>Save time</li>
-          <li>Look professional</li>
-          <li>Impress audiences</li>
+        <ul class="space-y-2">
+          <li>✓ Save time</li>
+          <li>✓ Look professional</li>
+          <li>✓ Impress audiences</li>
         </ul>
       {/snippet}
     </TwoColumnWithHeadingsLayout>
   </CardContainer>
 </div>
 
-<CodeBlock code={twoColumnWithHeadingsCode} language="svelte" />
-
-<div class="divider my-8"></div>
-
-<!-- Three Column With Headings -->
-<h2 id="three-column-headings">Three Column with Headings</h2>
-<p>
-  Three columns with headings - ideal for step-by-step processes.
-</p>
-
-<div class="my-6">
-  <CardContainer aspectRatio="16/9" bordered={true}>
-    <ThreeColumnWithHeadingsLayout class="p-8">
-      {#snippet firstHeading()}
-        Step 1
-      {/snippet}
-
-      {#snippet firstContent()}
-        <p>Install the package from npm</p>
-      {/snippet}
-
-      {#snippet secondHeading()}
-        Step 2
-      {/snippet}
-
-      {#snippet secondContent()}
-        <p>Configure your project</p>
-      {/snippet}
-
-      {#snippet thirdHeading()}
-        Step 3
-      {/snippet}
-
-      {#snippet thirdContent()}
-        <p>Start building!</p>
-      {/snippet}
-    </ThreeColumnWithHeadingsLayout>
-  </CardContainer>
-</div>
-
-<CodeBlock code={threeColumnWithHeadingsCode} language="svelte" />
-
-<div class="divider my-8"></div>
-
-<!-- Image and Text -->
-<h2 id="image-and-text">Image and Text Layout</h2>
-<p>
-  Image on the left, text content on the right - perfect for product showcases.
-</p>
-
-<div class="my-6">
-  <CardContainer aspectRatio="16/9" bordered={true}>
-    <ImageAndTextLayout
-      image="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800"
-      imageAlt="Abstract colorful background"
-    >
-      <div class="p-8">
-        <h2 class="text-3xl font-bold mb-4">Beautiful Design</h2>
-        <p class="text-lg mb-4">Create stunning presentations with ease.</p>
-        <p>Combine images with compelling text to tell your story.</p>
-      </div>
-    </ImageAndTextLayout>
-  </CardContainer>
-</div>
-
-<CodeBlock code={imageAndTextCode} language="svelte" />
-
-<div class="divider my-8"></div>
-
-<!-- Text and Image -->
-<h2 id="text-and-image">Text and Image Layout</h2>
-<p>
-  Text content on the left, image on the right - great for feature highlights.
-</p>
-
-<div class="my-6">
-  <CardContainer aspectRatio="16/9" bordered={true}>
-    <TextAndImageLayout
-      image="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=800"
-      imageAlt="Modern office workspace"
-    >
-      <div class="p-8">
-        <h2 class="text-3xl font-bold mb-4">Professional Tools</h2>
-        <p class="text-lg mb-4">Everything you need to succeed.</p>
-        <p>Powerful features designed for modern presentations.</p>
-      </div>
-    </TextAndImageLayout>
-  </CardContainer>
-</div>
-
-<CodeBlock code={textAndImageCode} language="svelte" />
-
 <div class="divider my-8"></div>
 
 <!-- Title with Bullets -->
-<h2 id="title-with-bullets">Title with Bullets Layout</h2>
+<h2 id="title-bullets">Title with Bullets</h2>
 <p>
-  A title at the top with a bulleted list below - the classic presentation layout.
+  Classic presentation layout with title and bullet points.
 </p>
 
 <div class="my-6">
@@ -467,81 +251,22 @@
   </CardContainer>
 </div>
 
-<CodeBlock code={titleWithBulletsCode} language="svelte" />
+<div class="divider my-8"></div>
+
+<h2>Responsive Behavior</h2>
+<p>
+  All column layouts automatically stack vertically on screens smaller than 480px (portrait phones).
+  On larger screens, columns display side-by-side as designed.
+</p>
 
 <div class="divider my-8"></div>
 
-<!-- Title with Bullets and Image -->
-<h2 id="title-bullets-image">Title with Bullets and Image Layout</h2>
-<p>
-  Title and bullets on the left, supporting image on the right - combines the best of both worlds.
-</p>
+<h2>Best Practices</h2>
 
-<div class="my-6">
-  <CardContainer aspectRatio="16/9" bordered={true}>
-    <TitleWithBulletsAndImageLayout
-      class="p-8"
-      image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"
-      imageAlt="Data visualization"
-      items={[
-        'AI-powered generation',
-        'Real-time collaboration',
-        'Beautiful templates',
-        'Export to any format'
-      ]}
-    >
-      {#snippet title()}
-        Product Features
-      {/snippet}
-    </TitleWithBulletsAndImageLayout>
-  </CardContainer>
-</div>
-
-<CodeBlock code={titleWithBulletsAndImageCode} language="svelte" />
-
-<div class="divider my-8"></div>
-
-<!-- Usage Guide -->
-<h2>Usage Tips</h2>
-
-<h3>Inside Cards</h3>
-<p>
-  All basic layouts work seamlessly inside CardContainer components:
-</p>
-
-<CodeBlock code={`<CardContainer aspectRatio="16/9">
-  <TwoColumnLayout>
-    <!-- Your content -->
-  </TwoColumnLayout>
-</CardContainer>`} language="svelte" />
-
-<h3>Responsive Design</h3>
-<p>
-  These layouts are optimized for 16:9 presentations but will adapt to different aspect ratios.
-  The column layouts will stack vertically on smaller screens.
-</p>
-
-<h3>Customization</h3>
-<p>
-  All layouts accept a <code>class</code> prop for additional styling:
-</p>
-
-<CodeBlock code={`<TwoColumnLayout class="bg-primary text-primary-content">
-  <!-- Styled content -->
-</TwoColumnLayout>`} language="svelte" />
-
-<div class="divider my-8"></div>
-
-<h2>React Usage</h2>
-
-<p>
-  These layouts are also available in the React package with identical APIs.
-  Instead of Svelte snippets, use React children and props:
-</p>
-
-<CodeBlock code={`import { TwoColumnLayout } from '@slideyui/react';
-
-<TwoColumnLayout
-  left={<div><h3>Left</h3><p>Content</p></div>}
-  right={<div><h3>Right</h3><p>Content</p></div>}
-/>`} language="tsx" />
+<ul class="list-disc list-inside space-y-2 my-4">
+  <li><strong>Always wrap layouts in CardContainer</strong> - Layouts need a defined container with aspect ratio</li>
+  <li><strong>Add padding to the layout</strong> - Use <code>class="p-8"</code> for comfortable spacing</li>
+  <li><strong>Style column content</strong> - Add backgrounds, borders, or padding to make columns visible</li>
+  <li><strong>Use flex for vertical centering</strong> - Add <code>flex flex-col justify-center</code> to center content</li>
+  <li><strong>Test responsive behavior</strong> - Resize your browser to see columns stack on small screens</li>
+</ul>
