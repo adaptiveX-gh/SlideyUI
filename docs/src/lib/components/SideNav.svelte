@@ -64,6 +64,8 @@
           children: [
             { title: 'Bullet-With-Icons', href: '/docs/examples/bullet-with-icons' },
             { title: 'Bullet With Icons Description Grid', href: '/docs/examples/bullet-with-icons-description-grid' },
+            { title: 'Chart With Description', href: '/docs/examples/chart-with-description' },
+            { title: 'Chart With Metrics', href: '/docs/examples/chart-with-metrics' },
           ],
         },
       ],
