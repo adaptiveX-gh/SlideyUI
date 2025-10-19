@@ -46,11 +46,31 @@
 </h3>`;
 
   const lineHeightsCode = `<ContentCard title="Leading Utilities">
-  <div class="space-y-4">
-    <p class="leading-tight">Leading tight: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <p class="leading-normal">Leading normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <p class="leading-relaxed">Leading relaxed: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <p class="leading-loose">Leading loose: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <div class="space-y-8">
+    <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+      <p class="text-sm font-mono text-base-content/60 mb-3">leading-tight (1.25)</p>
+      <p class="leading-tight text-xl max-w-2xl">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
+    <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+      <p class="text-sm font-mono text-base-content/60 mb-3">leading-normal (1.5)</p>
+      <p class="leading-normal text-xl max-w-2xl">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
+    <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+      <p class="text-sm font-mono text-base-content/60 mb-3">leading-relaxed (1.625)</p>
+      <p class="leading-relaxed text-xl max-w-2xl">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
+    <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+      <p class="text-sm font-mono text-base-content/60 mb-3">leading-loose (2.0)</p>
+      <p class="leading-loose text-xl max-w-2xl">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
   </div>
 </ContentCard>`;
 
@@ -233,19 +253,19 @@
     <p class="text-base-content/70 mb-4">Create stunning gradient text effects for slide titles.</p>
 
     <ContentCard title="Text Gradients" class="mb-4">
-      <div class="space-y-6">
-        <h3 class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <div class="space-y-6 gradient-text-examples">
+        <div class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Beautiful gradient text
-        </h3>
-        <h3 class="text-4xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+        </div>
+        <div class="text-4xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
           Another gradient example
-        </h3>
-        <h3 class="text-4xl font-bold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">
+        </div>
+        <div class="text-4xl font-bold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">
           Multi-color gradient
-        </h3>
-        <h3 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+        </div>
+        <div class="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
           Rainbow gradient effect
-        </h3>
+        </div>
       </div>
     </ContentCard>
 
@@ -263,22 +283,30 @@
     <p class="text-base-content/70 mb-4">Adjust line spacing with <code class="bg-base-200 px-2 py-1 rounded">leading-*</code> utilities.</p>
 
     <ContentCard title="Leading Utilities" class="mb-8">
-      <div class="space-y-6">
-        <div>
-          <p class="text-sm font-mono text-base-content/60 mb-2">leading-tight</p>
-          <p class="leading-tight text-lg">Leading tight: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+      <div class="space-y-8">
+        <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+          <p class="text-sm font-mono text-base-content/60 mb-3">leading-tight (1.25)</p>
+          <p class="leading-tight text-xl max-w-2xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
         </div>
-        <div>
-          <p class="text-sm font-mono text-base-content/60 mb-2">leading-normal</p>
-          <p class="leading-normal text-lg">Leading normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+          <p class="text-sm font-mono text-base-content/60 mb-3">leading-normal (1.5)</p>
+          <p class="leading-normal text-xl max-w-2xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
         </div>
-        <div>
-          <p class="text-sm font-mono text-base-content/60 mb-2">leading-relaxed</p>
-          <p class="leading-relaxed text-lg">Leading relaxed: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+          <p class="text-sm font-mono text-base-content/60 mb-3">leading-relaxed (1.625)</p>
+          <p class="leading-relaxed text-xl max-w-2xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
         </div>
-        <div>
-          <p class="text-sm font-mono text-base-content/60 mb-2">leading-loose</p>
-          <p class="leading-loose text-lg">Leading loose: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <div class="p-4 bg-base-200 border border-base-300 rounded-lg">
+          <p class="text-sm font-mono text-base-content/60 mb-3">leading-loose (2.0)</p>
+          <p class="leading-loose text-xl max-w-2xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
         </div>
       </div>
     </ContentCard>
@@ -525,9 +553,11 @@
 
     <div class="grid grid-cols-2 gap-6">
       <ContentCard title="Presentation Title" variant="featured">
-        <h2 class="text-5xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
-          Stunning Title
-        </h2>
+        <div class="gradient-text-examples">
+          <div class="text-5xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+            Stunning Title
+          </div>
+        </div>
         <p class="text-xl text-center text-base-content/60 mt-4">
           With beautiful subtitle
         </p>
@@ -591,3 +621,4 @@
     </div>
   </section>
 </div>
+

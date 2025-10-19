@@ -65,17 +65,58 @@
   .slide-card,
   div.slide-card {
     padding: 2.5rem !important;
+    border-radius: 1rem !important;
+    box-sizing: border-box;
+    overflow: visible;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Light theme (default) */
+  .slide-card,
+  div.slide-card,
+  [data-theme="light"] .slide-card,
+  [data-theme="cupcake"] .slide-card,
+  [data-theme="corporate"] .slide-card {
     background: linear-gradient(to bottom, white, rgb(249, 250, 251)) !important;
     border: 2px solid rgb(229, 231, 235) !important;
-    border-radius: 1rem !important;
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06),
       0 0 0 1px rgba(0, 0, 0, 0.05) !important;
-    box-sizing: border-box;
-    overflow: hidden;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide-card:hover,
+  [data-theme="light"] .slide-card:hover,
+  [data-theme="cupcake"] .slide-card:hover,
+  [data-theme="corporate"] .slide-card:hover {
+    border-color: rgb(209, 213, 219) !important;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(99, 102, 241, 0.1) !important;
+    transform: translateY(-2px);
+  }
+
+  /* Dark themes */
+  [data-theme="dark"] .slide-card,
+  [data-theme="business"] .slide-card {
+    background: linear-gradient(to bottom, rgb(31, 41, 55), rgb(17, 24, 39)) !important;
+    border: 2px solid rgb(55, 65, 81) !important;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="dark"] .slide-card:hover,
+  [data-theme="business"] .slide-card:hover {
+    border-color: rgb(75, 85, 99) !important;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.4),
+      0 4px 6px -2px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(99, 102, 241, 0.2) !important;
+    transform: translateY(-2px);
   }
 
   /* Add subtle gradient overlay for depth */
@@ -95,25 +136,6 @@
     opacity: 1;
   }
 
-  .slide-card:hover {
-    border-color: rgb(209, 213, 219);
-    box-shadow:
-      0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05),
-      0 0 0 1px rgba(99, 102, 241, 0.1);
-    transform: translateY(-2px);
-  }
-
-  /* Dark mode support */
-  [data-theme="dark"] .slide-card {
-    background: linear-gradient(to bottom, rgb(31, 41, 55), rgb(17, 24, 39));
-    border-color: rgb(55, 65, 81);
-  }
-
-  [data-theme="dark"] .slide-card:hover {
-    border-color: rgb(75, 85, 99);
-  }
-
   .slide-card-compact {
     padding: 1.75rem;
   }
@@ -129,7 +151,6 @@
   /* Enhanced List Items with Better Typography */
   .slide-card ul li {
     @apply flex items-start gap-3 mb-3;
-    font-size: 1.125rem !important;
     line-height: 1.6 !important;
     list-style-type: none !important;
     padding-left: 0 !important;
@@ -167,6 +188,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.3 !important;
+    padding-bottom: 0.15em !important;
+    display: inline-block;
   }
 
   [data-theme="dark"] .slide-card h1,
@@ -176,15 +200,22 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.3 !important;
+    padding-bottom: 0.15em !important;
+    display: inline-block;
   }
 
   /* Enhanced Paragraph Spacing */
   .slide-card p {
-    @apply text-base leading-relaxed;
+    @apply leading-relaxed;
+  }
+
+  /* Only apply default color to paragraphs without explicit color classes */
+  .slide-card p:not([class*="text-"]) {
     color: rgb(75, 85, 99);
   }
 
-  [data-theme="dark"] .slide-card p {
+  [data-theme="dark"] .slide-card p:not([class*="text-"]) {
     color: rgb(209, 213, 219);
   }
 

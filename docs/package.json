@@ -29,6 +29,7 @@
 	"dependencies": {
 		"@slideyui/core": "file:../packages/slideyui-core",
 		"@slideyui/svelte": "file:../packages/slideyui-svelte",
+		"apexcharts": "^5.3.5",
 		"css-selector-tokenizer": "^0.8.0",
 		"culori": "^3.3.0",
 		"slideyui": "file:../packages/slideyui-core"

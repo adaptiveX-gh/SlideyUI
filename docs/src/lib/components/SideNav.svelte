@@ -47,6 +47,13 @@
             { title: 'Header', href: '/docs/components/header' },
             { title: 'Hero', href: '/docs/components/hero' },
             { title: 'List', href: '/docs/components/list' },
+            { title: 'Charts', href: '/docs/components/charts', children: [
+              { title: 'Area', href: '/docs/components/charts/area' },
+              { title: 'Bar', href: '/docs/components/charts/bar' },
+              { title: 'Column', href: '/docs/components/charts/column' },
+              { title: 'Line', href: '/docs/components/charts/line' },
+              { title: 'Pie', href: '/docs/components/charts/pie' },
+            ]},
           ],
         },
         { title: 'Analytics', href: '/docs/analytics' },
@@ -56,6 +63,7 @@
           href: '/docs/examples',
           children: [
             { title: 'Bullet-With-Icons', href: '/docs/examples/bullet-with-icons' },
+            { title: 'Bullet With Icons Description Grid', href: '/docs/examples/bullet-with-icons-description-grid' },
           ],
         },
       ],
