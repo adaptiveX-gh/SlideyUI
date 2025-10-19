@@ -100,6 +100,33 @@ export {
   HeroFigure,
 } from './layout/Hero';
 
+// Basic Layout Components
+export {
+  BlankLayout,
+  ImageAndTextLayout,
+  TextAndImageLayout,
+  TwoColumnLayout,
+  TwoColumnWithHeadingsLayout,
+  ThreeColumnLayout,
+  ThreeColumnWithHeadingsLayout,
+  FourColumnLayout,
+  TitleWithBulletsLayout,
+  TitleWithBulletsAndImageLayout,
+} from './layouts/BasicLayouts';
+
+export type {
+  BlankLayoutProps,
+  ImageAndTextLayoutProps,
+  TextAndImageLayoutProps,
+  TwoColumnLayoutProps,
+  TwoColumnWithHeadingsLayoutProps,
+  ThreeColumnLayoutProps,
+  ThreeColumnWithHeadingsLayoutProps,
+  FourColumnLayoutProps,
+  TitleWithBulletsLayoutProps,
+  TitleWithBulletsAndImageLayoutProps,
+} from './layouts/BasicLayouts';
+
 // ============================================================================
 // LEGACY API (Deprecated - maintained for backwards compatibility only)
 // These components will be removed in v1.0.0

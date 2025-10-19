@@ -113,6 +113,21 @@ export { default as HeroSplit } from './components/HeroSplit.svelte';
 export { default as HeroFigure } from './components/HeroFigure.svelte';
 
 // ============================================================================
+// Basic Layouts (Card Templates)
+// ============================================================================
+
+export { default as BlankLayout } from './components/layouts/BlankLayout.svelte';
+export { default as TwoColumnLayout } from './components/layouts/TwoColumnLayout.svelte';
+export { default as ThreeColumnLayout } from './components/layouts/ThreeColumnLayout.svelte';
+export { default as FourColumnLayout } from './components/layouts/FourColumnLayout.svelte';
+export { default as TwoColumnWithHeadingsLayout } from './components/layouts/TwoColumnWithHeadingsLayout.svelte';
+export { default as ThreeColumnWithHeadingsLayout } from './components/layouts/ThreeColumnWithHeadingsLayout.svelte';
+export { default as ImageAndTextLayout } from './components/layouts/ImageAndTextLayout.svelte';
+export { default as TextAndImageLayout } from './components/layouts/TextAndImageLayout.svelte';
+export { default as TitleWithBulletsLayout } from './components/layouts/TitleWithBulletsLayout.svelte';
+export { default as TitleWithBulletsAndImageLayout } from './components/layouts/TitleWithBulletsAndImageLayout.svelte';
+
+// ============================================================================
 // Presentation System
 // ============================================================================
 

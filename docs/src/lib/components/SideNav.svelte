@@ -24,7 +24,13 @@
       title: 'Customization',
       items: [
         { title: 'Themes', href: '/docs/themes' },
-        { title: 'Layouts', href: '/docs/layouts' },
+        {
+          title: 'Layouts',
+          href: '/docs/layouts',
+          children: [
+            { title: 'Basic Layouts', href: '/docs/layouts/basic' },
+          ],
+        },
         { title: 'Typography', href: '/docs/typography' },
       ],
     },
