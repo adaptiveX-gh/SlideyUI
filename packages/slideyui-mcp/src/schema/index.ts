@@ -131,7 +131,7 @@ export const TimelineSlideSchema = BaseSlideSchema.extend({
       title: z.string(),
       description: z.string().optional(),
     })
-  ),
+  ).default([]),
   orientation: z.enum(['horizontal', 'vertical']).optional(),
 });
 
@@ -141,10 +141,10 @@ export const TimelineSlideSchema = BaseSlideSchema.extend({
 export const ComparisonSlideSchema = BaseSlideSchema.extend({
   type: z.literal('comparison'),
   title: z.string().min(1),
-  leftTitle: z.string(),
-  leftContent: z.array(z.string()),
-  rightTitle: z.string(),
-  rightContent: z.array(z.string()),
+  leftTitle: z.string().default(''),
+  leftContent: z.array(z.string()).default([]),
+  rightTitle: z.string().default(''),
+  rightContent: z.array(z.string()).default([]),
 });
 
 /**
