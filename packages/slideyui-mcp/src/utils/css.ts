@@ -1,0 +1,521 @@
+/**
+ * CSS embedding utilities
+ *
+ * Handles embedding SlideyUI CSS into generated HTML presentations.
+ * Uses a multi-tier fallback strategy for maximum reliability.
+ */
+
+import { readFile, access } from 'node:fs/promises';
+import { resolve, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { constants } from 'node:fs';
+
+/**
+ * Embedded SlideyUI CSS - Full styles from @slideyui/core source files
+ * This serves as the ultimate fallback when file loading fails.
+ *
+ * Generated from:
+ * - base.css
+ * - components.css
+ * - layouts.css
+ * - typography.css
+ * - animations.css
+ */
+const EMBEDDED_SLIDEYUI_CSS = `
+/**
+ * SlideyUI Core Styles
+ * Embedded version for MCP server
+ */
+
+/* Base Tailwind Reset */
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+/* CSS Custom Properties for theming */
+:root {
+  --slidey-primary: #1e40af;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #64748b;
+  --slidey-secondary-foreground: #ffffff;
+  --slidey-accent: #3b82f6;
+  --slidey-accent-foreground: #ffffff;
+  --slidey-background: #ffffff;
+  --slidey-foreground: #1e293b;
+  --slidey-muted: #f1f5f9;
+  --slidey-muted-foreground: #64748b;
+  --slidey-border: #e2e8f0;
+
+  /* Spacing Scale (8pt grid system) */
+  --card-spacing-xs: 0.5rem;   /* 8px */
+  --card-spacing-sm: 0.75rem;  /* 12px */
+  --card-spacing-md: 1rem;     /* 16px */
+  --card-spacing-lg: 1.5rem;   /* 24px */
+  --card-spacing-xl: 2rem;     /* 32px */
+  --card-spacing-2xl: 3rem;    /* 48px */
+  --card-spacing-3xl: 4rem;    /* 64px */
+
+  /* Card Padding Defaults */
+  --card-padding: var(--card-spacing-xl);
+  --card-padding-compact: var(--card-spacing-lg);
+  --card-padding-spacious: var(--card-spacing-2xl);
+
+  /* Legacy Spacing */
+  --slidey-spacing-base: 1rem;
+  --slidey-spacing-padding: 3rem;
+  --slidey-spacing-gap: 2rem;
+
+  /* Safe zones */
+  --slidey-safe-padding: 5%;
+  --slidey-danger-zone: 2%;
+
+  /* Minimum readable sizes */
+  --slidey-font-min: 24px;
+  --slidey-line-height-base: 1.4;
+}
+
+/* Slide Container Base */
+.slide, .card {
+  position: relative;
+  width: 100%;
+  background-color: var(--slidey-background);
+  color: var(--slidey-foreground);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Aspect Ratios */
+.slide-ratio-16-9 { aspect-ratio: 16 / 9; }
+.slide-ratio-4-3 { aspect-ratio: 4 / 3; }
+.slide-ratio-9-16 { aspect-ratio: 9 / 16; }
+.slide-ratio-1-1 { aspect-ratio: 1 / 1; }
+
+/* Safe Zone */
+.slide-safe-zone {
+  padding: var(--slidey-safe-padding);
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Content Container */
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--slidey-spacing-gap);
+  padding: var(--slidey-spacing-padding);
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
+.slide-text-hero, .card-text-hero {
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.slide-text-header, .card-text-header {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.slide-text-body, .card-text-body {
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Card Component */
+.slide-card {
+  padding: var(--card-padding);
+  background: var(--slidey-background);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.slide-card-header {
+  margin-bottom: var(--card-spacing-md);
+  padding: 0;
+}
+
+.slide-card-title {
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 600;
+}
+
+.slide-card-body {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.slide-card-footer {
+  margin-top: var(--card-spacing-lg);
+  padding-top: var(--card-spacing-md);
+  border-top: 1px solid var(--slidey-border);
+}
+
+/* Layouts */
+.slide-layout-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--slidey-spacing-gap);
+  padding: var(--slidey-spacing-padding);
+}
+
+.slide-layout-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--slidey-spacing-gap) * 2);
+  padding: var(--slidey-spacing-padding);
+  align-items: center;
+}
+
+/* Animations */
+.slide-enter-fade {
+  animation: slideEnterFade 500ms ease-out;
+}
+
+@keyframes slideEnterFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-build {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+.slide-build.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Utilities */
+.slide-p-safe { padding: var(--slidey-safe-padding); }
+.slide-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slide-gap { gap: var(--slidey-spacing-gap); }
+.slide-z-background { z-index: 0; }
+.slide-z-content { z-index: 1; }
+.slide-z-overlay { z-index: 2; }
+`;
+
+/**
+ * Possible paths to the SlideyUI core CSS file
+ * Ordered by preference (most specific to most general)
+ */
+function getCSSPaths(): string[] {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+
+  return [
+    // 1. Try built package in node_modules (production)
+    resolve(__dirname, '../../../../node_modules/@slideyui/core/dist/slideyui.css'),
+
+    // 2. Try workspace package dist (monorepo development)
+    resolve(__dirname, '../../../slideyui-core/dist/slideyui.css'),
+    resolve(__dirname, '../../../slideyui-core/dist/index.css'),
+
+    // 3. Try workspace package source files (fallback to source)
+    resolve(__dirname, '../../../slideyui-core/src/index.css'),
+
+    // 4. Try relative to MCP package root
+    resolve(__dirname, '../../node_modules/@slideyui/core/dist/slideyui.css'),
+  ];
+}
+
+/**
+ * Check if a file exists and is readable
+ */
+async function fileExists(path: string): Promise<boolean> {
+  try {
+    await access(path, constants.R_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Attempt to load CSS from file system
+ *
+ * @returns CSS content or null if not found
+ */
+async function loadCSSFromFile(): Promise<string | null> {
+  const paths = getCSSPaths();
+
+  for (const cssPath of paths) {
+    try {
+      if (await fileExists(cssPath)) {
+        const css = await readFile(cssPath, 'utf-8');
+        console.log(`✓ Loaded SlideyUI CSS from: ${cssPath}`);
+        return css;
+      }
+    } catch (error) {
+      // Continue to next path
+      continue;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Load CSS from source files and concatenate
+ * This is a fallback when the built CSS is not available
+ */
+async function loadCSSFromSource(): Promise<string | null> {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const srcDir = resolve(__dirname, '../../../slideyui-core/src');
+
+  const sourceFiles = [
+    'base.css',
+    'components.css',
+    'layouts.css',
+    'typography.css',
+    'animations.css',
+  ];
+
+  try {
+    const cssBlocks: string[] = [];
+
+    for (const file of sourceFiles) {
+      const filePath = join(srcDir, file);
+      if (await fileExists(filePath)) {
+        const content = await readFile(filePath, 'utf-8');
+        cssBlocks.push(content);
+      }
+    }
+
+    if (cssBlocks.length > 0) {
+      console.log(`✓ Loaded SlideyUI CSS from ${cssBlocks.length} source files`);
+      return cssBlocks.join('\n\n');
+    }
+  } catch (error) {
+    // Fall through to next strategy
+  }
+
+  return null;
+}
+
+/**
+ * Get minimal CSS with theme colors
+ * Used as a last resort fallback
+ *
+ * @param theme - Theme name
+ * @returns Minimal CSS string
+ * @internal
+ */
+export function getMinimalCSS(theme: string): string {
+  const colors = getThemeColors(theme);
+
+  return `
+    /* SlideyUI Minimal Fallback CSS */
+    :root {
+      --primary: ${colors.primary};
+      --secondary: ${colors.secondary};
+      --accent: ${colors.accent};
+      --background: ${colors.background};
+      --text: ${colors.text};
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: ${colors.background};
+      color: ${colors.text};
+    }
+
+    .slide, .card {
+      background: ${colors.background};
+      color: ${colors.text};
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1, h2, h3 {
+      color: ${colors.primary};
+      margin: 0 0 1rem 0;
+    }
+
+    h1 { font-size: 3rem; font-weight: 800; }
+    h2 { font-size: 2rem; font-weight: 700; }
+    h3 { font-size: 1.5rem; font-weight: 600; }
+
+    p, li {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    ul, ol {
+      padding-left: 2rem;
+    }
+
+    .slide-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 2rem;
+    }
+  `;
+}
+
+/**
+ * Theme colors interface
+ */
+interface ThemeColors {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  text: string;
+}
+
+/**
+ * Theme color definitions
+ */
+const THEME_COLORS: Record<string, ThemeColors> = {
+  corporate: {
+    primary: '#1e40af',
+    secondary: '#64748b',
+    accent: '#3b82f6',
+    background: '#ffffff',
+    text: '#1e293b',
+  },
+  'pitch-deck': {
+    primary: '#7c3aed',
+    secondary: '#a855f7',
+    accent: '#c084fc',
+    background: '#ffffff',
+    text: '#1e293b',
+  },
+  academic: {
+    primary: '#0f172a',
+    secondary: '#475569',
+    accent: '#94a3b8',
+    background: '#ffffff',
+    text: '#1e293b',
+  },
+  workshop: {
+    primary: '#ea580c',
+    secondary: '#fb923c',
+    accent: '#fdba74',
+    background: '#ffffff',
+    text: '#1e293b',
+  },
+  startup: {
+    primary: '#10b981',
+    secondary: '#34d399',
+    accent: '#6ee7b7',
+    background: '#ffffff',
+    text: '#1e293b',
+  },
+};
+
+/**
+ * Get theme color palette
+ */
+function getThemeColors(theme: string): ThemeColors {
+  return THEME_COLORS[theme] ?? THEME_COLORS.corporate!;
+}
+
+/**
+ * Get Tailwind CDN link as ultimate fallback
+ * This ensures presentations always have some baseline styling
+ */
+function getTailwindCDN(): string {
+  return `<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#1e40af',
+          secondary: '#64748b',
+          accent: '#3b82f6',
+        }
+      }
+    }
+  }
+</script>`;
+}
+
+/**
+ * Embed SlideyUI CSS for a specific theme
+ *
+ * Multi-tier fallback strategy:
+ * 1. Try to load from built package (dist/slideyui.css)
+ * 2. Try to load from source files (src/*.css)
+ * 3. Use embedded CSS constant
+ * 4. Fall back to minimal CSS with theme colors
+ *
+ * @param theme - Theme name
+ * @returns CSS string
+ */
+export async function embedCSS(_theme: string): Promise<string> {
+  // Strategy 1: Try to load from built file
+  const fileCSS = await loadCSSFromFile();
+  if (fileCSS) {
+    return fileCSS;
+  }
+
+  // Strategy 2: Try to load from source files
+  const sourceCSS = await loadCSSFromSource();
+  if (sourceCSS) {
+    return sourceCSS;
+  }
+
+  // Strategy 3: Use embedded CSS constant
+  console.warn('⚠ Using embedded SlideyUI CSS (built files not found)');
+  return EMBEDDED_SLIDEYUI_CSS;
+}
+
+/**
+ * Embed CSS as <style> tag
+ */
+export async function embedCSSTag(theme: string): Promise<string> {
+  const css = await embedCSS(theme);
+  return `<style>${css}</style>`;
+}
+
+/**
+ * Get complete HTML head content with CSS and optional Tailwind CDN
+ *
+ * @param theme - Theme name
+ * @param includeTailwindCDN - Whether to include Tailwind CDN as fallback (default: false)
+ * @returns HTML head content
+ */
+export async function getHTMLHead(theme: string, includeTailwindCDN = false): Promise<string> {
+  const css = await embedCSS(theme);
+  const tailwindCDN = includeTailwindCDN ? getTailwindCDN() : '';
+
+  return `
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>${css}</style>
+    ${tailwindCDN}
+  `.trim();
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SlideyUI Chart Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #1e293b;
+      margin-bottom: 2rem;
+    }
+    .chart-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .chart-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SlideyUI Chart Rendering Test</h1>
+
+    <div class="chart-container">
+      <div class="chart-title">Bar Chart - Quarterly Revenue</div>
+      <div id="bar-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Line Chart - Traffic Growth</div>
+      <div id="line-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Pie Chart - Market Share</div>
+      <div id="pie-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Area Chart - Cumulative Revenue</div>
+      <div id="area-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Doughnut Chart - Budget Allocation</div>
+      <div id="doughnut-chart"></div>
+    </div>
+  </div>
+
+  <script>
+    // This would normally come from the chart-renderer.ts module
+    // For testing, we'll verify the SVG output format
+
+    const barChartSvg = `
+      <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; font-family: system-ui, sans-serif;">
+        <line x1="80" y1="60" x2="80" y2="460" stroke="#374151" stroke-width="2"/>
+        <line x1="80" y1="460" x2="1160" y2="460" stroke="#374151" stroke-width="2"/>
+        <rect x="150" y="260" width="60" height="200" fill="#1e40af" rx="4"/>
+        <rect x="220" y="310" width="60" height="150" fill="#0891b2" rx="4"/>
+        <rect x="450" y="220" width="60" height="240" fill="#1e40af" rx="4"/>
+        <rect x="520" y="280" width="60" height="180" fill="#0891b2" rx="4"/>
+        <rect x="750" y="180" width="60" height="280" fill="#1e40af" rx="4"/>
+        <rect x="820" y="250" width="60" height="210" fill="#0891b2" rx="4"/>
+        <rect x="1050" y="135" width="60" height="325" fill="#1e40af" rx="4"/>
+        <rect x="1120" y="220" width="60" height="240" fill="#0891b2" rx="4"/>
+        <text x="210" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Q1</text>
+        <text x="510" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Q2</text>
+        <text x="810" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Q3</text>
+        <text x="1110" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Q4</text>
+        <rect x="400" y="540" width="20" height="20" fill="#1e40af" rx="2"/>
+        <text x="430" y="556" font-size="20" fill="#374151">Revenue</text>
+        <rect x="600" y="540" width="20" height="20" fill="#0891b2" rx="2"/>
+        <text x="630" y="556" font-size="20" fill="#374151">Expenses</text>
+      </svg>
+    `;
+
+    const lineChartSvg = `
+      <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; font-family: system-ui, sans-serif;">
+        <line x1="80" y1="60" x2="80" y2="460" stroke="#374151" stroke-width="2"/>
+        <line x1="80" y1="460" x2="1160" y2="460" stroke="#374151" stroke-width="2"/>
+        <path d="M 80 360 L 296 310 L 512 260 L 728 205 L 944 145 L 1160 80" stroke="#1e40af" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="80" cy="360" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <circle cx="296" cy="310" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <circle cx="512" cy="260" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <circle cx="728" cy="205" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <circle cx="944" cy="145" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <circle cx="1160" cy="80" r="8" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+        <text x="80" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Jan</text>
+        <text x="296" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Feb</text>
+        <text x="512" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Mar</text>
+        <text x="728" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Apr</text>
+        <text x="944" y="495" text-anchor="middle" font-size="20" fill="#4b5563">May</text>
+        <text x="1160" y="495" text-anchor="middle" font-size="20" fill="#4b5563">Jun</text>
+        <rect x="500" y="540" width="20" height="20" fill="#1e40af" rx="2"/>
+        <text x="530" y="556" font-size="20" fill="#374151">Page Views</text>
+      </svg>
+    `;
+
+    const pieChartSvg = `
+      <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; font-family: system-ui, sans-serif;">
+        <path d="M 600 300 L 600 75 A 225 225 0 0 1 754.0 450.0 Z" fill="#1e40af" stroke="#fff" stroke-width="3"/>
+        <path d="M 600 300 L 754.0 450.0 A 225 225 0 0 1 446.0 450.0 Z" fill="#0891b2" stroke="#fff" stroke-width="3"/>
+        <path d="M 600 300 L 446.0 450.0 A 225 225 0 0 1 415.9 300.0 Z" fill="#64748b" stroke="#fff" stroke-width="3"/>
+        <path d="M 600 300 L 415.9 300.0 A 225 225 0 0 1 600.0 75.0 Z" fill="#0f766e" stroke="#fff" stroke-width="3"/>
+        <text x="700" y="200" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">35%</text>
+        <text x="650" y="420" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">25%</text>
+        <text x="480" y="380" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">20%</text>
+        <text x="520" y="220" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">20%</text>
+        <rect x="50" y="530" width="24" height="24" fill="#1e40af" rx="2"/>
+        <text x="85" y="548" font-size="20" fill="#374151">Our Product (35%)</text>
+        <rect x="300" y="530" width="24" height="24" fill="#0891b2" rx="2"/>
+        <text x="335" y="548" font-size="20" fill="#374151">Competitor A (25%)</text>
+      </svg>
+    `;
+
+    document.getElementById('bar-chart').innerHTML = barChartSvg;
+    document.getElementById('line-chart').innerHTML = lineChartSvg;
+    document.getElementById('pie-chart').innerHTML = pieChartSvg;
+    document.getElementById('area-chart').innerHTML = '<p style="text-align: center; color: #64748b; font-size: 18px;">Area chart would render similar to line chart with filled area</p>';
+    document.getElementById('doughnut-chart').innerHTML = '<p style="text-align: center; color: #64748b; font-size: 18px;">Doughnut chart would render similar to pie chart with center cutout</p>';
+  </script>
+</body>
+</html>

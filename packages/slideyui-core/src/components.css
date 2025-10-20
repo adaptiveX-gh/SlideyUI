@@ -1852,8 +1852,8 @@
   }
 
   /* Responsive Layout Adjustments */
-  /* Only stack on very small screens (phones in portrait) */
-  @media (max-width: 480px) {
+  /* Stack columns on tablet and smaller screens for better readability */
+  @media (max-width: 1024px) {
     .card-layout-2col,
     .card-layout-3col,
     .card-layout-4col,
@@ -1866,7 +1866,10 @@
     .card-layout-split-reverse {
       direction: ltr;
     }
+  }
 
+  /* Further adjustments for small mobile screens */
+  @media (max-width: 480px) {
     .card-layout-col-heading {
       font-size: clamp(1rem, 4vw, 1.5rem);
     }

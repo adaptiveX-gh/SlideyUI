@@ -145,7 +145,7 @@
   </p>
 
   <div class="not-prose mb-12">
-    <CardContainer aspectRatio="16/9" bordered={true}>
+    <CardContainer aspectRatio="16/9" bordered={true} autoScale={true}>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full p-8 lg:p-12">
         <!-- Left Column: Title and Chart -->
         <div class="flex flex-col space-y-6">
@@ -173,55 +173,58 @@
           <!-- Metrics Cards -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <!-- Card 1: Artificial Intelligence -->
-            <div class="bg-white rounded-lg p-4 lg:p-5 shadow-md border border-gray-100">
+            <div class="bg-base-100 rounded-lg p-4 lg:p-5 shadow-md border border-base-300">
               <div class="mb-2">
                 <span
-                  class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-600 rounded"
+                  class="inline-block px-3 py-1 text-white bg-blue-600 rounded font-semibold"
+                  style="font-size: clamp(0.625rem, 1vw, 0.75rem);"
                 >
                   Artificial Intelligence
                 </span>
               </div>
               <div class="mb-1">
-                <div class="text-2xl lg:text-3xl font-bold text-blue-600">+1000%</div>
-                <div class="text-sm font-medium text-gray-700">growth</div>
+                <div class="font-bold text-blue-600" style="font-size: clamp(1.25rem, 2.5vw, 2rem);">+1000%</div>
+                <div class="font-medium text-base-content opacity-70" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">growth</div>
               </div>
-              <p class="text-xs text-gray-500 leading-snug">
+              <p class="text-base-content opacity-60 leading-snug" style="font-size: clamp(0.625rem, 1vw, 0.75rem);">
                 Artificial Intelligence growth over the period.
               </p>
             </div>
 
             <!-- Card 2: Internet Of Things -->
-            <div class="bg-white rounded-lg p-4 lg:p-5 shadow-md border border-gray-100">
+            <div class="bg-base-100 rounded-lg p-4 lg:p-5 shadow-md border border-base-300">
               <div class="mb-2">
                 <span
-                  class="inline-block px-3 py-1 text-xs font-semibold text-white bg-cyan-500 rounded"
+                  class="inline-block px-3 py-1 text-white bg-cyan-500 rounded font-semibold"
+                  style="font-size: clamp(0.625rem, 1vw, 0.75rem);"
                 >
                   Internet Of Things
                 </span>
               </div>
               <div class="mb-1">
-                <div class="text-2xl lg:text-3xl font-bold text-cyan-500">+550%</div>
-                <div class="text-sm font-medium text-gray-700">growth</div>
+                <div class="font-bold text-cyan-500" style="font-size: clamp(1.25rem, 2.5vw, 2rem);">+550%</div>
+                <div class="font-medium text-base-content opacity-70" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">growth</div>
               </div>
-              <p class="text-xs text-gray-500 leading-snug">
+              <p class="text-base-content opacity-60 leading-snug" style="font-size: clamp(0.625rem, 1vw, 0.75rem);">
                 Internet Of Things growth over the period.
               </p>
             </div>
 
             <!-- Card 3: Others -->
-            <div class="bg-white rounded-lg p-4 lg:p-5 shadow-md border border-gray-100">
+            <div class="bg-base-100 rounded-lg p-4 lg:p-5 shadow-md border border-base-300">
               <div class="mb-2">
                 <span
-                  class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-600 rounded"
+                  class="inline-block px-3 py-1 text-white bg-blue-600 rounded font-semibold"
+                  style="font-size: clamp(0.625rem, 1vw, 0.75rem);"
                 >
                   Others
                 </span>
               </div>
               <div class="mb-1">
-                <div class="text-2xl lg:text-3xl font-bold text-blue-600">+550%</div>
-                <div class="text-sm font-medium text-gray-700">growth</div>
+                <div class="font-bold text-blue-600" style="font-size: clamp(1.25rem, 2.5vw, 2rem);">+550%</div>
+                <div class="font-medium text-base-content opacity-70" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">growth</div>
               </div>
-              <p class="text-xs text-gray-500 leading-snug">Others growth over the period.</p>
+              <p class="text-base-content opacity-60 leading-snug" style="font-size: clamp(0.625rem, 1vw, 0.75rem);">Others growth over the period.</p>
             </div>
           </div>
         </div>
@@ -274,7 +277,7 @@
   </ul>
 
   <h2>Code Example (Svelte)</h2>
-  <pre><code>{`<script lang="ts">
+  <pre><code>{`<`}{`script lang="ts">`}{`
   import { CardContainer } from '@slideyui/svelte';
   import { onMount } from 'svelte';
 
@@ -314,9 +317,9 @@
 
     return () => chart.destroy();
   });
-</script>
+`}{`</script>`}{`
 
-<CardContainer aspectRatio="16/9" bordered={true}>
+`}{`<CardContainer aspectRatio="16/9" bordered={true}>`}{`
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 h-full p-12">
     <!-- Left: Title and Chart -->
     <div class="flex flex-col space-y-6">
@@ -353,7 +356,7 @@
       </div>
     </div>
   </div>
-</CardContainer>`}</code></pre>
+`}{`</CardContainer>`}</code></pre>
 
   <h2>React Implementation</h2>
   <pre><code>{`import { CardContainer } from '@slideyui/react';
