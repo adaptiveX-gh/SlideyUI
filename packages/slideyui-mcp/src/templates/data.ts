@@ -5,14 +5,14 @@
  */
 
 import type { DataSlideSpec, GenerationOptions, ChartData, Theme } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 import { renderChart } from '../utils/chart-renderer.js';
 
 export function dataTemplate(
   spec: DataSlideSpec,
   options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
+  const title = renderMarkdown(escapeHTML(spec.title));
 
   let dataHTML = '';
 
@@ -53,7 +53,7 @@ function renderTable(data: Record<string, unknown>[] | string[][]): string {
       <table class="slideyui-table">
         <thead>
           <tr>
-            ${headers.map((h) => `<th>${escapeHTML(h)}</th>`).join('')}
+            ${headers.map((h) => `<th>${renderMarkdown(escapeHTML(h))}</th>`).join('')}
           </tr>
         </thead>
         <tbody>
@@ -61,7 +61,7 @@ function renderTable(data: Record<string, unknown>[] | string[][]): string {
             .map(
               (row) => `
             <tr>
-              ${headers.map((h) => `<td>${escapeHTML(String(row[h] ?? ''))}</td>`).join('')}
+              ${headers.map((h) => `<td>${renderMarkdown(escapeHTML(String(row[h] ?? '')))}</td>`).join('')}
             </tr>
           `
             )
@@ -80,7 +80,7 @@ function renderTable(data: Record<string, unknown>[] | string[][]): string {
     <table class="slideyui-table">
       <thead>
         <tr>
-          ${headers?.map((h) => `<th>${escapeHTML(h)}</th>`).join('') ?? ''}
+          ${headers?.map((h) => `<th>${renderMarkdown(escapeHTML(h))}</th>`).join('') ?? ''}
         </tr>
       </thead>
       <tbody>
@@ -88,7 +88,7 @@ function renderTable(data: Record<string, unknown>[] | string[][]): string {
           .map(
             (row) => `
           <tr>
-            ${row.map((cell) => `<td>${escapeHTML(cell)}</td>`).join('')}
+            ${row.map((cell) => `<td>${renderMarkdown(escapeHTML(cell))}</td>`).join('')}
           </tr>
         `
           )

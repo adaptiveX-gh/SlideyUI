@@ -5,15 +5,15 @@
  */
 
 import type { QuoteSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function quoteTemplate(
   spec: QuoteSlideSpec,
   _options: GenerationOptions
 ): string {
-  const quote = escapeHTML(spec.quote);
-  const author = escapeHTML(spec.author);
-  const context = spec.context ? escapeHTML(spec.context) : '';
+  const quote = renderMarkdown(escapeHTML(spec.quote));
+  const author = renderMarkdown(escapeHTML(spec.author));
+  const context = spec.context ? renderMarkdown(escapeHTML(spec.context)) : '';
 
   return `
     <div class="slideyui-card slideyui-quote-card">

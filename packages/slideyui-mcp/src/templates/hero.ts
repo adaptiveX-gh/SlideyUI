@@ -6,14 +6,14 @@
  */
 
 import type { HeroSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function heroTemplate(
   spec: HeroSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
-  const subtitle = spec.subtitle ? escapeHTML(spec.subtitle) : '';
+  const title = renderMarkdown(escapeHTML(spec.title));
+  const subtitle = spec.subtitle ? renderMarkdown(escapeHTML(spec.subtitle)) : '';
 
   // Build background style
   let backgroundStyle = '';

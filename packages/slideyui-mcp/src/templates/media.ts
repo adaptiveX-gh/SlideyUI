@@ -5,14 +5,14 @@
  */
 
 import type { MediaSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function mediaTemplate(
   spec: MediaSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = spec.title ? escapeHTML(spec.title) : '';
-  const caption = spec.caption ? escapeHTML(spec.caption) : '';
+  const title = spec.title ? renderMarkdown(escapeHTML(spec.title)) : '';
+  const caption = spec.caption ? renderMarkdown(escapeHTML(spec.caption)) : '';
   const layout = spec.layout ?? 'contained';
   const layoutClass = `slideyui-layout-${layout}`;
 

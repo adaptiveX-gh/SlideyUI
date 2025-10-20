@@ -6,7 +6,7 @@
  */
 
 import type { TwoColumnSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 /**
  * Render column content based on type
@@ -27,14 +27,14 @@ function renderColumnContent(
     const items = Array.isArray(content) ? content : [content];
     return `
       <ul class="slideyui-list">
-        ${items.map((item) => `<li>${escapeHTML(item)}</li>`).join('\n')}
+        ${items.map((item) => `<li>${renderMarkdown(escapeHTML(item))}</li>`).join('\n')}
       </ul>
     `;
   }
 
   // Default to text
   const text = Array.isArray(content) ? content.join('\n\n') : content;
-  return `<div class="slideyui-text">${escapeHTML(text)}</div>`;
+  return `<div class="slideyui-text">${renderMarkdown(escapeHTML(text))}</div>`;
 }
 
 /**
@@ -60,7 +60,7 @@ export function twoColumnTemplate(
   spec: TwoColumnSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = spec.title ? escapeHTML(spec.title) : '';
+  const title = spec.title ? renderMarkdown(escapeHTML(spec.title)) : '';
   const ratio = spec.columnRatio ?? '50-50';
   const [leftClass, rightClass] = getColumnClasses(ratio);
 

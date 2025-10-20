@@ -35,16 +35,16 @@ const EMBEDDED_SLIDEYUI_CSS = `
   border-color: currentColor;
 }
 
-/* CSS Custom Properties for theming */
+/* CSS Custom Properties for theming - Default Corporate Theme */
 :root {
   --slidey-primary: #1e40af;
   --slidey-primary-foreground: #ffffff;
   --slidey-secondary: #64748b;
   --slidey-secondary-foreground: #ffffff;
-  --slidey-accent: #3b82f6;
+  --slidey-accent: #0891b2;
   --slidey-accent-foreground: #ffffff;
   --slidey-background: #ffffff;
-  --slidey-foreground: #1e293b;
+  --slidey-foreground: #0f172a;
   --slidey-muted: #f1f5f9;
   --slidey-muted-foreground: #64748b;
   --slidey-border: #e2e8f0;
@@ -75,6 +75,77 @@ const EMBEDDED_SLIDEYUI_CSS = `
   /* Minimum readable sizes */
   --slidey-font-min: 24px;
   --slidey-line-height-base: 1.4;
+}
+
+/* Theme-specific color overrides */
+[data-theme="corporate"] {
+  --slidey-primary: #1e40af;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #64748b;
+  --slidey-secondary-foreground: #ffffff;
+  --slidey-accent: #0891b2;
+  --slidey-accent-foreground: #ffffff;
+  --slidey-background: #ffffff;
+  --slidey-foreground: #0f172a;
+  --slidey-muted: #f1f5f9;
+  --slidey-muted-foreground: #64748b;
+  --slidey-border: #e2e8f0;
+}
+
+[data-theme="pitch-deck"] {
+  --slidey-primary: #7c3aed;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #ec4899;
+  --slidey-secondary-foreground: #ffffff;
+  --slidey-accent: #f59e0b;
+  --slidey-accent-foreground: #000000;
+  --slidey-background: #0f172a;
+  --slidey-foreground: #f8fafc;
+  --slidey-muted: #1e293b;
+  --slidey-muted-foreground: #94a3b8;
+  --slidey-border: #334155;
+}
+
+[data-theme="academic"] {
+  --slidey-primary: #1e3a8a;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #92400e;
+  --slidey-secondary-foreground: #ffffff;
+  --slidey-accent: #065f46;
+  --slidey-accent-foreground: #ffffff;
+  --slidey-background: #fefce8;
+  --slidey-foreground: #1c1917;
+  --slidey-muted: #fef3c7;
+  --slidey-muted-foreground: #78716c;
+  --slidey-border: #d6d3d1;
+}
+
+[data-theme="workshop"] {
+  --slidey-primary: #ea580c;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #fb923c;
+  --slidey-secondary-foreground: #000000;
+  --slidey-accent: #fdba74;
+  --slidey-accent-foreground: #000000;
+  --slidey-background: #ffffff;
+  --slidey-foreground: #1e293b;
+  --slidey-muted: #fff7ed;
+  --slidey-muted-foreground: #78716c;
+  --slidey-border: #fed7aa;
+}
+
+[data-theme="startup"] {
+  --slidey-primary: #10b981;
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: #34d399;
+  --slidey-secondary-foreground: #000000;
+  --slidey-accent: #6ee7b7;
+  --slidey-accent-foreground: #000000;
+  --slidey-background: #ffffff;
+  --slidey-foreground: #1e293b;
+  --slidey-muted: #f0fdf4;
+  --slidey-muted-foreground: #64748b;
+  --slidey-border: #bbf7d0;
 }
 
 /* Slide Container Base */
@@ -125,6 +196,7 @@ const EMBEDDED_SLIDEYUI_CSS = `
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: var(--slidey-foreground);
 }
 
 .slide-text-header, .card-text-header {
@@ -132,21 +204,55 @@ const EMBEDDED_SLIDEYUI_CSS = `
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.01em;
+  color: var(--slidey-foreground);
 }
 
 .slide-text-body, .card-text-body {
   font-size: clamp(1.25rem, 2.5vw, 2rem);
   line-height: 1.5;
   font-weight: 400;
+  color: var(--slidey-foreground);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.slideyui-title,
+.slideyui-heading-1,
+.slideyui-heading-2,
+.slideyui-heading-3 {
+  color: var(--slidey-primary);
+  font-weight: 700;
+}
+
+/* Cards */
+.slideyui-card {
+  background-color: var(--slidey-background);
+  color: var(--slidey-foreground);
+  border: 1px solid var(--slidey-border);
+  border-radius: 0.5rem;
+  padding: var(--card-padding);
+}
+
+.slideyui-card-title {
+  color: var(--slidey-accent);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  margin-bottom: var(--card-spacing-md);
+}
+
+.slideyui-card-content {
+  color: var(--slidey-foreground);
 }
 
 /* Card Component */
 .slide-card {
   padding: var(--card-padding);
   background: var(--slidey-background);
+  color: var(--slidey-foreground);
   border-radius: 0.5rem;
   box-sizing: border-box;
   overflow: hidden;
+  border: 1px solid var(--slidey-border);
 }
 
 .slide-card-header {
@@ -157,16 +263,19 @@ const EMBEDDED_SLIDEYUI_CSS = `
 .slide-card-title {
   font-size: clamp(1.25rem, 2.5vw, 2rem);
   font-weight: 600;
+  color: var(--slidey-accent);
 }
 
 .slide-card-body {
   font-size: clamp(1rem, 2vw, 1.5rem);
+  color: var(--slidey-foreground);
 }
 
 .slide-card-footer {
   margin-top: var(--card-spacing-lg);
   padding-top: var(--card-spacing-md);
   border-top: 1px solid var(--slidey-border);
+  color: var(--slidey-muted-foreground);
 }
 
 /* Layouts */
@@ -217,6 +326,82 @@ const EMBEDDED_SLIDEYUI_CSS = `
 .slide-z-background { z-index: 0; }
 .slide-z-content { z-index: 1; }
 .slide-z-overlay { z-index: 2; }
+
+/* Additional component styling for themed elements */
+.slideyui-subtitle {
+  color: var(--slidey-muted-foreground);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.slideyui-text {
+  color: var(--slidey-foreground);
+}
+
+.slideyui-accent {
+  color: var(--slidey-accent);
+}
+
+.slideyui-muted {
+  color: var(--slidey-muted-foreground);
+  background-color: var(--slidey-muted);
+}
+
+/* Lists and bullets */
+ul, ol {
+  color: var(--slidey-foreground);
+}
+
+li {
+  color: var(--slidey-foreground);
+}
+
+/* Links */
+a {
+  color: var(--slidey-accent);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--slidey-primary);
+}
+
+/* Code blocks */
+code, pre {
+  background-color: var(--slidey-muted);
+  color: var(--slidey-foreground);
+  border: 1px solid var(--slidey-border);
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid var(--slidey-accent);
+  color: var(--slidey-foreground);
+  background-color: var(--slidey-muted);
+  padding: var(--card-spacing-md);
+  margin: var(--card-spacing-lg) 0;
+}
+
+/* Tables */
+table {
+  border-color: var(--slidey-border);
+  color: var(--slidey-foreground);
+}
+
+th {
+  background-color: var(--slidey-muted);
+  color: var(--slidey-foreground);
+  border: 1px solid var(--slidey-border);
+}
+
+td {
+  border: 1px solid var(--slidey-border);
+  color: var(--slidey-foreground);
+}
+
+/* Horizontal rules */
+hr {
+  border-color: var(--slidey-border);
+}
 `;
 
 /**

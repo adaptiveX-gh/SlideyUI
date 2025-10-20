@@ -5,21 +5,21 @@
  */
 
 import type { ComparisonSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function comparisonTemplate(
   spec: ComparisonSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
-  const leftTitle = escapeHTML(spec.leftTitle);
-  const rightTitle = escapeHTML(spec.rightTitle);
+  const title = renderMarkdown(escapeHTML(spec.title));
+  const leftTitle = renderMarkdown(escapeHTML(spec.leftTitle));
+  const rightTitle = renderMarkdown(escapeHTML(spec.rightTitle));
 
   const leftContent = spec.leftContent
-    .map((item) => `<li>${escapeHTML(item)}</li>`)
+    .map((item) => `<li>${renderMarkdown(escapeHTML(item))}</li>`)
     .join('');
   const rightContent = spec.rightContent
-    .map((item) => `<li>${escapeHTML(item)}</li>`)
+    .map((item) => `<li>${renderMarkdown(escapeHTML(item))}</li>`)
     .join('');
 
   return `

@@ -5,14 +5,14 @@
  */
 
 import type { SectionHeaderSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function sectionHeaderTemplate(
   spec: SectionHeaderSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
-  const subtitle = spec.subtitle ? escapeHTML(spec.subtitle) : '';
+  const title = renderMarkdown(escapeHTML(spec.title));
+  const subtitle = spec.subtitle ? renderMarkdown(escapeHTML(spec.subtitle)) : '';
 
   return `
     <div class="slideyui-card slideyui-section-header-card">

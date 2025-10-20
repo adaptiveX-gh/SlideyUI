@@ -5,13 +5,13 @@
  */
 
 import type { ContentSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function contentTemplate(
   spec: ContentSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
+  const title = renderMarkdown(escapeHTML(spec.title));
   const layout = spec.layout ?? 'single-column';
 
   // Handle content as array or string
@@ -21,10 +21,10 @@ export function contentTemplate(
 
   const contentHTML =
     contentItems.length === 1 && !Array.isArray(spec.content)
-      ? `<p class="slideyui-text">${escapeHTML(contentItems[0] ?? '')}</p>`
+      ? `<p class="slideyui-text">${renderMarkdown(escapeHTML(contentItems[0] ?? ''))}</p>`
       : `
       <ul class="slideyui-list">
-        ${contentItems.map((item) => `<li>${escapeHTML(item)}</li>`).join('\n')}
+        ${contentItems.map((item) => `<li>${renderMarkdown(escapeHTML(item))}</li>`).join('\n')}
       </ul>
     `;
 

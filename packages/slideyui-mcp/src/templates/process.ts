@@ -5,13 +5,13 @@
  */
 
 import type { ProcessSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function processTemplate(
   spec: ProcessSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
+  const title = renderMarkdown(escapeHTML(spec.title));
   const layout = spec.layout ?? 'horizontal';
   const layoutClass = `slideyui-process-${layout}`;
 
@@ -21,8 +21,8 @@ export function processTemplate(
     <div class="slideyui-process-step">
       <div class="slideyui-process-number">${index + 1}</div>
       <div class="slideyui-process-content">
-        <h3 class="slideyui-process-title">${escapeHTML(step.title)}</h3>
-        ${step.description ? `<p class="slideyui-process-description">${escapeHTML(step.description)}</p>` : ''}
+        <h3 class="slideyui-process-title">${renderMarkdown(escapeHTML(step.title))}</h3>
+        ${step.description ? `<p class="slideyui-process-description">${renderMarkdown(escapeHTML(step.description))}</p>` : ''}
       </div>
     </div>
   `

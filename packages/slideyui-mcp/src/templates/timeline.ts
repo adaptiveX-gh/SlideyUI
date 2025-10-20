@@ -5,13 +5,13 @@
  */
 
 import type { TimelineSlideSpec, GenerationOptions } from '../types/index.js';
-import { escapeHTML } from '../utils/html.js';
+import { escapeHTML, renderMarkdown } from '../utils/html.js';
 
 export function timelineTemplate(
   spec: TimelineSlideSpec,
   _options: GenerationOptions
 ): string {
-  const title = escapeHTML(spec.title);
+  const title = renderMarkdown(escapeHTML(spec.title));
   const orientation = spec.orientation ?? 'horizontal';
   const orientationClass = `slideyui-timeline-${orientation}`;
 
@@ -21,9 +21,9 @@ export function timelineTemplate(
     <div class="slideyui-timeline-event">
       <div class="slideyui-timeline-marker"></div>
       <div class="slideyui-timeline-content">
-        <span class="slideyui-timeline-date">${escapeHTML(event.date)}</span>
-        <h3 class="slideyui-timeline-title">${escapeHTML(event.title)}</h3>
-        ${event.description ? `<p class="slideyui-timeline-description">${escapeHTML(event.description)}</p>` : ''}
+        <span class="slideyui-timeline-date">${renderMarkdown(escapeHTML(event.date))}</span>
+        <h3 class="slideyui-timeline-title">${renderMarkdown(escapeHTML(event.title))}</h3>
+        ${event.description ? `<p class="slideyui-timeline-description">${renderMarkdown(escapeHTML(event.description))}</p>` : ''}
       </div>
     </div>
   `

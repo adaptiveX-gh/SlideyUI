@@ -169,14 +169,13 @@ export async function generateStandaloneHTML(params: {
       display: none;
       padding: 5%;
       box-sizing: border-box;
-    }
-
-    .slideyui-slide:first-child {
-      display: block;
+      background-color: var(--slidey-background);
+      color: var(--slidey-foreground);
     }
 
     .slideyui-slide.active {
       display: block;
+      z-index: 1;
     }
 
     /* Print styles */
