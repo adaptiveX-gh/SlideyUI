@@ -46,6 +46,19 @@ export const corporateTheme: Theme = {
     codeHighlight: true,
     dataVisualization: true,
   },
+  heroDefaults: {
+    overlay: {
+      type: 'gradient',
+      colors: ['primary', 'secondary'],
+      direction: '135deg',
+      opacity: 0.7,
+    },
+    textStyle: {
+      position: 'center',
+      color: 'white',
+      shadow: true,
+    },
+  },
 };
 
 /**
@@ -94,6 +107,19 @@ export const pitchDeckTheme: Theme = {
     codeHighlight: false,
     dataVisualization: true,
   },
+  heroDefaults: {
+    overlay: {
+      type: 'gradient',
+      colors: ['primary', 'accent'],
+      direction: '45deg',
+      opacity: 0.9,
+    },
+    textStyle: {
+      position: 'center',
+      color: 'white',
+      shadow: true,
+    },
+  },
 };
 
 /**
@@ -137,6 +163,18 @@ export const academicTheme: Theme = {
     codeHighlight: true,
     dataVisualization: true,
   },
+  heroDefaults: {
+    overlay: {
+      type: 'solid',
+      colors: ['primary'],
+      opacity: 0.5,
+    },
+    textStyle: {
+      position: 'bottom',
+      color: 'white',
+      shadow: true,
+    },
+  },
 };
 
 /**
@@ -179,6 +217,19 @@ export const workshopTheme: Theme = {
     animations: true,
     codeHighlight: true,
     dataVisualization: false,
+  },
+  heroDefaults: {
+    overlay: {
+      type: 'gradient',
+      colors: ['primary', 'accent'],
+      direction: '135deg',
+      opacity: 0.7,
+    },
+    textStyle: {
+      position: 'center',
+      color: 'white',
+      shadow: true,
+    },
   },
 };
 
@@ -227,6 +278,19 @@ export const startupTheme: Theme = {
     animations: true,
     codeHighlight: true,
     dataVisualization: true,
+  },
+  heroDefaults: {
+    overlay: {
+      type: 'gradient',
+      colors: ['primary', 'secondary'],
+      direction: '135deg',
+      opacity: 0.75,
+    },
+    textStyle: {
+      position: 'center',
+      color: 'white',
+      shadow: true,
+    },
   },
 };
 

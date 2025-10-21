@@ -404,6 +404,111 @@ td {
 hr {
   border-color: var(--slidey-border);
 }
+
+/* Hero Slide Layouts */
+.slideyui-hero-background {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideyui-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.slideyui-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  box-sizing: border-box;
+}
+
+/* Text positioning variants */
+.slideyui-hero-content-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.slideyui-hero-content-top {
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 10%;
+}
+
+.slideyui-hero-content-bottom {
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 10%;
+}
+
+.slideyui-hero-content-left {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.slideyui-hero-content-right {
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* Hero typography */
+.slideyui-hero-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem 0;
+}
+
+.slideyui-hero-subtitle {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Hero text shadow for better readability */
+.slideyui-hero-text-shadow {
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+               0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hero text color variants */
+.slideyui-hero-text-white {
+  color: #ffffff;
+}
+
+.slideyui-hero-text-dark {
+  color: var(--slidey-foreground);
+}
+
+/* Print optimization for hero slides */
+@media print {
+  .slideyui-hero-background {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .slideyui-hero-overlay {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
 `;
 
 /**

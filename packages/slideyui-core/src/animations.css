@@ -126,6 +126,23 @@
     background-size: 200% 200%;
     animation: slideGradientShift 3s ease infinite;
   }
+
+  /* Hero Slide Animations - Entrance effects for hero slides */
+  .slideyui-hero-fade-up {
+    animation: heroFadeUp 800ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slideyui-hero-zoom-subtle {
+    animation: heroZoomSubtle 1200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slideyui-hero-slide-left {
+    animation: heroSlideLeft 800ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slideyui-hero-slide-right {
+    animation: heroSlideRight 800ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 @layer utilities {
@@ -343,5 +360,76 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* Hero Slide Animations */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroZoomSubtle {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes heroSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Progressive Image Loading Animations */
+@keyframes heroPlaceholderPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes heroLoadingShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes heroImageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

@@ -590,12 +590,18 @@ export class ExamplesResourceHandler implements ResourceHandler {
         description: 'List of all available example presentations',
         mimeType: 'application/json',
       },
-      ...examples.map((example) => ({
-        uri: `${this.baseUri}/${example}`,
-        name: EXAMPLE_PRESENTATIONS[example].displayName,
-        description: EXAMPLE_PRESENTATIONS[example].description,
-        mimeType: 'application/json',
-      })),
+      ...examples.map((example) => {
+        const exampleData = EXAMPLE_PRESENTATIONS[example];
+        if (!exampleData) {
+          throw new Error(`Example ${example} not found`);
+        }
+        return {
+          uri: `${this.baseUri}/${example}`,
+          name: exampleData.displayName,
+          description: exampleData.description,
+          mimeType: 'application/json',
+        };
+      }),
     ];
   }
 
@@ -673,7 +679,10 @@ export class ExamplesResourceHandler implements ResourceHandler {
  */
 export function getExample(category: string): PresentationSpec | undefined {
   const example = EXAMPLE_PRESENTATIONS[category];
-  return example?.presentation as PresentationSpec;
+  if (!example) {
+    return undefined;
+  }
+  return example.presentation as unknown as PresentationSpec;
 }
 
 /**

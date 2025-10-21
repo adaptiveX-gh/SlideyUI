@@ -234,15 +234,94 @@ export const ContentSlideSchema = BaseSlideSchema.extend({
 });
 
 /**
+ * Media slide overlay configuration schema
+ */
+export const OverlayConfigSchema = z.object({
+  enabled: z.boolean().optional().default(true),
+  type: z.enum(['gradient', 'solid', 'none']).optional().default('gradient'),
+  colors: z.array(z.enum(['primary', 'secondary', 'accent'])).optional(),
+  customColors: z.array(z.string().regex(HEX_COLOR_REGEX, 'Custom color must be a valid hex color (e.g., #FF5733)')).optional(),
+  opacity: z.number().min(0).max(1).optional().default(0.7),
+  direction: z.string().optional().default('135deg'),
+});
+
+/**
+ * Media slide text style configuration schema
+ */
+export const TextStyleConfigSchema = z.object({
+  position: z.enum(['center', 'top', 'bottom', 'left', 'right']).optional().default('center'),
+  align: z.enum(['left', 'center', 'right']).optional().default('center'),
+  color: z.string().optional().default('white'),
+  shadow: z.boolean().optional().default(true),
+  maxWidth: z.string().optional().default('900px'),
+});
+
+/**
+ * Print configuration schema for media slides
+ */
+export const PrintConfigSchema = z.object({
+  mediaUrl: z.string().url().optional(),
+  enabled: z.boolean().optional().default(true),
+  quality: z.enum(['high', 'medium', 'screen']).optional().default('high'),
+});
+
+/**
+ * Loading configuration schema for progressive image loading
+ */
+export const LoadingConfigSchema = z.object({
+  strategy: z.enum(['progressive', 'eager', 'lazy']).optional().default('progressive'),
+  placeholder: z.object({
+    type: z.enum(['blur', 'color', 'none']).optional().default('color'),
+    thumbnail: z.string().url().optional(),
+    color: z.string().regex(HEX_COLOR_REGEX, 'Placeholder color must be a valid hex color').optional(),
+  }).optional(),
+  preload: z.boolean().optional().default(false),
+});
+
+/**
+ * Responsive image configuration schema
+ */
+export const ResponsiveConfigSchema = z.object({
+  autoGenerate: z.boolean().optional().default(true),
+  srcset: z.string().optional(),
+  sizes: z.string().optional().default('(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1920px'),
+  breakpoints: z.array(z.number()).optional().default([400, 800, 1200, 1920, 2560]),
+  formats: z.array(z.enum(['webp', 'jpg', 'png', 'avif'])).optional().default(['webp', 'jpg']),
+  qualities: z.record(z.number()).optional(),
+});
+
+/**
+ * Video configuration schema
+ */
+export const VideoConfigSchema = z.object({
+  autoplay: z.boolean().optional().default(true),
+  loop: z.boolean().optional().default(true),
+  muted: z.boolean().optional().default(true),
+  controls: z.boolean().optional().default(false),
+  playbackRate: z.number().min(0.25).max(2.0).optional().default(1.0),
+  poster: z.string().url().optional(),
+  playOn: z.enum(['visible', 'manual', 'immediate']).optional().default('visible'),
+  pauseOn: z.enum(['hidden', 'never']).optional().default('hidden'),
+  fallbackImage: z.string().url().optional(),
+});
+
+/**
  * Media slide schema
  */
 export const MediaSlideSchema = BaseSlideSchema.extend({
   type: z.literal('media'),
   title: z.string().optional(),
+  subtitle: z.string().optional(),
   mediaUrl: z.string().url(),
   mediaType: z.enum(['image', 'video', 'embed']),
   caption: z.string().optional(),
-  layout: z.enum(['full-bleed', 'contained', 'split']).optional(),
+  layout: z.enum(['contained', 'hero', 'split', 'full-bleed']).optional().default('contained'),
+  overlay: OverlayConfigSchema.optional(),
+  textStyle: TextStyleConfigSchema.optional(),
+  print: PrintConfigSchema.optional(),
+  loading: LoadingConfigSchema.optional(),
+  responsive: ResponsiveConfigSchema.optional(),
+  video: VideoConfigSchema.optional(),
 });
 
 /**
@@ -585,3 +664,13 @@ export type GenerationOptions = z.infer<typeof GenerationOptionsSchema>;
  * Generation result type inferred from schema
  */
 export type GenerationResult = z.infer<typeof GenerationResultSchema>;
+
+/**
+ * Overlay configuration type inferred from schema
+ */
+export type OverlayConfig = z.infer<typeof OverlayConfigSchema>;
+
+/**
+ * Text style configuration type inferred from schema
+ */
+export type TextStyleConfig = z.infer<typeof TextStyleConfigSchema>;

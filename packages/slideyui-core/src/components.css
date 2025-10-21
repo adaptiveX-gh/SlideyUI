@@ -1665,6 +1665,544 @@
   }
 
   /* ========================================================================
+   * Hero Slide Layouts
+   * Full-bleed background hero slides for presentations
+   * Based on media.ts implementation with enhanced CSS classes
+   * ======================================================================== */
+
+  /* Hero Background - Full-bleed background container */
+  .slideyui-hero-background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  /* Progressive Image Loading States */
+  .slideyui-hero-background[data-loading-state="loading"] {
+    /* Show color placeholder immediately */
+    background-color: var(--hero-placeholder-color, var(--slidey-primary));
+    animation: heroPlaceholderPulse 2s ease-in-out infinite;
+  }
+
+  .slideyui-hero-background[data-loading-state="loading"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    animation: heroLoadingShimmer 2s infinite;
+  }
+
+  .slideyui-hero-background[data-loading-state="loaded"] {
+    animation: heroImageFadeIn 0.5s ease-out;
+  }
+
+  .slideyui-hero-background[data-loading-state="error"] {
+    background-color: var(--slidey-muted);
+    background-image: none !important;
+  }
+
+  .slideyui-hero-background[data-loading-state="error"]::before {
+    content: '⚠️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.3;
+  }
+
+  /* Hero Overlay - Semi-transparent overlay layer */
+  .slideyui-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Hero Content - Content container positioned above overlay */
+  .slideyui-hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 5%; /* 5% safe zones */
+  }
+
+  /* Content Positioning Variants */
+  .slideyui-hero-content-center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slideyui-hero-content-top {
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .slideyui-hero-content-bottom {
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 5%;
+  }
+
+  .slideyui-hero-content-left {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .slideyui-hero-content-right {
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  /* Combined positioning variants */
+  .slideyui-hero-content-top-left {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .slideyui-hero-content-top-right {
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .slideyui-hero-content-bottom-left {
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-bottom: 5%;
+  }
+
+  .slideyui-hero-content-bottom-right {
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-bottom: 5%;
+  }
+
+  /* Typography - Hero Title */
+  .slideyui-hero-title {
+    font-size: clamp(3rem, 8vw, 6rem); /* 48px - 96px responsive */
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    margin-bottom: calc(var(--slidey-spacing-gap) * 1);
+    letter-spacing: -0.02em;
+  }
+
+  /* Typography - Hero Subtitle */
+  .slideyui-hero-subtitle {
+    font-size: clamp(1.5rem, 3vw, 2.5rem); /* 24px - 40px responsive */
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Text Styling - Text Shadow for Readability */
+  .slideyui-hero-text-shadow {
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Text Styling - White Text */
+  .slideyui-hero-text-white {
+    color: #ffffff;
+  }
+
+  /* Text Styling - Dark Text */
+  .slideyui-hero-text-dark {
+    color: var(--slidey-foreground);
+  }
+
+  /* Hero Actions - Button container */
+  .slideyui-hero-actions {
+    display: flex;
+    gap: calc(var(--slidey-spacing-gap) * 1);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: calc(var(--slidey-spacing-gap) * 1.5);
+  }
+
+  /* Hero Button - Primary action button */
+  .slideyui-hero-button {
+    padding: calc(var(--slidey-spacing-gap) * 0.75) calc(var(--slidey-spacing-gap) * 2);
+    background: var(--slidey-accent);
+    color: var(--slidey-accent-foreground);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: clamp(1.125rem, 2vw, 1.5rem); /* Min 24px for readability */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .slideyui-hero-button:hover {
+    background: var(--slidey-primary);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .slideyui-hero-button:active {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Hero Button - Outline variant */
+  .slideyui-hero-button-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .slideyui-hero-button-outline:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+
+  /* Hero Button - Dark outline for light backgrounds */
+  .slideyui-hero-button-outline-dark {
+    background: transparent;
+    color: var(--slidey-foreground);
+    border: 2px solid var(--slidey-foreground);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .slideyui-hero-button-outline-dark:hover {
+    background: var(--slidey-muted);
+    border-color: var(--slidey-accent);
+    color: var(--slidey-accent);
+  }
+
+  /* Hero Content Wrapper - Max width constraint */
+  .slideyui-hero-content-wrapper {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  /* Responsive Hero Adjustments */
+  @media (max-width: 1024px) {
+    .slideyui-hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem); /* 40px - 64px on tablets */
+    }
+
+    .slideyui-hero-subtitle {
+      font-size: clamp(1.25rem, 2.5vw, 2rem); /* 20px - 32px on tablets */
+    }
+
+    .slideyui-hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .slideyui-hero-button {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .slideyui-hero-content {
+      padding: 8%; /* Larger safe zones on mobile */
+    }
+
+    .slideyui-hero-title {
+      font-size: clamp(2rem, 5vw, 3rem); /* 32px - 48px on mobile */
+    }
+
+    .slideyui-hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.5rem); /* 16px - 24px on mobile (min at edge) */
+    }
+
+    .slideyui-hero-button {
+      font-size: clamp(1rem, 2vw, 1.25rem); /* 16px - 20px on mobile */
+      padding: calc(var(--slidey-spacing-gap) * 0.625) calc(var(--slidey-spacing-gap) * 1.5);
+    }
+  }
+
+  /* Print Styles for Hero Slides */
+  @media print {
+    .slideyui-hero-background {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+    }
+
+    .slideyui-hero-overlay {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+    }
+
+    .slideyui-hero-text-shadow {
+      text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* High-resolution image swap for print (300dpi) */
+    .slideyui-hero-background[data-print-url]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: var(--print-bg-image);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+
+    /* Hide screen-resolution background when print URL is provided */
+    .slideyui-hero-background[data-print-url] {
+      background-image: none !important;
+    }
+
+    /* Hide interactive elements in print */
+    .slideyui-hero-button {
+      border: 2px solid currentColor;
+      box-shadow: none;
+    }
+
+    .slideyui-hero-button:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Accessibility Enhancements */
+  @media (prefers-reduced-motion: reduce) {
+    .slideyui-hero-button {
+      transition: none;
+    }
+
+    .slideyui-hero-button:hover {
+      transform: none;
+    }
+  }
+
+  /* ========================================================================
+   * Video Background Support
+   * Full-bleed video backgrounds for hero slides
+   * ======================================================================== */
+
+  /* Video background container */
+  .slideyui-hero-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* Contained video element */
+  .slideyui-media-video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+  }
+
+  /* Video controls overlay */
+  .slideyui-video-controls {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .slideyui-hero-video:hover .slideyui-video-controls {
+    opacity: 1;
+  }
+
+  /* Video fallback */
+  .slideyui-video-fallback {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  /* Video loading state */
+  .slideyui-hero-video[data-video-state="loading"] .slideyui-hero-video-bg {
+    opacity: 0;
+  }
+
+  .slideyui-hero-video[data-video-state="loaded"] .slideyui-hero-video-bg {
+    animation: heroImageFadeIn 0.5s ease-out;
+  }
+
+  .slideyui-hero-video[data-video-state="error"] .slideyui-hero-video-bg {
+    display: none;
+  }
+
+  /* Print: Replace video with poster/fallback */
+  @media print {
+    .slideyui-hero-video-bg,
+    .slideyui-media-video {
+      display: none !important;
+    }
+
+    .slideyui-hero-video[data-poster] {
+      background-image: var(--video-poster-url);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slideyui-video-controls {
+      display: none !important;
+    }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .slideyui-hero-text-shadow {
+      text-shadow:
+        0 0 2px rgba(0, 0, 0, 1),
+        0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .slideyui-hero-overlay {
+      background: rgba(0, 0, 0, 0.7) !important; /* Ensure sufficient contrast */
+    }
+
+    .slideyui-hero-button-outline {
+      border-width: 3px;
+    }
+  }
+
+  /* ========================================================================
+   * Handout Print Layouts
+   * Multiple slides per page for printing handouts
+   * Usage: Add body class "slideyui-print-handout-2", "slideyui-print-handout-4", or "slideyui-print-handout-6"
+   * ======================================================================== */
+
+  @media print {
+    /* Common handout styles */
+    body[class*="slideyui-print-handout"] .slideyui-slide,
+    body[class*="slideyui-print-handout"] .slide {
+      page-break-inside: avoid;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Hide navigation and controls in handout mode */
+    body[class*="slideyui-print-handout"] .slide-controls,
+    body[class*="slideyui-print-handout"] .nav-hint,
+    body[class*="slideyui-print-handout"] .slide-progress {
+      display: none !important;
+    }
+
+    /* 2 slides per page - 50% width each */
+    body.slideyui-print-handout-2 .slideyui-slide,
+    body.slideyui-print-handout-2 .slide {
+      width: 48%;
+      height: 48vh;
+      float: left;
+      margin: 1%;
+      transform: scale(0.95);
+      transform-origin: top left;
+    }
+
+    body.slideyui-print-handout-2 .slideyui-slide:nth-child(2n),
+    body.slideyui-print-handout-2 .slide:nth-child(2n) {
+      page-break-after: always;
+    }
+
+    /* 4 slides per page - 2x2 grid */
+    body.slideyui-print-handout-4 .slideyui-slide,
+    body.slideyui-print-handout-4 .slide {
+      width: 48%;
+      height: 23vh;
+      float: left;
+      margin: 1%;
+      transform: scale(0.9);
+      transform-origin: top left;
+    }
+
+    body.slideyui-print-handout-4 .slideyui-slide:nth-child(4n),
+    body.slideyui-print-handout-4 .slide:nth-child(4n) {
+      page-break-after: always;
+    }
+
+    /* 6 slides per page - 2x3 grid */
+    body.slideyui-print-handout-6 .slideyui-slide,
+    body.slideyui-print-handout-6 .slide {
+      width: 48%;
+      height: 15vh;
+      float: left;
+      margin: 1%;
+      transform: scale(0.85);
+      transform-origin: top left;
+    }
+
+    body.slideyui-print-handout-6 .slideyui-slide:nth-child(6n),
+    body.slideyui-print-handout-6 .slide:nth-child(6n) {
+      page-break-after: always;
+    }
+
+    /* Scale hero content for handout mode */
+    body[class*="slideyui-print-handout"] .slideyui-hero-title {
+      font-size: clamp(1rem, 3vw, 2rem);
+    }
+
+    body[class*="slideyui-print-handout"] .slideyui-hero-subtitle {
+      font-size: clamp(0.75rem, 2vw, 1.25rem);
+    }
+
+    body[class*="slideyui-print-handout"] .slideyui-hero-content {
+      padding: 3%;
+    }
+
+    /* Add slide numbers for handouts */
+    body[class*="slideyui-print-handout"] .slideyui-slide::after,
+    body[class*="slideyui-print-handout"] .slide::after {
+      content: counter(slide);
+      counter-increment: slide;
+      position: absolute;
+      bottom: 4px;
+      right: 8px;
+      font-size: 10pt;
+      color: #64748b;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* Initialize slide counter */
+    body[class*="slideyui-print-handout"] {
+      counter-reset: slide;
+    }
+  }
+
+  /* ========================================================================
    * Basic Layout Components
    * Presentation-optimized 16:9 layout patterns for card composition
    * ======================================================================== */

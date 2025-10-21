@@ -83,15 +83,118 @@ export interface ContentSlideSpec extends BaseSlideSpec {
 }
 
 /**
+ * Overlay configuration for media slides
+ */
+export interface OverlayConfig {
+  enabled?: boolean;
+  type?: 'gradient' | 'solid' | 'none';
+  colors?: Array<'primary' | 'secondary' | 'accent'>;
+  customColors?: string[];
+  opacity?: number;
+  direction?: string;
+}
+
+/**
+ * Text style configuration for media slides
+ */
+export interface TextStyleConfig {
+  position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
+  align?: 'left' | 'center' | 'right';
+  color?: string;
+  shadow?: boolean;
+  maxWidth?: string;
+}
+
+/**
+ * Print configuration for media slides
+ */
+export interface PrintConfig {
+  /** High-resolution image URL for print output (300dpi recommended) */
+  mediaUrl?: string;
+  /** Enable/disable printing of this slide */
+  enabled?: boolean;
+  /** Print quality: 'high' uses 300dpi images, 'medium' uses 150dpi, 'screen' uses 72dpi */
+  quality?: 'high' | 'medium' | 'screen';
+}
+
+/**
+ * Image loading configuration for progressive enhancement
+ */
+export interface LoadingConfig {
+  /** Loading strategy: 'progressive' (blur-up), 'eager' (immediate), 'lazy' (on-demand) */
+  strategy?: 'progressive' | 'eager' | 'lazy';
+  /** Placeholder configuration */
+  placeholder?: {
+    /** Placeholder type */
+    type?: 'blur' | 'color' | 'none';
+    /** Low-resolution thumbnail URL for blur-up effect */
+    thumbnail?: string;
+    /** Solid color placeholder (hex format) */
+    color?: string;
+  };
+  /** Preload image on deck initialization */
+  preload?: boolean;
+}
+
+/**
+ * Responsive image configuration for srcset generation
+ */
+export interface ResponsiveConfig {
+  /** Enable automatic srcset generation from base URL */
+  autoGenerate?: boolean;
+  /** Manually specify srcset (overrides auto-generation) */
+  srcset?: string;
+  /** Sizes attribute for responsive images */
+  sizes?: string;
+  /** Breakpoints in pixels for auto-generation [400, 800, 1200, 1920, 2560] */
+  breakpoints?: number[];
+  /** Image formats to generate (e.g., ['webp', 'jpg']) */
+  formats?: Array<'webp' | 'jpg' | 'png' | 'avif'>;
+  /** Quality levels per breakpoint */
+  qualities?: Record<number, number>;
+}
+
+/**
+ * Video playback configuration
+ */
+export interface VideoConfig {
+  /** Auto-play video (muted required for most browsers) */
+  autoplay?: boolean;
+  /** Loop video playback */
+  loop?: boolean;
+  /** Mute audio (required for autoplay) */
+  muted?: boolean;
+  /** Show video controls */
+  controls?: boolean;
+  /** Playback rate (0.5 = half speed, 2.0 = double speed) */
+  playbackRate?: number;
+  /** Poster image URL (displayed before video loads) */
+  poster?: string;
+  /** When to play: 'visible' (when slide visible), 'manual', 'immediate' */
+  playOn?: 'visible' | 'manual' | 'immediate';
+  /** When to pause: 'hidden' (when slide hidden), 'never' */
+  pauseOn?: 'hidden' | 'never';
+  /** Fallback image if video fails to load */
+  fallbackImage?: string;
+}
+
+/**
  * Media slide specification
  */
 export interface MediaSlideSpec extends BaseSlideSpec {
   type: 'media';
   title?: string;
+  subtitle?: string;
   mediaUrl: string;
   mediaType: 'image' | 'video' | 'embed';
   caption?: string;
-  layout?: 'full-bleed' | 'contained' | 'split';
+  layout?: 'contained' | 'hero' | 'split' | 'full-bleed';
+  overlay?: OverlayConfig;
+  textStyle?: TextStyleConfig;
+  print?: PrintConfig;
+  loading?: LoadingConfig;
+  responsive?: ResponsiveConfig;
+  video?: VideoConfig;
 }
 
 /**

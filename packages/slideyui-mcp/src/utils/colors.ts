@@ -447,3 +447,184 @@ export function validateAccessibility(theme: {
 
   return warnings;
 }
+
+/**
+ * Convert hex color to rgba
+ *
+ * @param hex - Hex color string (e.g., '#FF5733')
+ * @param alpha - Alpha value (0-1)
+ * @returns RGBA color string
+ *
+ * @example
+ * hexToRgba('#FF5733', 0.7) // 'rgba(255, 87, 51, 0.7)'
+ */
+export function hexToRgba(hex: string, alpha: number): string {
+  const rgb = hexToRgb(hex);
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+}
+
+/**
+ * Predefined theme color mappings
+ */
+const THEME_COLOR_MAP: Record<string, {
+  primary: string;
+  secondary: string;
+  accent: string;
+}> = {
+  corporate: {
+    primary: '#1e40af',
+    secondary: '#64748b',
+    accent: '#0891b2',
+  },
+  'pitch-deck': {
+    primary: '#7c3aed',
+    secondary: '#ec4899',
+    accent: '#f59e0b',
+  },
+  academic: {
+    primary: '#1e3a8a',
+    secondary: '#92400e',
+    accent: '#065f46',
+  },
+  workshop: {
+    primary: '#ea580c',
+    secondary: '#fb923c',
+    accent: '#fdba74',
+  },
+  startup: {
+    primary: '#10b981',
+    secondary: '#34d399',
+    accent: '#6ee7b7',
+  },
+};
+
+/**
+ * Get theme color by name
+ *
+ * Maps semantic color names (primary, secondary, accent) to actual hex values
+ * based on the current theme. Supports both predefined themes and custom themes
+ * registered in the theme registry.
+ *
+ * @param colorName - Color name (primary, secondary, or accent)
+ * @param theme - Theme name
+ * @returns Hex color value
+ *
+ * @example
+ * getThemeColor('primary', 'corporate') // '#1e40af'
+ * getThemeColor('accent', 'startup') // '#6ee7b7'
+ */
+export function getThemeColor(colorName: 'primary' | 'secondary' | 'accent', theme: string): string {
+  // Check predefined themes first
+  const predefinedTheme = THEME_COLOR_MAP[theme];
+  if (predefinedTheme) {
+    return predefinedTheme[colorName];
+  }
+
+  // For custom themes, we need to import the theme registry
+  // This is a lazy import to avoid circular dependencies
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { getTheme } = require('./theme-registry.js') as typeof import('./theme-registry.js');
+    const customTheme = getTheme(theme);
+
+    if (customTheme) {
+      const colorMap: Record<'primary' | 'secondary' | 'accent', string> = {
+        primary: customTheme.colors.primary,
+        secondary: customTheme.colors.secondary || customTheme.colors.primary,
+        accent: customTheme.colors.accent || customTheme.colors.primary,
+      };
+      return colorMap[colorName];
+    }
+  } catch {
+    // Fall through to default
+  }
+
+  // Fallback to corporate theme
+  const corporateTheme = THEME_COLOR_MAP.corporate;
+  if (!corporateTheme) {
+    // Hard-coded fallback if corporate theme is somehow missing
+    const fallbackColors = { primary: '#1e40af', secondary: '#64748b', accent: '#0891b2' };
+    return fallbackColors[colorName];
+  }
+  return corporateTheme[colorName];
+}
+
+/**
+ * Overlay configuration interface
+ */
+export interface OverlayConfig {
+  enabled?: boolean;
+  type?: 'gradient' | 'solid' | 'none';
+  colors?: Array<'primary' | 'secondary' | 'accent'>;
+  customColors?: string[];
+  opacity?: number;
+  direction?: string;
+}
+
+/**
+ * Generate overlay CSS based on overlay configuration
+ *
+ * Creates CSS background value for hero slide overlays. Supports:
+ * - Gradient overlays (linear-gradient)
+ * - Solid color overlays
+ * - Theme color resolution
+ * - Custom hex colors
+ * - Configurable opacity and direction
+ *
+ * @param overlay - Overlay configuration object
+ * @param theme - Theme name for color resolution
+ * @returns CSS background value
+ *
+ * @example
+ * generateOverlayCSS({
+ *   type: 'gradient',
+ *   colors: ['primary', 'secondary'],
+ *   opacity: 0.7,
+ *   direction: '135deg'
+ * }, 'corporate')
+ * // Returns: 'linear-gradient(135deg, rgba(30, 64, 175, 0.7), rgba(100, 116, 139, 0.7))'
+ *
+ * @example
+ * generateOverlayCSS({
+ *   type: 'solid',
+ *   customColors: ['#FF5733'],
+ *   opacity: 0.5
+ * }, 'corporate')
+ * // Returns: 'rgba(255, 87, 51, 0.5)'
+ */
+export function generateOverlayCSS(overlay: OverlayConfig, theme: string): string {
+  // Return 'none' if overlay is explicitly disabled or type is 'none'
+  if (overlay.enabled === false || overlay.type === 'none') {
+    return 'none';
+  }
+
+  const opacity = overlay.opacity ?? 0.7;
+  const overlayType = overlay.type || 'gradient'; // Default to gradient
+
+  // Resolve colors (custom colors take precedence over theme colors)
+  let resolvedColors: string[];
+
+  if (overlay.customColors && overlay.customColors.length > 0) {
+    resolvedColors = overlay.customColors;
+  } else if (overlay.colors && overlay.colors.length > 0) {
+    resolvedColors = overlay.colors.map(colorName => getThemeColor(colorName, theme));
+  } else {
+    // Default to primary and secondary theme colors
+    resolvedColors = [
+      getThemeColor('primary', theme),
+      getThemeColor('secondary', theme),
+    ];
+  }
+
+  // Convert hex colors to rgba with opacity
+  const rgbaColors = resolvedColors.map(hex => hexToRgba(hex, opacity));
+
+  // Generate CSS based on overlay type (defaults to gradient)
+  if (overlayType === 'solid') {
+    return rgbaColors[0]!;
+  } else {
+    // Default behavior: gradient
+    const direction = overlay.direction || '135deg';
+    return `linear-gradient(${direction}, ${rgbaColors.join(', ')})`;
+  }
+}

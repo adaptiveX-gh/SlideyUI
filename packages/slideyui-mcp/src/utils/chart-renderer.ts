@@ -73,7 +73,11 @@ function generateColors(count: number, theme: Theme): string[] {
   const colors = getThemeColors(theme);
   const result: string[] = [];
   for (let i = 0; i < count; i++) {
-    result.push(colors[i % colors.length]);
+    const color = colors[i % colors.length];
+    if (!color) {
+      throw new Error('No colors available for theme');
+    }
+    result.push(color);
   }
   return result;
 }
@@ -385,7 +389,7 @@ function renderAreaChart(
   height: number,
   showLegend: boolean,
   showGrid: boolean,
-  showValues: boolean,
+  _showValues: boolean,
   title?: string
 ): string {
   const padding = { top: 60, right: 40, bottom: 100, left: 80 };
@@ -568,6 +572,9 @@ function renderPieChart(
       const y = legendY + index * 35;
       const color = colors[index];
       const value = values[index];
+      if (value === undefined) {
+        return;
+      }
       const percentage = ((value / total) * 100).toFixed(1);
 
       svg += `<rect x="${legendX}" y="${y}" width="24" height="24" fill="${color}" rx="2"/>`;
@@ -668,6 +675,9 @@ function renderDoughnutChart(
       const y = legendY + index * 35;
       const color = colors[index];
       const value = values[index];
+      if (value === undefined) {
+        return;
+      }
       const percentage = ((value / total) * 100).toFixed(1);
 
       svg += `<rect x="${legendX}" y="${y}" width="24" height="24" fill="${color}" rx="2"/>`;

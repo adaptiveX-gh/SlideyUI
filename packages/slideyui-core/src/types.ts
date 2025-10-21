@@ -75,6 +75,33 @@ export interface ThemeFeatures {
 }
 
 /**
+ * Hero layout overlay configuration
+ */
+export interface HeroOverlayDefaults {
+  type: 'gradient' | 'solid' | 'none';
+  colors: Array<'primary' | 'secondary' | 'accent'>;
+  direction?: string;
+  opacity: number;
+}
+
+/**
+ * Hero layout text style configuration
+ */
+export interface HeroTextStyleDefaults {
+  position: 'center' | 'top' | 'bottom' | 'left' | 'right';
+  color: string;
+  shadow: boolean;
+}
+
+/**
+ * Hero layout defaults for a theme
+ */
+export interface HeroDefaults {
+  overlay: HeroOverlayDefaults;
+  textStyle: HeroTextStyleDefaults;
+}
+
+/**
  * Complete theme definition
  */
 export interface Theme {
@@ -96,6 +123,8 @@ export interface Theme {
   animationStyle: AnimationStyle;
   /** Special features */
   features: ThemeFeatures;
+  /** Hero layout defaults */
+  heroDefaults?: HeroDefaults;
 }
 
 /**
