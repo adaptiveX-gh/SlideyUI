@@ -8,6 +8,7 @@ import type { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 // Tool implementations
 import { createPresentationTool } from './create-presentation.js';
+import { createCustomThemeTool } from './create-custom-theme.js';
 import { addSlideTool } from './add-slide.js';
 import { updateSlideTool } from './update-slide.js';
 import { exportPresentationTool } from './export-presentation.js';
@@ -17,6 +18,7 @@ import { exportPresentationTool } from './export-presentation.js';
  */
 export const tools = [
   createPresentationTool,
+  createCustomThemeTool,
   addSlideTool,
   updateSlideTool,
   exportPresentationTool,
@@ -38,6 +40,7 @@ export function registerTools(): Tool[] {
  */
 export {
   createPresentationTool,
+  createCustomThemeTool,
   addSlideTool,
   updateSlideTool,
   exportPresentationTool,

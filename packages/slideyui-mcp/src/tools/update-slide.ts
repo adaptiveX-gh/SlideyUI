@@ -15,7 +15,7 @@ export const updateSlideTool = {
     'Use this when modifying an existing slide in a presentation.',
 
   inputSchema: {
-    type: 'object',
+    type: 'object' as const,
     properties: {
       slideId: {
         type: 'string',

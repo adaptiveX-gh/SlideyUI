@@ -19,6 +19,12 @@ export type {
   SlideType,
 } from './types/index.js';
 
+// Schema types
+export type {
+  CustomTheme,
+  ThemeName,
+} from './schema/index.js';
+
 // Schema exports
 export {
   PresentationSchema,
@@ -46,3 +52,28 @@ export {
   minifyHTML,
   validatePresentation,
 } from './utils/index.js';
+
+// Tool exports (for testing and programmatic usage)
+export {
+  createPresentationTool,
+  createCustomThemeTool,
+  addSlideTool,
+  updateSlideTool,
+  exportPresentationTool,
+} from './tools/index.js';
+
+// Theme registry exports
+export {
+  registerTheme,
+  getTheme,
+  hasTheme,
+  getAllCustomThemes,
+  clearThemes,
+} from './utils/theme-registry.js';
+
+// Color utilities exports
+export {
+  generateThemeColors,
+  validateAccessibility,
+  getContrastRatio,
+} from './utils/colors.js';

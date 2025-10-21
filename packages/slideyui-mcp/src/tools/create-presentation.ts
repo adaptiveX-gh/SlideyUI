@@ -16,12 +16,13 @@ export const createPresentationTool = {
     'Includes embedded CSS, navigation controls, and print support.',
 
   inputSchema: {
-    type: 'object',
+    type: 'object' as const,
     properties: {
       theme: {
         type: 'string',
-        enum: ['corporate', 'pitch-deck', 'academic', 'workshop', 'startup'],
-        description: 'Presentation theme (corporate, pitch-deck, academic, workshop, startup)',
+        description:
+          'Presentation theme name. Use predefined themes (corporate, pitch-deck, academic, workshop, startup) ' +
+          'or a custom theme created with create_custom_theme tool',
       },
       title: {
         type: 'string',

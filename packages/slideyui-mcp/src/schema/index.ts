@@ -8,14 +8,184 @@
 import { z } from 'zod';
 
 /**
- * Theme schema
+ * Predefined theme names
+ * Exported for validation and tooling purposes
  */
-export const ThemeSchema = z.enum([
+export const PREDEFINED_THEMES = [
   'corporate',
   'pitch-deck',
   'academic',
   'workshop',
   'startup',
+] as const;
+
+/**
+ * Hex color regex pattern (e.g., #FF5733)
+ */
+const HEX_COLOR_REGEX = /^#[0-9A-Fa-f]{6}$/;
+
+/**
+ * Custom theme name regex pattern (lowercase alphanumeric with hyphens)
+ */
+const THEME_NAME_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/**
+ * Custom theme schema
+ *
+ * Allows users to define brand-specific presentation themes with custom colors.
+ * Required fields: name, displayName, and primary color.
+ * Optional fields will be auto-generated based on the primary color for optimal contrast.
+ *
+ * @example
+ * ```typescript
+ * const customTheme: CustomTheme = {
+ *   name: "acme-corp",
+ *   displayName: "ACME Corporation",
+ *   colors: {
+ *     primary: "#FF5733",
+ *     secondary: "#33C4FF",
+ *     accent: "#FFC300"
+ *   },
+ *   metadata: {
+ *     author: "Design Team",
+ *     description: "Official ACME brand colors",
+ *     tags: ["corporate", "brand"]
+ *   }
+ * };
+ * ```
+ */
+export const CustomThemeSchema = z.object({
+  /**
+   * Unique theme identifier (lowercase, alphanumeric with hyphens only)
+   * Must not conflict with predefined themes: corporate, pitch-deck, academic, workshop, startup
+   */
+  name: z
+    .string()
+    .regex(
+      THEME_NAME_REGEX,
+      'Theme name must be lowercase alphanumeric with hyphens only'
+    )
+    .refine(
+      (name) => !PREDEFINED_THEMES.includes(name as any),
+      'Theme name cannot conflict with predefined themes'
+    ),
+
+  /**
+   * Human-readable theme name displayed in UI
+   */
+  displayName: z.string().min(1, 'Display name is required'),
+
+  /**
+   * Theme color palette
+   * Only primary color is required; others will be auto-generated if not provided
+   */
+  colors: z.object({
+    /**
+     * Primary brand color (required, hex format)
+     */
+    primary: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Primary color must be a valid hex color (e.g., #FF5733)'),
+
+    /**
+     * Secondary brand color (optional, hex format)
+     * Auto-generated from primary if not provided
+     */
+    secondary: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Secondary color must be a valid hex color (e.g., #33C4FF)')
+      .optional(),
+
+    /**
+     * Accent color for highlights and CTAs (optional, hex format)
+     * Auto-generated from primary if not provided
+     */
+    accent: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Accent color must be a valid hex color (e.g., #FFC300)')
+      .optional(),
+
+    /**
+     * Background color (optional, hex format)
+     * Defaults to white (#FFFFFF) if not provided
+     */
+    background: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Background color must be a valid hex color')
+      .optional(),
+
+    /**
+     * Foreground/text color (optional, hex format)
+     * Auto-calculated for optimal contrast against background if not provided
+     */
+    foreground: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Foreground color must be a valid hex color')
+      .optional(),
+
+    /**
+     * Muted/disabled element color (optional, hex format)
+     * Auto-generated from primary if not provided
+     */
+    muted: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Muted color must be a valid hex color')
+      .optional(),
+
+    /**
+     * Text color for muted elements (optional, hex format)
+     * Auto-generated for contrast against muted background if not provided
+     */
+    mutedForeground: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Muted foreground color must be a valid hex color')
+      .optional(),
+
+    /**
+     * Border color (optional, hex format)
+     * Auto-generated from primary if not provided
+     */
+    border: z
+      .string()
+      .regex(HEX_COLOR_REGEX, 'Border color must be a valid hex color')
+      .optional(),
+  }),
+
+  /**
+   * Optional metadata about the theme
+   */
+  metadata: z
+    .object({
+      /**
+       * Theme creator/author
+       */
+      author: z.string().optional(),
+
+      /**
+       * Theme creation date (ISO 8601 format)
+       */
+      createdAt: z.string().datetime().optional(),
+
+      /**
+       * Theme description
+       */
+      description: z.string().optional(),
+
+      /**
+       * Tags for categorizing/searching themes
+       */
+      tags: z.array(z.string()).optional(),
+    })
+    .optional(),
+});
+
+/**
+ * Theme schema
+ * Supports both predefined themes (corporate, pitch-deck, etc.) and custom theme names
+ */
+export const ThemeSchema = z.union([
+  z.enum(PREDEFINED_THEMES),
+  z.string().regex(THEME_NAME_REGEX, 'Custom theme name must be lowercase alphanumeric with hyphens'),
 ]);
 
 /**
@@ -381,3 +551,37 @@ export const GenerationResultSchema = z.object({
   }),
   warnings: z.array(z.string()).optional(),
 });
+
+// ============================================================================
+// Type Exports
+// ============================================================================
+
+/**
+ * Custom theme type inferred from schema
+ */
+export type CustomTheme = z.infer<typeof CustomThemeSchema>;
+
+/**
+ * Theme name type - supports both predefined and custom themes
+ */
+export type ThemeName = z.infer<typeof ThemeSchema>;
+
+/**
+ * Slide type inferred from schema
+ */
+export type Slide = z.infer<typeof SlideSchema>;
+
+/**
+ * Presentation type inferred from schema
+ */
+export type Presentation = z.infer<typeof PresentationSchema>;
+
+/**
+ * Generation options type inferred from schema
+ */
+export type GenerationOptions = z.infer<typeof GenerationOptionsSchema>;
+
+/**
+ * Generation result type inferred from schema
+ */
+export type GenerationResult = z.infer<typeof GenerationResultSchema>;

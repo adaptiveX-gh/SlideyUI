@@ -9,6 +9,8 @@ import { readFile, access } from 'node:fs/promises';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { constants } from 'node:fs';
+import { getTheme } from './theme-registry.js';
+import type { CustomTheme } from '../schema/index.js';
 
 /**
  * Embedded SlideyUI CSS - Full styles from @slideyui/core source files
@@ -628,6 +630,44 @@ function getThemeColors(theme: string): ThemeColors {
 }
 
 /**
+ * Generate CSS custom properties for a custom theme
+ *
+ * Creates a [data-theme="theme-name"] CSS block with all color variables
+ * mapped from the custom theme's color palette.
+ *
+ * @param theme - Custom theme object
+ * @returns CSS string with theme variables
+ *
+ * @example
+ * const css = generateCustomThemeCSS(myTheme);
+ * // Returns:
+ * // [data-theme="my-theme"] {
+ * //   --slidey-primary: #3b82f6;
+ * //   ...
+ * // }
+ */
+export function generateCustomThemeCSS(theme: CustomTheme): string {
+  const { name, colors } = theme;
+
+  return `
+/* Custom Theme: ${theme.displayName} */
+[data-theme="${name}"] {
+  --slidey-primary: ${colors.primary};
+  --slidey-primary-foreground: #ffffff;
+  --slidey-secondary: ${colors.secondary};
+  --slidey-secondary-foreground: #ffffff;
+  --slidey-accent: ${colors.accent};
+  --slidey-accent-foreground: #000000;
+  --slidey-background: ${colors.background};
+  --slidey-foreground: ${colors.foreground};
+  --slidey-muted: ${colors.muted};
+  --slidey-muted-foreground: ${colors.mutedForeground};
+  --slidey-border: ${colors.border};
+}
+`;
+}
+
+/**
  * Get Tailwind CDN link as ultimate fallback
  * This ensures presentations always have some baseline styling
  */
@@ -657,25 +697,36 @@ function getTailwindCDN(): string {
  * 3. Use embedded CSS constant
  * 4. Fall back to minimal CSS with theme colors
  *
- * @param theme - Theme name
- * @returns CSS string
+ * For custom themes, appends custom theme CSS to the base CSS.
+ *
+ * @param theme - Theme name (predefined or custom)
+ * @returns CSS string with custom theme CSS appended if applicable
  */
-export async function embedCSS(_theme: string): Promise<string> {
+export async function embedCSS(theme: string): Promise<string> {
   // Strategy 1: Try to load from built file
-  const fileCSS = await loadCSSFromFile();
-  if (fileCSS) {
-    return fileCSS;
-  }
+  let baseCSS = await loadCSSFromFile();
 
   // Strategy 2: Try to load from source files
-  const sourceCSS = await loadCSSFromSource();
-  if (sourceCSS) {
-    return sourceCSS;
+  if (!baseCSS) {
+    baseCSS = await loadCSSFromSource();
   }
 
   // Strategy 3: Use embedded CSS constant
-  console.warn('⚠ Using embedded SlideyUI CSS (built files not found)');
-  return EMBEDDED_SLIDEYUI_CSS;
+  if (!baseCSS) {
+    console.warn('⚠ Using embedded SlideyUI CSS (built files not found)');
+    baseCSS = EMBEDDED_SLIDEYUI_CSS;
+  }
+
+  // Check if this is a custom theme
+  const customTheme = getTheme(theme);
+  if (customTheme) {
+    // Append custom theme CSS to base CSS
+    const customThemeCSS = generateCustomThemeCSS(customTheme);
+    return baseCSS + '\n\n' + customThemeCSS;
+  }
+
+  // Return base CSS for predefined themes
+  return baseCSS;
 }
 
 /**

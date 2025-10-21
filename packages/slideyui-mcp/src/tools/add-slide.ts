@@ -15,7 +15,7 @@ export const addSlideTool = {
     'Useful for iterative presentation building or adding slides dynamically.',
 
   inputSchema: {
-    type: 'object',
+    type: 'object' as const,
     properties: {
       slide: {
         type: 'object',

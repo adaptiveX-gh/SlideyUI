@@ -44,7 +44,7 @@ export const exportPresentationTool = {
     'Use JSON format to get the presentation data structure for programmatic access.',
 
   inputSchema: {
-    type: 'object',
+    type: 'object' as const,
     properties: {
       html: {
         type: 'string',
