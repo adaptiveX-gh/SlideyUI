@@ -161,18 +161,19 @@ export const createCustomThemeTool = {
   },
 
   async handler(args: Record<string, unknown>) {
-    // Extract options
-    const options = (args.options as CreateCustomThemeOptions) || {};
-    const shouldValidate = options.validateAccessibility !== false;
-    const shouldAutoGenerate = options.autoGenerateShades !== false;
+    try {
+      // Extract options
+      const options = (args.options as CreateCustomThemeOptions) || {};
+      const shouldValidate = options.validateAccessibility !== false;
+      const shouldAutoGenerate = options.autoGenerateShades !== false;
 
-    // Validate input against schema
-    const input = CustomThemeSchema.parse({
-      name: args.name,
-      displayName: args.displayName,
-      colors: args.colors,
-      metadata: args.metadata,
-    });
+      // Validate input against schema
+      const input = CustomThemeSchema.parse({
+        name: args.name,
+        displayName: args.displayName,
+        colors: args.colors,
+        metadata: args.metadata,
+      });
 
     // Check if theme already exists
     if (hasTheme(input.name)) {
@@ -293,5 +294,14 @@ export const createCustomThemeTool = {
           ? `Theme "${completeTheme.name}" created with ${warnings.length} accessibility warning(s)`
           : `Theme "${completeTheme.name}" created successfully`,
     };
+    } catch (error) {
+      // Import error formatter dynamically to avoid circular dependencies
+      const { formatValidationError } = await import('../utils/error-formatter.js');
+      const formatted = formatValidationError(error);
+
+      throw new Error(
+        `Theme validation failed:\n\n${formatted.details || formatted.message}`
+      );
+    }
   },
 };

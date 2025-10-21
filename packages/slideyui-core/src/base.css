@@ -51,6 +51,53 @@
     --slidey-ratio-9-16: 177.78%; /* 16/9 * 100 */
     --slidey-ratio-1-1: 100%;
   }
+
+  /* Dark mode support - respects system preference */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme-mode="light"]) {
+      --slidey-primary: theme('colors.blue.400');
+      --slidey-primary-foreground: theme('colors.slate.900');
+      --slidey-secondary: theme('colors.slate.400');
+      --slidey-secondary-foreground: theme('colors.slate.900');
+      --slidey-accent: theme('colors.cyan.400');
+      --slidey-accent-foreground: theme('colors.slate.900');
+      --slidey-background: theme('colors.slate.900');
+      --slidey-foreground: theme('colors.slate.50');
+      --slidey-muted: theme('colors.slate.800');
+      --slidey-muted-foreground: theme('colors.slate.400');
+      --slidey-border: theme('colors.slate.700');
+    }
+  }
+
+  /* Explicit dark mode override */
+  [data-theme-mode="dark"] {
+    --slidey-primary: theme('colors.blue.400');
+    --slidey-primary-foreground: theme('colors.slate.900');
+    --slidey-secondary: theme('colors.slate.400');
+    --slidey-secondary-foreground: theme('colors.slate.900');
+    --slidey-accent: theme('colors.cyan.400');
+    --slidey-accent-foreground: theme('colors.slate.900');
+    --slidey-background: theme('colors.slate.900');
+    --slidey-foreground: theme('colors.slate.50');
+    --slidey-muted: theme('colors.slate.800');
+    --slidey-muted-foreground: theme('colors.slate.400');
+    --slidey-border: theme('colors.slate.700');
+  }
+
+  /* Explicit light mode override (in case dark mode was preferred by system) */
+  [data-theme-mode="light"] {
+    --slidey-primary: theme('colors.blue.600');
+    --slidey-primary-foreground: theme('colors.white');
+    --slidey-secondary: theme('colors.slate.500');
+    --slidey-secondary-foreground: theme('colors.white');
+    --slidey-accent: theme('colors.cyan.600');
+    --slidey-accent-foreground: theme('colors.white');
+    --slidey-background: theme('colors.white');
+    --slidey-foreground: theme('colors.slate.900');
+    --slidey-muted: theme('colors.slate.100');
+    --slidey-muted-foreground: theme('colors.slate.500');
+    --slidey-border: theme('colors.slate.200');
+  }
 }
 
 @layer components {

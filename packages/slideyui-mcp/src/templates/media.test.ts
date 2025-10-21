@@ -62,6 +62,9 @@ describe('Media Template - Backward Compatibility', () => {
       mediaUrl: 'https://example.com/video.mp4',
       mediaType: 'video',
       layout: 'contained',
+      video: {
+        controls: true,
+      },
     };
 
     const html = mediaTemplate(spec, defaultOptions);
@@ -570,5 +573,176 @@ describe('Media Template - Edge Cases', () => {
 
     const html = mediaTemplate(spec, defaultOptions);
     expect(html).toContain('background-image');
+  });
+});
+
+describe('Media Template - SVG Content Support', () => {
+  it('renders SVG content inline in contained layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="red"/></svg>',
+      svgType: 'inline',
+      layout: 'contained',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-media-svg');
+    expect(html).toContain('<svg viewBox="0 0 100 100">');
+    expect(html).toContain('<circle cx="50" cy="50" r="40" fill="red"/>');
+    expect(html).not.toContain('&lt;svg');
+  });
+
+  it('renders SVG content as data URI in contained layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="blue"/></svg>',
+      svgType: 'data-uri',
+      layout: 'contained',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('data:image/svg+xml;utf8,');
+    expect(html).toContain('slideyui-media-svg');
+    expect(html).not.toContain('<svg viewBox');
+  });
+
+  it('renders SVG content inline in hero layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      layout: 'hero',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 800 600"><rect width="800" height="600" fill="purple"/></svg>',
+      svgType: 'inline',
+      title: 'SVG Hero Background',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-hero-background');
+    expect(html).toContain('slideyui-hero-svg');
+    expect(html).toContain('slideyui-hero-svg-bg');
+    expect(html).toContain('<svg viewBox="0 0 800 600">');
+    expect(html).toContain('<rect width="800" height="600" fill="purple"/>');
+    expect(html).toContain('SVG Hero Background');
+    expect(html).not.toContain('&lt;svg');
+  });
+
+  it('renders SVG content as data URI in hero layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      layout: 'hero',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 800 600"><circle cx="400" cy="300" r="200" fill="green"/></svg>',
+      svgType: 'data-uri',
+      title: 'Data URI Hero',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-hero-background');
+    expect(html).toContain('background-image: url(\'data:image/svg+xml;utf8,');
+    expect(html).toContain('Data URI Hero');
+    expect(html).not.toContain('<svg viewBox');
+  });
+
+  it('renders SVG content inline in hero-card layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      layout: 'hero-card',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 800 600"><polygon points="400,50 700,550 100,550" fill="orange"/></svg>',
+      svgType: 'inline',
+      title: 'SVG Hero Card',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-card-hero');
+    expect(html).toContain('slideyui-card-hero-svg');
+    expect(html).toContain('slideyui-card-hero-svg-bg');
+    expect(html).toContain('<svg viewBox="0 0 800 600">');
+    expect(html).toContain('<polygon points="400,50 700,550 100,550" fill="orange"/>');
+    expect(html).not.toContain('&lt;svg');
+  });
+
+  it('renders SVG content as data URI in hero-card layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      layout: 'hero-card',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 800 600"><ellipse cx="400" cy="300" rx="300" ry="200" fill="yellow"/></svg>',
+      svgType: 'data-uri',
+      title: 'Data URI Card',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-card-hero');
+    expect(html).toContain('background-image: url(\'data:image/svg+xml;utf8,');
+    expect(html).not.toContain('<svg viewBox');
+  });
+
+  it('does NOT escape SVG content (allows raw HTML rendering)', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 100 100"><text x="10" y="50" font-size="20">Test & < > " \'</text></svg>',
+      svgType: 'inline',
+      layout: 'contained',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    // SVG content should be rendered RAW, not escaped
+    expect(html).toContain('<svg viewBox="0 0 100 100">');
+    expect(html).toContain('<text x="10" y="50" font-size="20">Test & < > " \'</text>');
+    expect(html).not.toContain('&lt;svg');
+    expect(html).not.toContain('&lt;text');
+  });
+
+  it('supports SVG with overlay in hero layout', () => {
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      layout: 'hero',
+      mediaType: 'svg',
+      svgContent: '<svg viewBox="0 0 800 600"><rect width="800" height="600" fill="teal"/></svg>',
+      svgType: 'inline',
+      title: 'SVG with Overlay',
+      overlay: {
+        customColors: ['#FF0000', '#0000FF'],
+        opacity: 0.6,
+      },
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('slideyui-hero-overlay');
+    expect(html).toContain('<svg viewBox="0 0 800 600">');
+    expect(html).toContain('rgba(255, 0, 0, 0.6)');
+  });
+
+  it('handles complex SVG with gradients and paths', () => {
+    const complexSVG = `
+      <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <path d="M 100 100 L 300 100 L 200 300 z" fill="url(#grad1)" />
+      </svg>
+    `;
+
+    const spec: MediaSlideSpec = {
+      type: 'media',
+      mediaType: 'svg',
+      svgContent: complexSVG,
+      svgType: 'inline',
+      layout: 'hero',
+      title: 'Complex SVG',
+    };
+
+    const html = mediaTemplate(spec, defaultOptions);
+    expect(html).toContain('<linearGradient id="grad1"');
+    expect(html).toContain('stop-color:rgb(255,255,0)');
+    expect(html).toContain('url(#grad1)');
+    expect(html).not.toContain('&lt;linearGradient');
   });
 });

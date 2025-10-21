@@ -62,24 +62,34 @@ export const updateSlideTool = {
   },
 
   async handler(args: Record<string, unknown>) {
-    const slideId = args.slideId as string;
-    const slide = SlideSchema.parse(args.slide) as SlideSpec;
-    const options = args.options
-      ? (GenerationOptionsSchema.parse(args.options) as GenerationOptions)
-      : {};
+    try {
+      const slideId = args.slideId as string;
+      const slide = SlideSchema.parse(args.slide) as SlideSpec;
+      const options = args.options
+        ? (GenerationOptionsSchema.parse(args.options) as GenerationOptions)
+        : {};
 
-    // Ensure slide has the correct ID
-    slide.id = slideId;
+      // Ensure slide has the correct ID
+      slide.id = slideId;
 
-    // Generate updated slide HTML
-    const html = generateSlide(slide, options);
+      // Generate updated slide HTML
+      const html = generateSlide(slide, options);
 
-    return {
-      success: true,
-      html,
-      slideId,
-      slideType: slide.type,
-      message: `Updated slide ${slideId}`,
-    };
+      return {
+        success: true,
+        html,
+        slideId,
+        slideType: slide.type,
+        message: `Updated slide ${slideId}`,
+      };
+    } catch (error) {
+      // Import error formatter dynamically to avoid circular dependencies
+      const { formatValidationError } = await import('../utils/error-formatter.js');
+      const formatted = formatValidationError(error);
+
+      throw new Error(
+        `Slide update failed:\n\n${formatted.details || formatted.message}`
+      );
+    }
   },
 };

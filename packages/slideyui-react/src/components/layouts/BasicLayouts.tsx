@@ -11,6 +11,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
+import { LayoutDensity } from '../../types';
 
 // ============================================================================
 // 1. Blank Card
@@ -52,6 +53,8 @@ export interface ImageAndTextLayoutProps {
   imageAlt?: string;
   /** Text content */
   children: React.ReactNode;
+  /** Layout density for controlling spacing */
+  density?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
 }
@@ -60,11 +63,12 @@ export const ImageAndTextLayout: React.FC<ImageAndTextLayoutProps> = ({
   image,
   imageAlt = '',
   children,
+  density = 'normal',
   className = '',
   ...props
 }) => {
   return (
-    <div className={clsx('card-layout-split', className)} {...props}>
+    <div className={clsx('card-layout-split', className)} data-layout-density={density} {...props}>
       <div className="card-layout-split-image">
         <img src={image} alt={imageAlt} />
       </div>
@@ -87,6 +91,8 @@ export interface TextAndImageLayoutProps {
   imageAlt?: string;
   /** Text content */
   children: React.ReactNode;
+  /** Layout density for controlling spacing */
+  density?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
 }
@@ -95,11 +101,12 @@ export const TextAndImageLayout: React.FC<TextAndImageLayoutProps> = ({
   image,
   imageAlt = '',
   children,
+  density = 'normal',
   className = '',
   ...props
 }) => {
   return (
-    <div className={clsx('card-layout-split card-layout-split-reverse', className)} {...props}>
+    <div className={clsx('card-layout-split card-layout-split-reverse', className)} data-layout-density={density} {...props}>
       <div className="card-layout-split-content">{children}</div>
       <div className="card-layout-split-image">
         <img src={image} alt={imageAlt} />
@@ -120,6 +127,8 @@ export interface TwoColumnLayoutProps {
   left: React.ReactNode;
   /** Right column content */
   right: React.ReactNode;
+  /** Layout density for controlling spacing */
+  density?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
 }
@@ -127,11 +136,12 @@ export interface TwoColumnLayoutProps {
 export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
   left,
   right,
+  density = 'normal',
   className = '',
   ...props
 }) => {
   return (
-    <div className={clsx('card-layout-2col', className)} {...props}>
+    <div className={clsx('card-layout-2col', className)} data-layout-density={density} {...props}>
       <div>{left}</div>
       <div>{right}</div>
     </div>
@@ -194,6 +204,8 @@ export interface ThreeColumnLayoutProps {
   second: React.ReactNode;
   /** Third column content */
   third: React.ReactNode;
+  /** Layout density for controlling spacing */
+  density?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
 }
@@ -202,11 +214,12 @@ export const ThreeColumnLayout: React.FC<ThreeColumnLayoutProps> = ({
   first,
   second,
   third,
+  density = 'normal',
   className = '',
   ...props
 }) => {
   return (
-    <div className={clsx('card-layout-3col', className)} {...props}>
+    <div className={clsx('card-layout-3col', className)} data-layout-density={density} {...props}>
       <div>{first}</div>
       <div>{second}</div>
       <div>{third}</div>
@@ -282,6 +295,8 @@ export interface FourColumnLayoutProps {
   third: React.ReactNode;
   /** Fourth column content */
   fourth: React.ReactNode;
+  /** Layout density for controlling spacing */
+  density?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
 }
@@ -291,11 +306,12 @@ export const FourColumnLayout: React.FC<FourColumnLayoutProps> = ({
   second,
   third,
   fourth,
+  density = 'normal',
   className = '',
   ...props
 }) => {
   return (
-    <div className={clsx('card-layout-4col', className)} {...props}>
+    <div className={clsx('card-layout-4col', className)} data-layout-density={density} {...props}>
       <div>{first}</div>
       <div>{second}</div>
       <div>{third}</div>

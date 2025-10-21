@@ -3,9 +3,10 @@
  * Helper functions for plugin configuration and theme management
  */
 
-import type { SlideyUIConfig, ResolvedConfig, Theme } from './types';
+import type { SlideyUIConfig, ResolvedConfig, Theme, ThemeId } from './types';
 import { getTheme, isValidTheme } from './themes';
 import { corporateTheme } from './themes';
+import { getPreset, isValidPreset, applyPreset } from './presets';
 
 /**
  * Deep merge two objects with type safety
@@ -57,6 +58,21 @@ export function resolveConfig(config: SlideyUIConfig = {}): ResolvedConfig {
     baseTheme = corporateTheme;
   }
 
+  // Apply design preset if specified
+  if (config.preset) {
+    if (isValidPreset(config.preset)) {
+      const preset = getPreset(config.preset);
+      if (preset) {
+        baseTheme = applyPreset(baseTheme, preset);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`📦 SlideyUI: Applied preset "${preset.name}"`);
+        }
+      }
+    } else {
+      console.warn(`Unknown preset "${config.preset}", ignoring`);
+    }
+  }
+
   // Apply color overrides
   if (config.colors) {
     baseTheme = {
@@ -85,45 +101,59 @@ export function resolveConfig(config: SlideyUIConfig = {}): ResolvedConfig {
 
 /**
  * Generate CSS variables from theme
+ * @param theme - The theme to generate variables for
+ * @param prefix - Variable prefix (default: 'slidey')
+ * @param mode - Optional mode to use (light/dark). If not specified, uses base colors
  */
-export function generateCSSVariables(theme: Theme, prefix: string = 'slidey'): Record<string, string> {
+export function generateCSSVariables(
+  theme: Theme,
+  prefix: string = 'slidey',
+  mode?: 'light' | 'dark'
+): Record<string, string> {
   const vars: Record<string, string> = {};
 
+  // Determine which colors to use
+  let colors = theme.colors;
+  if (mode && theme.modes && theme.modes[mode]) {
+    // Merge base colors with mode-specific overrides
+    colors = { ...theme.colors, ...theme.modes[mode] };
+  }
+
   // Color variables
-  vars[`--${prefix}-primary`] = theme.colors.primary;
-  vars[`--${prefix}-primary-foreground`] = theme.colors.primaryForeground;
-  vars[`--${prefix}-secondary`] = theme.colors.secondary;
-  vars[`--${prefix}-secondary-foreground`] = theme.colors.secondaryForeground;
-  vars[`--${prefix}-accent`] = theme.colors.accent;
-  vars[`--${prefix}-accent-foreground`] = theme.colors.accentForeground;
-  vars[`--${prefix}-background`] = theme.colors.background;
-  vars[`--${prefix}-foreground`] = theme.colors.foreground;
-  vars[`--${prefix}-muted`] = theme.colors.muted;
-  vars[`--${prefix}-muted-foreground`] = theme.colors.mutedForeground;
-  vars[`--${prefix}-border`] = theme.colors.border;
+  vars[`--${prefix}-primary`] = colors.primary;
+  vars[`--${prefix}-primary-foreground`] = colors.primaryForeground;
+  vars[`--${prefix}-secondary`] = colors.secondary;
+  vars[`--${prefix}-secondary-foreground`] = colors.secondaryForeground;
+  vars[`--${prefix}-accent`] = colors.accent;
+  vars[`--${prefix}-accent-foreground`] = colors.accentForeground;
+  vars[`--${prefix}-background`] = colors.background;
+  vars[`--${prefix}-foreground`] = colors.foreground;
+  vars[`--${prefix}-muted`] = colors.muted;
+  vars[`--${prefix}-muted-foreground`] = colors.mutedForeground;
+  vars[`--${prefix}-border`] = colors.border;
 
   // Gradient variables (if available)
-  if (theme.colors.gradient) {
-    vars[`--${prefix}-gradient-from`] = theme.colors.gradient.from;
-    vars[`--${prefix}-gradient-to`] = theme.colors.gradient.to;
-    if (theme.colors.gradient.via) {
-      vars[`--${prefix}-gradient-via`] = theme.colors.gradient.via;
+  if (colors.gradient) {
+    vars[`--${prefix}-gradient-from`] = colors.gradient.from;
+    vars[`--${prefix}-gradient-to`] = colors.gradient.to;
+    if (colors.gradient.via) {
+      vars[`--${prefix}-gradient-via`] = colors.gradient.via;
     }
   }
 
-  // Font variables
+  // Font variables (not mode-specific)
   vars[`--${prefix}-font-display`] = theme.fonts.display.join(', ');
   vars[`--${prefix}-font-body`] = theme.fonts.body.join(', ');
   if (theme.fonts.mono) {
     vars[`--${prefix}-font-mono`] = theme.fonts.mono.join(', ');
   }
 
-  // Spacing variables
+  // Spacing variables (not mode-specific)
   vars[`--${prefix}-spacing-base`] = `${theme.spacing.base}rem`;
   vars[`--${prefix}-spacing-padding`] = `${theme.spacing.slidePadding}rem`;
   vars[`--${prefix}-spacing-gap`] = `${theme.spacing.contentGap}rem`;
 
-  // Animation duration based on style
+  // Animation duration based on style (not mode-specific)
   const animationDurations: Record<string, string> = {
     none: '0ms',
     subtle: '300ms',
@@ -131,6 +161,39 @@ export function generateCSSVariables(theme: Theme, prefix: string = 'slidey'): R
     energetic: '700ms',
   };
   vars[`--${prefix}-animation-duration`] = animationDurations[theme.animationStyle];
+
+  // Typography scale variables (if configured, not mode-specific)
+  if (theme.typography) {
+    // Hero text
+    vars[`--${prefix}-text-hero`] = `clamp(${theme.typography.hero.min}, ${theme.typography.hero.preferred}, ${theme.typography.hero.max})`;
+    vars[`--${prefix}-text-hero-weight`] = theme.typography.hero.weight.toString();
+    vars[`--${prefix}-text-hero-lh`] = theme.typography.hero.lineHeight.toString();
+
+    // H1
+    vars[`--${prefix}-text-h1`] = `clamp(${theme.typography.h1.min}, ${theme.typography.h1.preferred}, ${theme.typography.h1.max})`;
+    vars[`--${prefix}-text-h1-weight`] = theme.typography.h1.weight.toString();
+    vars[`--${prefix}-text-h1-lh`] = theme.typography.h1.lineHeight.toString();
+
+    // H2
+    vars[`--${prefix}-text-h2`] = `clamp(${theme.typography.h2.min}, ${theme.typography.h2.preferred}, ${theme.typography.h2.max})`;
+    vars[`--${prefix}-text-h2-weight`] = theme.typography.h2.weight.toString();
+    vars[`--${prefix}-text-h2-lh`] = theme.typography.h2.lineHeight.toString();
+
+    // H3
+    vars[`--${prefix}-text-h3`] = `clamp(${theme.typography.h3.min}, ${theme.typography.h3.preferred}, ${theme.typography.h3.max})`;
+    vars[`--${prefix}-text-h3-weight`] = theme.typography.h3.weight.toString();
+    vars[`--${prefix}-text-h3-lh`] = theme.typography.h3.lineHeight.toString();
+
+    // Body
+    vars[`--${prefix}-text-body`] = `clamp(${theme.typography.body.min}, ${theme.typography.body.preferred}, ${theme.typography.body.max})`;
+    vars[`--${prefix}-text-body-weight`] = theme.typography.body.weight.toString();
+    vars[`--${prefix}-text-body-lh`] = theme.typography.body.lineHeight.toString();
+
+    // Caption
+    vars[`--${prefix}-text-caption`] = `clamp(${theme.typography.caption.min}, ${theme.typography.caption.preferred}, ${theme.typography.caption.max})`;
+    vars[`--${prefix}-text-caption-weight`] = theme.typography.caption.weight.toString();
+    vars[`--${prefix}-text-caption-lh`] = theme.typography.caption.lineHeight.toString();
+  }
 
   return vars;
 }
@@ -227,5 +290,92 @@ export function validateTheme(theme: Partial<Theme>): { valid: boolean; errors: 
   return {
     valid: errors.length === 0,
     errors,
+  };
+}
+
+/**
+ * Create a derived theme by extending a base theme with overrides
+ * Supports theme inheritance and composition
+ *
+ * @param baseThemeId - The base theme to extend
+ * @param overrides - Partial theme properties to override
+ * @param options - Optional metadata for the derived theme
+ * @returns A new theme object with overrides applied
+ *
+ * @example
+ * ```ts
+ * const myTheme = createDerivedTheme('corporate', {
+ *   colors: {
+ *     primary: '#FF5733',
+ *     accent: '#00D4FF',
+ *   },
+ *   spacing: {
+ *     slidePadding: 4,
+ *   },
+ * }, {
+ *   id: 'my-brand',
+ *   name: 'My Brand Theme',
+ *   description: 'Custom corporate theme with brand colors',
+ * });
+ * ```
+ */
+export function createDerivedTheme(
+  baseThemeId: ThemeId,
+  overrides: Partial<Theme>,
+  options?: {
+    id?: string;
+    name?: string;
+    description?: string;
+  }
+): Theme {
+  const baseTheme = getTheme(baseThemeId);
+
+  // Deep merge hero defaults if provided
+  let heroDefaults = baseTheme.heroDefaults;
+  if (overrides.heroDefaults && baseTheme.heroDefaults) {
+    heroDefaults = {
+      overlay: {
+        ...baseTheme.heroDefaults.overlay,
+        ...(overrides.heroDefaults.overlay || {}),
+      },
+      textStyle: {
+        ...baseTheme.heroDefaults.textStyle,
+        ...(overrides.heroDefaults.textStyle || {}),
+      },
+    };
+  } else if (overrides.heroDefaults) {
+    heroDefaults = overrides.heroDefaults as any;
+  }
+
+  // Deep merge typography if provided
+  let typography = baseTheme.typography;
+  if (overrides.typography) {
+    if (baseTheme.typography) {
+      typography = {
+        hero: { ...baseTheme.typography.hero, ...(overrides.typography.hero || {}) },
+        h1: { ...baseTheme.typography.h1, ...(overrides.typography.h1 || {}) },
+        h2: { ...baseTheme.typography.h2, ...(overrides.typography.h2 || {}) },
+        h3: { ...baseTheme.typography.h3, ...(overrides.typography.h3 || {}) },
+        body: { ...baseTheme.typography.body, ...(overrides.typography.body || {}) },
+        caption: { ...baseTheme.typography.caption, ...(overrides.typography.caption || {}) },
+      };
+    } else {
+      typography = overrides.typography;
+    }
+  }
+
+  return {
+    ...baseTheme,
+    id: (options?.id || `${baseThemeId}-custom`) as ThemeId,
+    name: options?.name || `${baseTheme.name} (Custom)`,
+    description: options?.description || baseTheme.description,
+    colors: { ...baseTheme.colors, ...overrides.colors },
+    fonts: { ...baseTheme.fonts, ...overrides.fonts },
+    spacing: { ...baseTheme.spacing, ...overrides.spacing },
+    features: { ...baseTheme.features, ...overrides.features },
+    animationStyle: overrides.animationStyle || baseTheme.animationStyle,
+    slideRatio: overrides.slideRatio || baseTheme.slideRatio,
+    heroDefaults,
+    typography,
   };
 }

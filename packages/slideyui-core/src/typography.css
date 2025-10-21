@@ -6,52 +6,61 @@
 @layer components {
   /* Hero Text - Main slide titles */
   .slide-text-hero, .card-text-hero {
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height: 1.1;
-    font-weight: 800;
+    font-size: var(--slidey-text-hero, clamp(3rem, 8vw, 6rem));
+    line-height: var(--slidey-text-hero-lh, 1.1);
+    font-weight: var(--slidey-text-hero-weight, 800);
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
-  /* Header Text - Section headers */
+  /* Header Text - Section headers (H1) */
   .slide-text-header, .card-text-header {
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1.2;
-    font-weight: 700;
+    font-size: var(--slidey-text-h1, clamp(2rem, 5vw, 4rem));
+    line-height: var(--slidey-text-h1-lh, 1.2);
+    font-weight: var(--slidey-text-h1-weight, 700);
     letter-spacing: -0.01em;
     text-wrap: balance;
   }
 
-  /* Subheader Text */
+  /* Subheader Text (H2) */
   .slide-text-subheader, .card-text-subheader {
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-    line-height: 1.3;
-    font-weight: 600;
+    font-size: var(--slidey-text-h2, clamp(1.5rem, 3.5vw, 2.5rem));
+    line-height: var(--slidey-text-h2-lh, 1.3);
+    font-weight: var(--slidey-text-h2-weight, 600);
     letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  /* H3 Text */
+  .slide-text-h3, .card-text-h3 {
+    font-size: var(--slidey-text-h3, clamp(1.25rem, 3vw, 2rem));
+    line-height: var(--slidey-text-h3-lh, 1.3);
+    font-weight: var(--slidey-text-h3-weight, 600);
+    letter-spacing: 0;
     text-wrap: balance;
   }
 
   /* Body Text - Main content */
   .slide-text-body, .card-text-body {
-    font-size: clamp(1.25rem, 2.5vw, 2rem);
-    line-height: 1.5;
-    font-weight: 400;
+    font-size: var(--slidey-text-body, clamp(1.25rem, 2.5vw, 2rem));
+    line-height: var(--slidey-text-body-lh, 1.5);
+    font-weight: var(--slidey-text-body-weight, 400);
     letter-spacing: 0;
   }
 
   /* List Text - Optimized for bullet points */
   .slide-text-list, .card-text-list {
-    font-size: clamp(1.125rem, 2.25vw, 1.75rem);
-    line-height: 1.6;
-    font-weight: 400;
+    font-size: var(--slidey-text-body, clamp(1.125rem, 2.25vw, 1.75rem));
+    line-height: var(--slidey-text-body-lh, 1.6);
+    font-weight: var(--slidey-text-body-weight, 400);
     letter-spacing: 0;
   }
 
   /* Caption Text - Small annotations */
   .slide-text-caption, .card-text-caption {
-    font-size: clamp(0.875rem, 1.5vw, 1.25rem);
-    line-height: 1.4;
-    font-weight: 400;
+    font-size: var(--slidey-text-caption, clamp(0.875rem, 1.5vw, 1.25rem));
+    line-height: var(--slidey-text-caption-lh, 1.4);
+    font-weight: var(--slidey-text-caption-weight, 400);
     letter-spacing: 0.01em;
     color: var(--slidey-muted-foreground);
   }

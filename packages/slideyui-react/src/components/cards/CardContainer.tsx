@@ -26,7 +26,7 @@ const modeClasses: Record<string, string> = {
  *
  * @example
  * ```tsx
- * <CardContainer aspectRatio="16/9" shadow>
+ * <CardContainer aspectRatio="16/9" shadow layoutDensity="spacious">
  *   <h2>Card Content</h2>
  * </CardContainer>
  * ```
@@ -34,6 +34,7 @@ const modeClasses: Record<string, string> = {
 export function CardContainer({
   aspectRatio = '16/9',
   mode = 'preview',
+  layoutDensity = 'normal',
   className = '',
   children,
   backgroundColor,
@@ -65,6 +66,7 @@ export function CardContainer({
       }}
       data-card-id={cardId}
       data-card-state={cardState}
+      data-layout-density={layoutDensity}
       data-auto-scale={autoScale ? 'true' : undefined}
       data-fluid-scale={fluidScale ? 'true' : undefined}
     >

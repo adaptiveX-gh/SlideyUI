@@ -12,6 +12,7 @@ import { createCustomThemeTool } from './create-custom-theme.js';
 import { addSlideTool } from './add-slide.js';
 import { updateSlideTool } from './update-slide.js';
 import { exportPresentationTool } from './export-presentation.js';
+import { generateSVGTool } from './generate-svg.js';
 
 /**
  * All available MCP tools
@@ -22,6 +23,7 @@ export const tools = [
   addSlideTool,
   updateSlideTool,
   exportPresentationTool,
+  generateSVGTool,
 ];
 
 /**
@@ -44,4 +46,5 @@ export {
   addSlideTool,
   updateSlideTool,
   exportPresentationTool,
+  generateSVGTool,
 };

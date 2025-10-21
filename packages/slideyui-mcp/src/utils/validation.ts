@@ -2,19 +2,22 @@
  * Validation utilities
  */
 
+import { ZodError } from 'zod';
 import { PresentationSchema } from '../schema/index.js';
 import type { PresentationSpec } from '../types/index.js';
+import { formatZodError, formatValidationError } from './error-formatter.js';
 
 /**
  * Validate a presentation specification
  *
  * @param spec - Presentation spec to validate
- * @returns Validation result
+ * @returns Validation result with formatted errors
  */
 export function validatePresentation(spec: unknown): {
   valid: boolean;
   errors?: string[];
   data?: PresentationSpec;
+  formattedError?: string;
 } {
   try {
     const data = PresentationSchema.parse(spec);
@@ -23,14 +26,22 @@ export function validatePresentation(spec: unknown): {
       data: data as PresentationSpec,
     };
   } catch (error) {
-    const errors =
-      error instanceof Error
-        ? [error.message]
-        : ['Unknown validation error'];
+    // Format Zod errors for better readability
+    if (error instanceof ZodError) {
+      const formatted = formatZodError(error);
+      return {
+        valid: false,
+        errors: error.issues.map((issue) => issue.message),
+        formattedError: formatted,
+      };
+    }
 
+    // Handle other error types
+    const formatted = formatValidationError(error);
     return {
       valid: false,
-      errors,
+      errors: [formatted.message],
+      formattedError: formatted.details || formatted.message,
     };
   }
 }

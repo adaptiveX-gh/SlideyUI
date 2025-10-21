@@ -49,7 +49,10 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@slideyui/core": "workspace:*",
+    "@svgdotjs/svg.js": "^3.2.4",
     "html-minifier-terser": "^7.2.0",
+    "roughjs": "^4.6.6",
+    "svgdom": "^0.1.19",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.22.4"
   },

@@ -1,12 +1,13 @@
 /**
  * MediaCard Component
- * Image and video-focused presentation card
+ * Image, video, and SVG-focused presentation card
  * Optimized for visual content with optional overlays and captions
  */
 
 import { MediaCardProps } from '../../types';
 import { CardContainer } from './CardContainer';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 const objectFitClasses: Record<string, string> = {
   cover: 'object-cover',
@@ -15,7 +16,7 @@ const objectFitClasses: Record<string, string> = {
 };
 
 /**
- * Media-focused card for images and videos
+ * Media-focused card for images, videos, and SVG graphics
  *
  * @example
  * ```tsx
@@ -26,6 +27,22 @@ const objectFitClasses: Record<string, string> = {
  *   caption="Q4 Revenue: +42%"
  * />
  *
+ * // SVG content (interactive mode)
+ * <MediaCard
+ *   mediaType="svg"
+ *   svgContent="<svg>...</svg>"
+ *   svgType="interactive"
+ *   alt="Custom diagram"
+ * />
+ *
+ * // SVG content (image mode with data URI)
+ * <MediaCard
+ *   mediaType="svg"
+ *   svgContent="<svg>...</svg>"
+ *   svgType="image"
+ *   alt="Icon"
+ * />
+ *
  * // Background image with overlay content
  * <MediaCard
  *   src="/images/hero.jpg"
@@ -34,10 +51,19 @@ const objectFitClasses: Record<string, string> = {
  * >
  *   <h2 className="text-white text-4xl">Overlay Content</h2>
  * </MediaCard>
+ *
+ * // Image with error fallback
+ * <MediaCard
+ *   src="/images/might-fail.jpg"
+ *   fallbackImage="/images/placeholder.jpg"
+ *   onError={(err) => console.error('Failed to load:', err)}
+ * />
  * ```
  */
 export function MediaCard({
   src,
+  svgContent,
+  svgType = 'image',
   alt = '',
   mediaType = 'image',
   title,
@@ -45,17 +71,103 @@ export function MediaCard({
   objectFit = 'cover',
   overlay,
   asBackground = false,
+  fallbackImage,
+  onError,
   children,
   padding = 'none',
   className = '',
   ...containerProps
 }: MediaCardProps) {
+  const [imageError, setImageError] = useState(false);
   const paddingClass = {
     compact: 'slide-card-compact',
     default: '',
     spacious: 'slide-card-spacious',
     none: 'slide-card-flush',
   }[padding];
+
+  // Handle image load error
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (fallbackImage && !imageError) {
+      setImageError(true);
+      e.currentTarget.src = fallbackImage;
+    }
+    if (onError) {
+      onError(new Error(`Failed to load image: ${src}`));
+    }
+  };
+
+  // SVG rendering logic
+  if (mediaType === 'svg' && svgContent) {
+    if (svgType === 'interactive') {
+      // Interactive mode - render SVG directly in DOM
+      return (
+        <CardContainer {...containerProps} className={clsx('relative overflow-hidden', paddingClass, className)}>
+          <div
+            className="w-full h-full"
+            dangerouslySetInnerHTML={{ __html: svgContent }}
+            role="img"
+            aria-label={alt}
+          />
+
+          {/* Title Overlay */}
+          {title && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+              <h3 className="text-white text-2xl font-semibold">{title}</h3>
+            </div>
+          )}
+
+          {/* Custom Overlay */}
+          {overlay && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              {overlay}
+            </div>
+          )}
+
+          {/* Caption */}
+          {caption && (
+            <div className="absolute bottom-0 left-0 right-0 bg-slidey-background/95 p-4 border-t border-slidey-border">
+              <div className="text-sm text-slidey-muted-foreground">{caption}</div>
+            </div>
+          )}
+        </CardContainer>
+      );
+    } else {
+      // Image mode - render as data URI
+      const dataUri = `data:image/svg+xml;utf8,${encodeURIComponent(svgContent)}`;
+      return (
+        <CardContainer {...containerProps} className={clsx('relative overflow-hidden', paddingClass, className)}>
+          <img
+            src={dataUri}
+            alt={alt}
+            className={clsx('w-full h-full', objectFitClasses[objectFit])}
+            loading="lazy"
+          />
+
+          {/* Title Overlay */}
+          {title && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+              <h3 className="text-white text-2xl font-semibold">{title}</h3>
+            </div>
+          )}
+
+          {/* Custom Overlay */}
+          {overlay && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              {overlay}
+            </div>
+          )}
+
+          {/* Caption */}
+          {caption && (
+            <div className="absolute bottom-0 left-0 right-0 bg-slidey-background/95 p-4 border-t border-slidey-border">
+              <div className="text-sm text-slidey-muted-foreground">{caption}</div>
+            </div>
+          )}
+        </CardContainer>
+      );
+    }
+  }
 
   if (asBackground) {
     // Use media as background with content overlay
@@ -94,6 +206,7 @@ export function MediaCard({
             alt={alt}
             className={clsx('w-full h-full', objectFitClasses[objectFit])}
             loading="lazy"
+            onError={handleImageError}
           />
         )}
 

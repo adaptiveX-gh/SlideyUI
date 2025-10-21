@@ -30,6 +30,55 @@ const HEX_COLOR_REGEX = /^#[0-9A-Fa-f]{6}$/;
 const THEME_NAME_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /**
+ * Typography scale configuration schema
+ * Allows custom type scale overrides for themes
+ */
+export const TypographyScaleSchema = z.object({
+  hero: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+  h1: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+  h2: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+  h3: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+  body: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+  caption: z.object({
+    min: z.string().optional(),
+    preferred: z.string().optional(),
+    max: z.string().optional(),
+    weight: z.number().optional(),
+    lineHeight: z.number().optional(),
+  }).optional(),
+});
+
+/**
  * Custom theme schema
  *
  * Allows users to define brand-specific presentation themes with custom colors.
@@ -45,6 +94,15 @@ const THEME_NAME_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
  *     primary: "#FF5733",
  *     secondary: "#33C4FF",
  *     accent: "#FFC300"
+ *   },
+ *   typography: {
+ *     hero: {
+ *       min: "3rem",
+ *       preferred: "8vw",
+ *       max: "6rem",
+ *       weight: 800,
+ *       lineHeight: 1.1
+ *     }
  *   },
  *   metadata: {
  *     author: "Design Team",
@@ -152,6 +210,12 @@ export const CustomThemeSchema = z.object({
   }),
 
   /**
+   * Optional typography scale configuration
+   * Allows customization of font sizes, weights, and line heights
+   */
+  typography: TypographyScaleSchema.optional(),
+
+  /**
    * Optional metadata about the theme
    */
   metadata: z
@@ -199,9 +263,144 @@ export const AspectRatioSchema = z.enum(['16:9', '4:3']);
 export const FontSizeSchema = z.enum(['default', 'large', 'xlarge']);
 
 /**
+ * Layout density schema
+ * Controls spacing across all layout types
+ */
+export const LayoutDensitySchema = z.enum(['compact', 'normal', 'spacious']);
+
+/**
  * Card state schema
  */
 export const CardStateSchema = z.enum(['generating', 'complete', 'error']);
+
+/**
+ * Icon names for SVG generation
+ * Business, Communication, Actions, Media, Status, and General purpose icons
+ */
+export const IconNameSchema = z.enum([
+  // Business icons
+  'briefcase',
+  'chart-line',
+  'chart-bar',
+  'pie-chart',
+  'trend-up',
+  'trend-down',
+  // Communication icons
+  'mail',
+  'phone',
+  'message',
+  'users',
+  'calendar',
+  // Action icons
+  'check',
+  'x',
+  'arrow-right',
+  'arrow-left',
+  'plus',
+  'minus',
+  // Media icons
+  'image',
+  'video',
+  'download',
+  'upload',
+  // Status icons
+  'alert',
+  'info',
+  'success',
+  'error',
+  'warning',
+  // General icons
+  'star',
+  'heart',
+  'settings',
+  'search',
+]);
+
+/**
+ * Pattern types for SVG generation
+ */
+export const PatternTypeSchema = z.enum([
+  'dots',
+  'grid',
+  'diagonal-lines',
+  'waves',
+  'gradient-mesh',
+  'chevron',
+  'hexagon',
+  'blobs',
+  'noise',
+  'particles',
+  'rays',
+]);
+
+/**
+ * Chart dataset schema
+ */
+export const ChartDatasetSchema = z.object({
+  label: z.string(),
+  data: z.array(z.number()),
+  backgroundColor: z.union([z.string(), z.array(z.string())]).optional(),
+  borderColor: z.string().optional(),
+  borderWidth: z.number().optional(),
+});
+
+/**
+ * Chart data schema (standard format for all chart types)
+ */
+export const ChartDataSchema = z.object({
+  labels: z.array(z.string()),
+  datasets: z.array(ChartDatasetSchema).min(1),
+});
+
+/**
+ * SVG generation schema
+ * Supports icons, patterns, charts, diagrams, and custom SVG generation
+ */
+export const GenerateSVGSchema = z.object({
+  /**
+   * Type of SVG to generate
+   */
+  type: z.enum(['icon', 'pattern', 'chart', 'diagram', 'custom']),
+
+  /**
+   * Icon generation (type: 'icon')
+   */
+  iconName: IconNameSchema.optional(),
+
+  /**
+   * Pattern generation (type: 'pattern')
+   */
+  patternType: PatternTypeSchema.optional(),
+  patternDensity: z.enum(['low', 'medium', 'high']).optional().default('medium'),
+  patternOpacity: z.number().min(0).max(1).optional().default(0.1),
+
+  /**
+   * Chart generation (type: 'chart')
+   * Uses existing chart-renderer for bar, line, pie, area, doughnut, scatter
+   */
+  chartType: z.enum(['bar', 'line', 'pie', 'area', 'doughnut', 'scatter']).optional(),
+  chartData: ChartDataSchema.optional(),
+
+  /**
+   * Custom SVG generation (type: 'custom')
+   * AI-generated SVG based on text instructions
+   */
+  customInstructions: z.string().optional(),
+
+  /**
+   * Common options for all SVG types
+   */
+  width: z.number().min(1).optional().default(800),
+  height: z.number().min(1).optional().default(600),
+  theme: ThemeSchema.optional(),
+  style: z.enum(['default', 'hand-drawn', 'minimal']).optional().default('default'),
+
+  /**
+   * Optional color overrides (hex format)
+   */
+  color: z.string().regex(HEX_COLOR_REGEX, 'Color must be a valid hex color').optional(),
+  backgroundColor: z.string().regex(HEX_COLOR_REGEX, 'Background color must be a valid hex color').optional(),
+});
 
 /**
  * Base slide schema
@@ -225,12 +424,40 @@ export const TitleSlideSchema = BaseSlideSchema.extend({
 
 /**
  * Content slide schema
+ *
+ * Standard content slide with title and bullet points.
+ * The content field must ALWAYS be an array, even for single items.
+ *
+ * @example
+ * ```json
+ * {
+ *   "type": "content",
+ *   "title": "Key Points",
+ *   "content": ["Point 1", "Point 2", "Point 3"]
+ * }
+ * ```
+ *
+ * @example Single item (still use array)
+ * ```json
+ * {
+ *   "type": "content",
+ *   "title": "Main Idea",
+ *   "content": ["Single important point"]
+ * }
+ * ```
  */
 export const ContentSlideSchema = BaseSlideSchema.extend({
-  type: z.literal('content'),
-  title: z.string().min(1),
-  content: z.union([z.array(z.string()), z.string()]),
-  layout: z.enum(['single-column', 'two-column']).optional(),
+  type: z.literal('content').describe('Slide type must be "content"'),
+  title: z.string().min(1, 'Title is required and cannot be empty'),
+  content: z.union([z.array(z.string()), z.string()]).describe(
+    'Content must be an array of strings, even for single items. Example: ["Point 1", "Point 2"]'
+  ).transform((val) => {
+    // Auto-convert single string to array for better UX
+    return typeof val === 'string' ? [val] : val;
+  }),
+  layout: z.enum(['single-column', 'two-column']).optional().describe(
+    'Layout style: single-column or two-column (default: single-column)'
+  ),
 });
 
 /**
@@ -307,40 +534,63 @@ export const VideoConfigSchema = z.object({
 
 /**
  * Media slide schema
+ *
+ * @remarks
+ * When using SVG content (mediaType: 'svg'):
+ * - Set `svgContent` to the raw SVG markup (NOT escaped - will be rendered as-is)
+ * - Set `svgType` to 'inline' for direct SVG embedding or 'data-uri' for data URIs
+ * - SVG content is NEVER HTML-escaped to allow proper rendering
+ * - For hero/hero-card layouts, SVG can be used as background without mediaUrl
+ * - Security: Only use SVG content from trusted sources (no user input)
+ *
+ * @example
+ * ```typescript
+ * // Inline SVG in contained layout
+ * {
+ *   type: 'media',
+ *   mediaType: 'svg',
+ *   svgContent: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>',
+ *   svgType: 'inline',
+ *   layout: 'contained'
+ * }
+ *
+ * // SVG as hero background
+ * {
+ *   type: 'media',
+ *   mediaType: 'svg',
+ *   svgContent: '<svg viewBox="0 0 800 600">...</svg>',
+ *   svgType: 'inline',
+ *   layout: 'hero',
+ *   title: 'Hero with SVG Background'
+ * }
+ * ```
  */
 export const MediaSlideSchema = BaseSlideSchema.extend({
   type: z.literal('media'),
   title: z.string().optional(),
   subtitle: z.string().optional(),
-  mediaUrl: z.string().url(),
-  mediaType: z.enum(['image', 'video', 'embed']),
+  mediaUrl: z.string().url().optional(),
+  mediaType: z.enum(['image', 'video', 'embed', 'svg']),
+  /**
+   * Raw SVG markup for mediaType: 'svg'
+   * IMPORTANT: This content is rendered as-is without HTML escaping.
+   * Only use SVG from trusted sources to prevent XSS attacks.
+   */
+  svgContent: z.string().optional(),
+  /**
+   * SVG rendering mode:
+   * - 'inline': Inject SVG directly as HTML (allows CSS styling, animations)
+   * - 'data-uri': Encode as data URI in img/background-image (more isolated)
+   */
+  svgType: z.enum(['inline', 'data-uri']).optional().default('inline'),
   caption: z.string().optional(),
-  layout: z.enum(['contained', 'hero', 'split', 'full-bleed']).optional().default('contained'),
+  layout: z.enum(['contained', 'hero', 'hero-card', 'split', 'full-bleed']).optional().default('contained'),
   overlay: OverlayConfigSchema.optional(),
   textStyle: TextStyleConfigSchema.optional(),
   print: PrintConfigSchema.optional(),
   loading: LoadingConfigSchema.optional(),
   responsive: ResponsiveConfigSchema.optional(),
   video: VideoConfigSchema.optional(),
-});
-
-/**
- * Chart dataset schema
- */
-export const ChartDatasetSchema = z.object({
-  label: z.string(),
-  data: z.array(z.number()),
-  backgroundColor: z.union([z.string(), z.array(z.string())]).optional(),
-  borderColor: z.string().optional(),
-  borderWidth: z.number().optional(),
-});
-
-/**
- * Chart data schema (standard format for all chart types)
- */
-export const ChartDataSchema = z.object({
-  labels: z.array(z.string()),
-  datasets: z.array(ChartDatasetSchema).min(1),
 });
 
 /**
@@ -369,19 +619,31 @@ export const QuoteSlideSchema = BaseSlideSchema.extend({
 });
 
 /**
+ * Timeline event schema with roadmap features
+ */
+export const TimelineEventSchema = z.object({
+  date: z.string(),
+  title: z.string(),
+  description: z.string().optional(),
+  status: z.enum(['planned', 'in-progress', 'completed']).optional(),
+  progress: z.number().min(0).max(100).optional(),
+  milestone: z.boolean().optional().default(false),
+  quarter: z.string().optional(),
+  dependencies: z.array(z.number()).optional(),
+});
+
+/**
  * Timeline slide schema
+ * Supports both basic timeline and enhanced roadmap features
  */
 export const TimelineSlideSchema = BaseSlideSchema.extend({
   type: z.literal('timeline'),
   title: z.string().min(1),
-  events: z.array(
-    z.object({
-      date: z.string(),
-      title: z.string(),
-      description: z.string().optional(),
-    })
-  ).default([]),
+  events: z.array(TimelineEventSchema).default([]),
   orientation: z.enum(['horizontal', 'vertical']).optional(),
+  mode: z.enum(['timeline', 'roadmap']).optional().default('timeline'),
+  showProgress: z.boolean().optional().default(false),
+  groupBy: z.enum(['none', 'quarter', 'month', 'year']).optional().default('none'),
 });
 
 /**
@@ -460,6 +722,7 @@ export const TwoColumnSlideSchema = BaseSlideSchema.extend({
     content: z.union([z.string(), z.array(z.string())]),
   }),
   columnRatio: z.enum(['50-50', '60-40', '40-60', '70-30', '30-70']).optional(),
+  layoutDensity: LayoutDensitySchema.optional(),
 });
 
 /**
@@ -485,6 +748,7 @@ export const ThreeColumnSlideSchema = BaseSlideSchema.extend({
       content: z.union([z.string(), z.array(z.string())]),
     }),
   ]),
+  layoutDensity: LayoutDensitySchema.optional(),
 });
 
 /**
@@ -515,6 +779,7 @@ export const FourColumnSlideSchema = BaseSlideSchema.extend({
       content: z.string(),
     }),
   ]),
+  layoutDensity: LayoutDensitySchema.optional(),
 });
 
 /**
@@ -562,7 +827,150 @@ export const ProductOverviewSlideSchema = BaseSlideSchema.extend({
 });
 
 /**
+ * Grid item schema for grid slides
+ */
+export const GridItemSchema = z.object({
+  icon: z.union([IconNameSchema, z.string()]).optional(),
+  title: z.string().min(1),
+  description: z.string().optional(),
+  image: z.string().url().optional(),
+});
+
+/**
+ * Grid slide schema
+ * Flexible grid layout for feature showcases, product grids, etc.
+ */
+export const GridSlideSchema = BaseSlideSchema.extend({
+  type: z.literal('grid'),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  gridType: z.enum(['2x2', '3x3', '2x3', '4x2', 'auto']).optional().default('2x2'),
+  items: z.array(GridItemSchema).min(1),
+  gap: LayoutDensitySchema.optional().default('normal'),
+});
+
+/**
+ * Feature card schema for feature card slides
+ */
+export const FeatureCardItemSchema = z.object({
+  icon: z.union([IconNameSchema, z.string()]).optional(),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  highlight: z.boolean().optional().default(false),
+});
+
+/**
+ * Feature card slide schema
+ * Card-based layout optimized for feature showcases
+ */
+export const FeatureCardSlideSchema = BaseSlideSchema.extend({
+  type: z.literal('feature-cards'),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  features: z.array(FeatureCardItemSchema).min(1),
+  columns: z.enum(['2', '3', '4', 'auto']).optional().default('3'),
+  gap: LayoutDensitySchema.optional().default('normal'),
+});
+
+/**
+ * Team member schema
+ */
+export const TeamMemberSchema = z.object({
+  name: z.string().min(1),
+  role: z.string().min(1),
+  photo: z.string().url().optional(),
+  bio: z.string().optional(),
+  social: z
+    .object({
+      linkedin: z.string().url().optional(),
+      twitter: z.string().url().optional(),
+      github: z.string().url().optional(),
+    })
+    .optional(),
+});
+
+/**
+ * Team slide schema
+ */
+export const TeamSlideSchema = BaseSlideSchema.extend({
+  type: z.literal('team'),
+  title: z.string().optional(),
+  members: z.array(TeamMemberSchema).min(1),
+  layout: z.enum(['grid', 'carousel', 'highlight']).optional().default('grid'),
+});
+
+/**
+ * Pricing plan schema
+ */
+export const PricingPlanSchema = z.object({
+  name: z.string().min(1),
+  price: z.union([z.string(), z.number()]),
+  period: z.string().optional().default('per month'),
+  features: z.array(z.string()).min(1),
+  cta: z.string().optional().default('Get Started'),
+  recommended: z.boolean().optional().default(false),
+});
+
+/**
+ * Pricing slide schema
+ */
+export const PricingSlideSchema = BaseSlideSchema.extend({
+  type: z.literal('pricing'),
+  title: z.string().optional(),
+  plans: z.array(PricingPlanSchema).min(1).max(4),
+  highlight: z.number().optional(),
+});
+
+/**
+ * Code slide schema
+ */
+export const CodeSlideSchema = BaseSlideSchema.extend({
+  type: z.literal('code'),
+  title: z.string().optional(),
+  language: z.string().min(1),
+  code: z.string().min(1),
+  highlights: z.array(z.number()).optional(),
+  filename: z.string().optional(),
+  theme: z.enum(['dark', 'light', 'auto']).optional().default('dark'),
+});
+
+/**
  * Union schema for all slide types
+ *
+ * Each slide MUST have a 'type' field that determines its structure.
+ * The type field is used to discriminate between different slide schemas.
+ *
+ * Valid slide types:
+ * - title: Opening slide with title, subtitle, author, date
+ * - content: Standard content with bullet points
+ * - media: Images, videos, or embedded content
+ * - data: Tables and charts
+ * - quote: Pull quotes with attribution
+ * - timeline: Event timeline
+ * - comparison: Side-by-side comparison
+ * - process: Step-by-step process
+ * - section-header: Section divider
+ * - blank: Blank canvas for custom content
+ * - hero: Full-screen hero slide
+ * - two-column: Two-column layout
+ * - three-column: Three-column layout
+ * - four-column: Four-column layout
+ * - chart-with-metrics: Chart with metrics sidebar
+ * - product-overview: Product showcase
+ * - grid: Grid layout for features/products
+ * - feature-card: Feature highlight cards
+ * - team: Team member showcase
+ * - pricing: Pricing table
+ * - code: Code snippet with syntax highlighting
+ *
+ * @example
+ * ```json
+ * {
+ *   "type": "content",
+ *   "title": "My Slide",
+ *   "content": ["Point 1", "Point 2"]
+ * }
+ * ```
  */
 export const SlideSchema = z.discriminatedUnion('type', [
   TitleSlideSchema,
@@ -581,7 +989,19 @@ export const SlideSchema = z.discriminatedUnion('type', [
   FourColumnSlideSchema,
   ChartWithMetricsSlideSchema,
   ProductOverviewSlideSchema,
-]);
+  GridSlideSchema,
+  FeatureCardSlideSchema,
+  TeamSlideSchema,
+  PricingSlideSchema,
+  CodeSlideSchema,
+]).describe(
+  'Slide specification. Must include a "type" field to determine the slide structure.'
+);
+
+/**
+ * Theme mode schema
+ */
+export const ThemeModeSchema = z.enum(['light', 'dark', 'auto']);
 
 /**
  * Generation options schema
@@ -589,10 +1009,15 @@ export const SlideSchema = z.discriminatedUnion('type', [
 export const GenerationOptionsSchema = z.object({
   aspectRatio: AspectRatioSchema.optional(),
   fontSize: FontSizeSchema.optional(),
+  layoutDensity: LayoutDensitySchema.optional().default('normal'),
+  preset: z.string().optional(),
   minify: z.boolean().optional(),
   includeSlideyUICSS: z.boolean().optional(),
   embedFonts: z.boolean().optional(),
   theme: ThemeSchema.optional(),
+  mode: ThemeModeSchema.optional().default('auto').describe(
+    'Theme mode: light, dark, or auto (respects system preference)'
+  ),
 });
 
 /**
@@ -608,13 +1033,43 @@ export const PresentationMetadataSchema = z.object({
 
 /**
  * Complete presentation schema
+ *
+ * @example
+ * ```json
+ * {
+ *   "theme": "corporate",
+ *   "title": "My Presentation",
+ *   "slides": [
+ *     {
+ *       "type": "title",
+ *       "title": "Welcome",
+ *       "subtitle": "Getting Started"
+ *     },
+ *     {
+ *       "type": "content",
+ *       "title": "Key Points",
+ *       "content": ["Point 1", "Point 2"]
+ *     }
+ *   ]
+ * }
+ * ```
  */
 export const PresentationSchema = z.object({
-  theme: ThemeSchema,
-  title: z.string().min(1),
-  slides: z.array(SlideSchema).min(1),
-  options: GenerationOptionsSchema.optional(),
-  metadata: PresentationMetadataSchema.optional(),
+  theme: ThemeSchema.describe(
+    'Theme name: corporate, pitch-deck, academic, workshop, startup, or custom theme'
+  ),
+  title: z.string().min(1, 'Presentation title is required and cannot be empty').describe(
+    'Presentation title (shown in browser tab)'
+  ),
+  slides: z.array(SlideSchema).min(1, 'Presentation must have at least one slide').describe(
+    'Array of slide specifications. Each slide must have a "type" field.'
+  ),
+  options: GenerationOptionsSchema.optional().describe(
+    'Optional generation settings (aspect ratio, font size, etc.)'
+  ),
+  metadata: PresentationMetadataSchema.optional().describe(
+    'Optional metadata (author, date, description, etc.)'
+  ),
 });
 
 /**

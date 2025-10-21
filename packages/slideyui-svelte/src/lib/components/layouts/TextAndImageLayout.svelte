@@ -5,6 +5,8 @@
    * @component
    */
 
+  import type { LayoutDensity } from '$lib/types';
+
   interface Props {
     /**
      * Image source URL
@@ -17,6 +19,11 @@
     imageAlt?: string;
 
     /**
+     * Layout density for controlling spacing
+     */
+    density?: LayoutDensity;
+
+    /**
      * Additional CSS classes
      */
     class?: string;
@@ -25,6 +32,7 @@
   let {
     image,
     imageAlt = '',
+    density = 'normal',
     class: className = '',
     children,
     ...restProps
@@ -35,7 +43,7 @@
   );
 </script>
 
-<div class={classes} {...restProps}>
+<div class={classes} data-layout-density={density} {...restProps}>
   <div class="card-layout-split-content">
     {@render children?.()}
   </div>

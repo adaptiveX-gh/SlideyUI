@@ -387,6 +387,11 @@ export type CardAspectRatio = '16/9' | '4/3' | '1/1' | '3/2' | 'auto';
 export type CardLayoutMode = 'preview' | 'thumbnail' | 'full';
 
 /**
+ * Layout density options
+ */
+export type LayoutDensity = 'compact' | 'normal' | 'spacious';
+
+/**
  * Base card container props
  */
 export interface CardContainerProps {
@@ -394,6 +399,8 @@ export interface CardContainerProps {
   aspectRatio?: CardAspectRatio;
   /** Layout mode */
   mode?: CardLayoutMode;
+  /** Layout density for controlling spacing */
+  layoutDensity?: LayoutDensity;
   /** Additional CSS classes */
   className?: string;
   /** Child elements */
@@ -488,15 +495,19 @@ export interface ContentCardProps extends Omit<CardContainerProps, 'children'> {
 }
 
 /**
- * Media card props (image/video focused)
+ * Media card props (image/video/SVG focused)
  */
 export interface MediaCardProps extends Omit<CardContainerProps, 'children'> {
-  /** Media source (image or video URL) */
-  src: string;
+  /** Media source (image or video URL) - optional if svgContent is provided */
+  src?: string;
+  /** Inline SVG content string */
+  svgContent?: string;
+  /** SVG rendering mode - 'image' renders as data URI, 'interactive' allows DOM access */
+  svgType?: 'image' | 'interactive';
   /** Alt text for accessibility */
   alt?: string;
   /** Media type */
-  mediaType?: 'image' | 'video';
+  mediaType?: 'image' | 'video' | 'svg';
   /** Title overlay */
   title?: string;
   /** Caption */
@@ -507,6 +518,10 @@ export interface MediaCardProps extends Omit<CardContainerProps, 'children'> {
   overlay?: ReactNode;
   /** Whether media should be a background */
   asBackground?: boolean;
+  /** Fallback image URL if media fails to load */
+  fallbackImage?: string;
+  /** Error handler callback */
+  onError?: (error: Error) => void;
   /** Child content (if asBackground is true) */
   children?: ReactNode;
   /** Padding size variant (typically 'none' for full-bleed media) */

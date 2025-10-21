@@ -28,7 +28,8 @@ import { getThemeIds, getTheme } from './themes';
 // Import themes for re-export
 export * from './types';
 export * from './themes';
-export { resolveConfig, generateCSSVariables, generateThemeExtension } from './utils';
+export * from './presets';
+export { resolveConfig, generateCSSVariables, generateThemeExtension, createDerivedTheme } from './utils';
 
 /**
  * Generate base slide styles as CSS-in-JS objects
@@ -246,35 +247,63 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
       const config = resolveConfig(userConfig);
       const cssVars = generateCSSVariables(config.theme, config.prefix);
 
+      // Prepare root CSS variables
+      const rootVars: Record<string, string> = {
+        ...cssVars,
+        '--slidey-safe-padding': '5%',
+        '--slidey-danger-zone': '2%',
+        '--slidey-font-min': '24px',
+        '--slidey-line-height-base': '1.4',
+        // Card spacing scale (8pt grid system)
+        '--card-spacing-xs': '0.5rem',   // 8px
+        '--card-spacing-sm': '0.75rem',  // 12px
+        '--card-spacing-md': '1rem',     // 16px
+        '--card-spacing-lg': '1.5rem',   // 24px
+        '--card-spacing-xl': '2rem',     // 32px
+        '--card-spacing-2xl': '3rem',    // 48px
+        '--card-spacing-3xl': '4rem',    // 64px
+        // Card padding defaults
+        '--card-padding': 'var(--card-spacing-xl)',          // 32px default
+        '--card-padding-compact': 'var(--card-spacing-lg)',  // 24px compact
+        '--card-padding-spacious': 'var(--card-spacing-2xl)', // 48px spacious
+      };
+
+      // Merge custom CSS variables if provided
+      if (userConfig.customCSS) {
+        Object.assign(rootVars, userConfig.customCSS);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`🎨 SlideyUI: Injected ${Object.keys(userConfig.customCSS).length} custom CSS variables`);
+        }
+      }
+
       // Add CSS variables to :root
       addBase({
-        ':root': {
-          ...cssVars,
-          '--slidey-safe-padding': '5%',
-          '--slidey-danger-zone': '2%',
-          '--slidey-font-min': '24px',
-          '--slidey-line-height-base': '1.4',
-          // Card spacing scale (8pt grid system)
-          '--card-spacing-xs': '0.5rem',   // 8px
-          '--card-spacing-sm': '0.75rem',  // 12px
-          '--card-spacing-md': '1rem',     // 16px
-          '--card-spacing-lg': '1.5rem',   // 24px
-          '--card-spacing-xl': '2rem',     // 32px
-          '--card-spacing-2xl': '3rem',    // 48px
-          '--card-spacing-3xl': '4rem',    // 64px
-          // Card padding defaults
-          '--card-padding': 'var(--card-spacing-xl)',          // 32px default
-          '--card-padding-compact': 'var(--card-spacing-lg)',  // 24px compact
-          '--card-padding-spacious': 'var(--card-spacing-2xl)', // 48px spacious
-        },
+        ':root': rootVars,
       });
 
       // Add per-theme variable classes so themes can be applied via class or data attribute
       const themeSelectors: Record<string, Record<string, string>> = {};
       for (const id of getThemeIds()) {
-        const tVars = generateCSSVariables(getTheme(id), config.prefix);
-        themeSelectors[`.theme-${id}`] = tVars;
-        themeSelectors[`[data-theme="${id}"]`] = tVars;
+        const theme = getTheme(id);
+
+        // Generate base theme variables (light mode by default)
+        const lightVars = generateCSSVariables(theme, config.prefix, 'light');
+        themeSelectors[`.theme-${id}`] = lightVars;
+        themeSelectors[`[data-theme="${id}"]`] = lightVars;
+
+        // Generate dark mode variables if theme has dark mode support
+        if (theme.modes?.dark) {
+          const darkVars = generateCSSVariables(theme, config.prefix, 'dark');
+          themeSelectors[`[data-theme="${id}"][data-theme-mode="dark"]`] = darkVars;
+          themeSelectors[`.theme-${id}[data-theme-mode="dark"]`] = darkVars;
+
+          // Also support auto mode with prefers-color-scheme
+          themeSelectors[`@media (prefers-color-scheme: dark)`] = {
+            ...themeSelectors[`@media (prefers-color-scheme: dark)`],
+            [`[data-theme="${id}"]:not([data-theme-mode="light"])`]: darkVars,
+            [`.theme-${id}:not([data-theme-mode="light"])`]: darkVars,
+          } as any;
+        }
       }
 
       // Add DaisyUI dark theme support (for themes that aren't SlideyUI themes)
@@ -297,6 +326,23 @@ function slideyUI(userConfig: SlideyUIConfig = {}) {
       }
 
       addBase(themeSelectors);
+
+      // Inject custom CSS layers if provided
+      if (userConfig.cssLayers) {
+        if (userConfig.cssLayers.animations) {
+          addBase({ '@layer animations': userConfig.cssLayers.animations } as any);
+        }
+        if (userConfig.cssLayers.utilities) {
+          addUtilities(userConfig.cssLayers.utilities as any);
+        }
+        if (userConfig.cssLayers.components) {
+          addComponents(userConfig.cssLayers.components as any);
+        }
+        if (process.env.NODE_ENV === 'development') {
+          const layerCount = Object.keys(userConfig.cssLayers).length;
+          console.log(`📝 SlideyUI: Injected ${layerCount} custom CSS layer(s)`);
+        }
+      }
 
       // Add base slide styles
       if (config.includeBase) {

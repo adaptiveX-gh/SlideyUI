@@ -26,6 +26,21 @@ export type AspectRatio = '16:9' | '4:3';
 export type FontSize = 'default' | 'large' | 'xlarge';
 
 /**
+ * Layout density options for controlling spacing
+ */
+export type LayoutDensity = 'compact' | 'normal' | 'spacious';
+
+/**
+ * Theme mode options (light/dark/auto)
+ */
+export type ThemeMode = 'light' | 'dark' | 'auto';
+
+/**
+ * Design preset names for theme variations
+ */
+export type DesignPreset = string;
+
+/**
  * Available slide types
  */
 export type SlideType =
@@ -44,7 +59,12 @@ export type SlideType =
   | 'three-column'
   | 'four-column'
   | 'chart-with-metrics'
-  | 'product-overview';
+  | 'product-overview'
+  | 'grid'
+  | 'feature-cards'
+  | 'team'
+  | 'pricing'
+  | 'code';
 
 /**
  * Card state for generation feedback
@@ -180,15 +200,57 @@ export interface VideoConfig {
 
 /**
  * Media slide specification
+ *
+ * @remarks
+ * When using SVG content (mediaType: 'svg'):
+ * - Set `svgContent` to the raw SVG markup (NOT escaped - will be rendered as-is)
+ * - Set `svgType` to 'inline' for direct SVG embedding or 'data-uri' for data URIs
+ * - SVG content is NEVER HTML-escaped to allow proper rendering
+ * - For hero/hero-card layouts, SVG can be used as background without mediaUrl
+ * - Security: Only use SVG content from trusted sources (no user input)
+ *
+ * @example
+ * ```typescript
+ * // Inline SVG in contained layout
+ * const slide: MediaSlideSpec = {
+ *   type: 'media',
+ *   mediaType: 'svg',
+ *   svgContent: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>',
+ *   svgType: 'inline',
+ *   layout: 'contained'
+ * };
+ *
+ * // SVG as hero background
+ * const heroSlide: MediaSlideSpec = {
+ *   type: 'media',
+ *   mediaType: 'svg',
+ *   svgContent: '<svg viewBox="0 0 800 600">...</svg>',
+ *   svgType: 'inline',
+ *   layout: 'hero',
+ *   title: 'Hero with SVG Background'
+ * };
+ * ```
  */
 export interface MediaSlideSpec extends BaseSlideSpec {
   type: 'media';
   title?: string;
   subtitle?: string;
-  mediaUrl: string;
-  mediaType: 'image' | 'video' | 'embed';
+  mediaUrl?: string;
+  mediaType: 'image' | 'video' | 'embed' | 'svg';
+  /**
+   * Raw SVG markup for mediaType: 'svg'
+   * IMPORTANT: This content is rendered as-is without HTML escaping.
+   * Only use SVG from trusted sources to prevent XSS attacks.
+   */
+  svgContent?: string;
+  /**
+   * SVG rendering mode:
+   * - 'inline': Inject SVG directly as HTML (allows CSS styling, animations)
+   * - 'data-uri': Encode as data URI in img/background-image (more isolated)
+   */
+  svgType?: 'inline' | 'data-uri';
   caption?: string;
-  layout?: 'contained' | 'hero' | 'split' | 'full-bleed';
+  layout?: 'contained' | 'hero' | 'hero-card' | 'split' | 'full-bleed';
   overlay?: OverlayConfig;
   textStyle?: TextStyleConfig;
   print?: PrintConfig;
@@ -238,17 +300,31 @@ export interface QuoteSlideSpec extends BaseSlideSpec {
 }
 
 /**
+ * Timeline event specification with roadmap features
+ */
+export interface TimelineEvent {
+  date: string;
+  title: string;
+  description?: string;
+  status?: 'planned' | 'in-progress' | 'completed';
+  progress?: number;
+  milestone?: boolean;
+  quarter?: string;
+  dependencies?: number[];
+}
+
+/**
  * Timeline slide specification
+ * Supports both basic timeline and enhanced roadmap features
  */
 export interface TimelineSlideSpec extends BaseSlideSpec {
   type: 'timeline';
   title: string;
-  events: Array<{
-    date: string;
-    title: string;
-    description?: string;
-  }>;
+  events: TimelineEvent[];
   orientation?: 'horizontal' | 'vertical';
+  mode?: 'timeline' | 'roadmap';
+  showProgress?: boolean;
+  groupBy?: 'none' | 'quarter' | 'month' | 'year';
 }
 
 /**
@@ -323,6 +399,7 @@ export interface TwoColumnSlideSpec extends BaseSlideSpec {
     content: string | string[];
   };
   columnRatio?: '50-50' | '60-40' | '40-60' | '70-30' | '30-70';
+  layoutDensity?: LayoutDensity;
 }
 
 /**
@@ -348,6 +425,7 @@ export interface ThreeColumnSlideSpec extends BaseSlideSpec {
       content: string | string[];
     }
   ];
+  layoutDensity?: LayoutDensity;
 }
 
 /**
@@ -378,6 +456,7 @@ export interface FourColumnSlideSpec extends BaseSlideSpec {
       content: string;
     }
   ];
+  layoutDensity?: LayoutDensity;
 }
 
 /**
@@ -419,6 +498,110 @@ export interface ProductOverviewSlideSpec extends BaseSlideSpec {
 }
 
 /**
+ * Grid item specification
+ */
+export interface GridItem {
+  icon?: string;
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+/**
+ * Grid slide specification
+ */
+export interface GridSlideSpec extends BaseSlideSpec {
+  type: 'grid';
+  title?: string;
+  subtitle?: string;
+  gridType?: '2x2' | '3x3' | '2x3' | '4x2' | 'auto';
+  items: GridItem[];
+  gap?: LayoutDensity;
+}
+
+/**
+ * Feature card item specification
+ */
+export interface FeatureCardItem {
+  icon?: string;
+  title: string;
+  description: string;
+  highlight?: boolean;
+}
+
+/**
+ * Feature card slide specification
+ */
+export interface FeatureCardSlideSpec extends BaseSlideSpec {
+  type: 'feature-cards';
+  title?: string;
+  subtitle?: string;
+  features: FeatureCardItem[];
+  columns?: '2' | '3' | '4' | 'auto';
+  gap?: LayoutDensity;
+}
+
+/**
+ * Team member specification
+ */
+export interface TeamMember {
+  name: string;
+  role: string;
+  photo?: string;
+  bio?: string;
+  social?: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+  };
+}
+
+/**
+ * Team slide specification
+ */
+export interface TeamSlideSpec extends BaseSlideSpec {
+  type: 'team';
+  title?: string;
+  members: TeamMember[];
+  layout?: 'grid' | 'carousel' | 'highlight';
+}
+
+/**
+ * Pricing plan specification
+ */
+export interface PricingPlan {
+  name: string;
+  price: string | number;
+  period?: string;
+  features: string[];
+  cta?: string;
+  recommended?: boolean;
+}
+
+/**
+ * Pricing slide specification
+ */
+export interface PricingSlideSpec extends BaseSlideSpec {
+  type: 'pricing';
+  title?: string;
+  plans: PricingPlan[];
+  highlight?: number;
+}
+
+/**
+ * Code slide specification
+ */
+export interface CodeSlideSpec extends BaseSlideSpec {
+  type: 'code';
+  title?: string;
+  language: string;
+  code: string;
+  highlights?: number[];
+  filename?: string;
+  theme?: 'dark' | 'light' | 'auto';
+}
+
+/**
  * Union type of all slide specifications
  */
 export type SlideSpec =
@@ -437,7 +620,12 @@ export type SlideSpec =
   | ThreeColumnSlideSpec
   | FourColumnSlideSpec
   | ChartWithMetricsSlideSpec
-  | ProductOverviewSlideSpec;
+  | ProductOverviewSlideSpec
+  | GridSlideSpec
+  | FeatureCardSlideSpec
+  | TeamSlideSpec
+  | PricingSlideSpec
+  | CodeSlideSpec;
 
 /**
  * Complete presentation specification
@@ -456,10 +644,13 @@ export interface PresentationSpec {
 export interface GenerationOptions {
   aspectRatio?: AspectRatio;
   fontSize?: FontSize;
+  layoutDensity?: LayoutDensity;
+  preset?: DesignPreset;
   minify?: boolean;
   includeSlideyUICSS?: boolean;
   embedFonts?: boolean;
   theme?: Theme;
+  mode?: ThemeMode;
 }
 
 /**
@@ -494,3 +685,134 @@ export type SlideTemplate<T extends BaseSlideSpec = BaseSlideSpec> = (
   spec: T,
   options: GenerationOptions
 ) => string;
+
+/**
+ * Icon names for SVG generation
+ */
+export type IconName =
+  | 'briefcase'
+  | 'chart-line'
+  | 'chart-bar'
+  | 'pie-chart'
+  | 'trend-up'
+  | 'trend-down'
+  | 'mail'
+  | 'phone'
+  | 'message'
+  | 'users'
+  | 'calendar'
+  | 'check'
+  | 'x'
+  | 'arrow-right'
+  | 'arrow-left'
+  | 'plus'
+  | 'minus'
+  | 'image'
+  | 'video'
+  | 'download'
+  | 'upload'
+  | 'alert'
+  | 'info'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'star'
+  | 'heart'
+  | 'settings'
+  | 'search';
+
+/**
+ * Pattern types for SVG generation
+ */
+export type PatternType =
+  | 'dots'
+  | 'grid'
+  | 'diagonal-lines'
+  | 'waves'
+  | 'gradient-mesh'
+  | 'chevron'
+  | 'hexagon'
+  | 'blobs'
+  | 'noise'
+  | 'particles'
+  | 'rays';
+
+/**
+ * SVG generation specification
+ */
+export interface SVGGenerationSpec {
+  type: 'icon' | 'pattern' | 'chart' | 'diagram' | 'custom';
+
+  // Icon generation
+  iconName?: IconName;
+
+  // Pattern generation
+  patternType?: PatternType;
+  patternDensity?: 'low' | 'medium' | 'high';
+  patternOpacity?: number;
+
+  // Chart generation
+  chartType?: 'bar' | 'line' | 'pie' | 'area' | 'doughnut' | 'scatter';
+  chartData?: ChartData;
+
+  // Custom SVG
+  customInstructions?: string;
+
+  // Common options
+  width?: number;
+  height?: number;
+  theme?: Theme;
+  style?: 'default' | 'hand-drawn' | 'minimal';
+
+  // Color overrides
+  color?: string;
+  backgroundColor?: string;
+}
+
+/**
+ * Typography scale level configuration
+ */
+export interface TypographyScaleLevel {
+  min?: string;
+  preferred?: string;
+  max?: string;
+  weight?: number;
+  lineHeight?: number;
+}
+
+/**
+ * Typography scale configuration
+ */
+export interface TypographyScale {
+  hero?: TypographyScaleLevel;
+  h1?: TypographyScaleLevel;
+  h2?: TypographyScaleLevel;
+  h3?: TypographyScaleLevel;
+  body?: TypographyScaleLevel;
+  caption?: TypographyScaleLevel;
+}
+
+/**
+ * Custom theme specification
+ */
+export interface CustomTheme {
+  name: string;
+  displayName: string;
+  colors: {
+    primary: string;
+    secondary?: string;
+    accent?: string;
+    background?: string;
+    foreground?: string;
+    muted?: string;
+    mutedForeground?: string;
+    border?: string;
+  };
+  typography?: TypographyScale;
+  metadata?: {
+    author?: string;
+    createdAt?: string;
+    description?: string;
+    tags?: string[];
+  };
+}

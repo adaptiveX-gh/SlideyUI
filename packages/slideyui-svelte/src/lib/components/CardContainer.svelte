@@ -7,6 +7,7 @@
 
 	export let aspectRatio: '16/9' | '4/3' | '1/1' | '3/2' | 'auto' = '16/9';
 	export let mode: 'preview' | 'thumbnail' | 'full' = 'preview';
+	export let layoutDensity: 'compact' | 'normal' | 'spacious' = 'normal';
 	export let bordered: boolean = true;
 	export let shadow: boolean = true;
 	export let interactive: boolean = false;
@@ -77,6 +78,7 @@
 	style={styles}
 	data-card-id={cardId}
 	data-card-state={cardState}
+	data-layout-density={layoutDensity}
 	data-auto-scale={autoScale ? 'true' : undefined}
 	data-fluid-scale={fluidScale ? 'true' : undefined}
 >

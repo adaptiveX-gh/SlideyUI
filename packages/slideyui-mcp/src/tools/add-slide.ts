@@ -62,21 +62,31 @@ export const addSlideTool = {
   },
 
   async handler(args: Record<string, unknown>) {
-    // Validate input
-    const slide = SlideSchema.parse(args.slide) as SlideSpec;
-    const options = args.options
-      ? (GenerationOptionsSchema.parse(args.options) as GenerationOptions)
-      : {};
-    const index = typeof args.index === 'number' ? args.index : undefined;
+    try {
+      // Validate input
+      const slide = SlideSchema.parse(args.slide) as SlideSpec;
+      const options = args.options
+        ? (GenerationOptionsSchema.parse(args.options) as GenerationOptions)
+        : {};
+      const index = typeof args.index === 'number' ? args.index : undefined;
 
-    // Generate slide HTML
-    const html = generateSlide(slide, options, index);
+      // Generate slide HTML
+      const html = generateSlide(slide, options, index);
 
-    return {
-      success: true,
-      html,
-      slideType: slide.type,
-      message: `Generated ${slide.type} slide`,
-    };
+      return {
+        success: true,
+        html,
+        slideType: slide.type,
+        message: `Generated ${slide.type} slide`,
+      };
+    } catch (error) {
+      // Import error formatter dynamically to avoid circular dependencies
+      const { formatValidationError } = await import('../utils/error-formatter.js');
+      const formatted = formatValidationError(error);
+
+      throw new Error(
+        `Slide validation failed:\n\n${formatted.details || formatted.message}`
+      );
+    }
   },
 };

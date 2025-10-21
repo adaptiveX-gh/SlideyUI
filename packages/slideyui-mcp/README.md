@@ -664,11 +664,20 @@ npm start
 node test-css-loading.js
 ```
 
-## API Reference
+## Documentation
 
-See [API Documentation](./docs/API.md) for detailed type definitions and examples.
+Complete documentation for using the SlideyUI MCP server:
 
-## Examples
+### Getting Started
+- **[Quick Start](./docs/QUICK-START.md)** - 5-minute tutorial to create your first presentation
+- **[User Guide](./docs/USER-GUIDE.md)** - Complete guide covering tools, themes, patterns, and best practices
+
+### Reference
+- **[Slide Types](./docs/SLIDE-TYPES.md)** - All 16 slide types with examples, layouts, and use cases
+- **[API Reference](./docs/API-REFERENCE.md)** - Complete schema documentation and type definitions
+- **[Error Guide](./docs/ERRORS.md)** - Common errors and troubleshooting solutions
+
+### Examples
 
 See [examples/](./examples/) directory for complete presentation examples.
 

@@ -94,17 +94,27 @@ export const createPresentationTool = {
   },
 
   async handler(args: Record<string, unknown>) {
-    // Validate input
-    const spec = PresentationSchema.parse(args) as PresentationSpec;
+    try {
+      // Validate input
+      const spec = PresentationSchema.parse(args) as PresentationSpec;
 
-    // Generate presentation
-    const result = await generatePresentation(spec);
+      // Generate presentation
+      const result = await generatePresentation(spec);
 
-    return {
-      success: true,
-      html: result.html,
-      metadata: result.metadata,
-      message: `Generated ${result.metadata.slideCount} slides using ${result.metadata.theme} theme`,
-    };
+      return {
+        success: true,
+        html: result.html,
+        metadata: result.metadata,
+        message: `Generated ${result.metadata.slideCount} slides using ${result.metadata.theme} theme`,
+      };
+    } catch (error) {
+      // Import error formatter dynamically to avoid circular dependencies
+      const { formatValidationError } = await import('../utils/error-formatter.js');
+      const formatted = formatValidationError(error);
+
+      throw new Error(
+        `Presentation validation failed:\n\n${formatted.details || formatted.message}`
+      );
+    }
   },
 };

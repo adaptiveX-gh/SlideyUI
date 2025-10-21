@@ -24,6 +24,10 @@ import { threeColumnTemplate } from './three-column.js';
 import { fourColumnTemplate } from './four-column.js';
 import { chartWithMetricsTemplate } from './chart-with-metrics.js';
 import { productOverviewTemplate } from './product-overview.js';
+import { gridTemplate, featureCardTemplate } from './grid.js';
+import { teamTemplate } from './team.js';
+import { pricingTemplate } from './pricing.js';
+import { codeTemplate } from './code.js';
 
 /**
  * Template registry mapping slide types to template functions
@@ -45,6 +49,11 @@ const templateRegistry = new Map<SlideType, SlideTemplate>([
   ['four-column', fourColumnTemplate as SlideTemplate],
   ['chart-with-metrics', chartWithMetricsTemplate as SlideTemplate],
   ['product-overview', productOverviewTemplate as SlideTemplate],
+  ['grid', gridTemplate as SlideTemplate],
+  ['feature-cards', featureCardTemplate as SlideTemplate],
+  ['team', teamTemplate as SlideTemplate],
+  ['pricing', pricingTemplate as SlideTemplate],
+  ['code', codeTemplate as SlideTemplate],
 ]);
 
 /**
@@ -119,4 +128,9 @@ export {
   fourColumnTemplate,
   chartWithMetricsTemplate,
   productOverviewTemplate,
+  gridTemplate,
+  featureCardTemplate,
+  teamTemplate,
+  pricingTemplate,
+  codeTemplate,
 };

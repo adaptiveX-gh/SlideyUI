@@ -5,6 +5,8 @@
    * @component
    */
 
+  import type { LayoutDensity } from '$lib/types';
+
   interface Props {
     /**
      * First column content
@@ -27,17 +29,22 @@
     fourth?: import('svelte').Snippet;
 
     /**
+     * Layout density for controlling spacing
+     */
+    density?: LayoutDensity;
+
+    /**
      * Additional CSS classes
      */
     class?: string;
   }
 
-  let { first, second, third, fourth, class: className = '', ...restProps }: Props = $props();
+  let { first, second, third, fourth, density = 'normal', class: className = '', ...restProps }: Props = $props();
 
   const classes = $derived(['card-layout-4col', className].filter(Boolean).join(' '));
 </script>
 
-<div class={classes} {...restProps}>
+<div class={classes} data-layout-density={density} {...restProps}>
   <div>{@render first?.()}</div>
   <div>{@render second?.()}</div>
   <div>{@render third?.()}</div>

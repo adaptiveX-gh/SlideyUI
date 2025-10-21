@@ -37,6 +37,10 @@ export { Presentation, usePresentationContext } from './Presentation';
 export { AnalyticsProvider, useAnalytics } from '../context/AnalyticsContext';
 export type { AnalyticsProviderProps } from '../context/AnalyticsContext';
 
+// Theme System
+export { ThemeModeSwitcher } from './ThemeModeSwitcher';
+export type { ThemeModeSwitcherProps } from './ThemeModeSwitcher';
+
 // Card Components (Layer 0 primitives for AI-first apps)
 export {
   CardContainer,

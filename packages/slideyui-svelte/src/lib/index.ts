@@ -35,6 +35,12 @@ export { default as CardContainer } from './components/CardContainer.svelte';
 export { default as CardGrid } from './components/CardGrid.svelte';
 
 // ============================================================================
+// Theme System
+// ============================================================================
+
+export { default as ThemeModeSwitcher } from './components/ThemeModeSwitcher.svelte';
+
+// ============================================================================
 // Specialized Card Components
 // ============================================================================
 

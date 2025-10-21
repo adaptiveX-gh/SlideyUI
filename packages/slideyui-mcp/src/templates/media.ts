@@ -27,6 +27,10 @@ function renderVideoElement(spec: MediaSlideSpec, className: string = ''): strin
     fallbackImage,
   } = videoConfig;
 
+  if (!spec.mediaUrl) {
+    return '';
+  }
+
   const mediaUrl = escapeHTML(spec.mediaUrl);
   const posterAttr = poster ? ` poster="${escapeHTML(poster)}"` : '';
   const classAttr = className ? ` class="${className}"` : '';
@@ -66,8 +70,14 @@ function renderVideoElement(spec: MediaSlideSpec, className: string = ''): strin
 function renderHeroLayout(spec: MediaSlideSpec, options: GenerationOptions): string {
   const title = spec.title ? escapeHTML(spec.title) : '';
   const subtitle = spec.subtitle ? escapeHTML(spec.subtitle) : '';
-  const mediaUrl = escapeHTML(spec.mediaUrl);
   const theme = options.theme || 'corporate';
+
+  // For hero layout, mediaUrl OR svgContent is required
+  if (!spec.mediaUrl && !spec.svgContent) {
+    return '';
+  }
+
+  const mediaUrl = spec.mediaUrl ? escapeHTML(spec.mediaUrl) : '';
 
   // Extract text style configuration with defaults
   const textStyle = spec.textStyle || {};
@@ -98,7 +108,10 @@ function renderHeroLayout(spec: MediaSlideSpec, options: GenerationOptions): str
   const loadingState = loadingConfig.strategy === 'lazy' ? 'loading' : 'loaded';
 
   // Build inline styles
-  let inlineStyles = `background-image: url('${mediaUrl}');`;
+  let inlineStyles = '';
+  if (mediaUrl) {
+    inlineStyles = `background-image: url('${mediaUrl}');`;
+  }
   if (printUrl) {
     inlineStyles += ` --print-bg-image: url('${printUrl}');`;
   }
@@ -106,26 +119,109 @@ function renderHeroLayout(spec: MediaSlideSpec, options: GenerationOptions): str
     inlineStyles += ` --hero-placeholder-color: ${loadingConfig.placeholder.color};`;
   }
 
-  // Determine if this is a video background
+  // Determine background type and content
   const isVideo = spec.mediaType === 'video';
+  const isSVG = spec.mediaType === 'svg';
   let backgroundContent = '';
 
   if (isVideo) {
     // Render video as background
     backgroundContent = renderVideoElement(spec, 'slideyui-hero-video-bg');
+  } else if (isSVG && spec.svgContent) {
+    // Render SVG as background (UNESCAPED - raw HTML)
+    const svgType = spec.svgType || 'inline';
+    if (svgType === 'inline') {
+      // Inject SVG directly as background element
+      backgroundContent = `<div class="slideyui-hero-svg-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">${spec.svgContent}</div>`;
+    } else {
+      // Use data URI for background-image
+      const dataUri = `data:image/svg+xml;utf8,${encodeURIComponent(spec.svgContent)}`;
+      inlineStyles = `background-image: url('${dataUri}'); background-size: cover; background-position: center;`;
+    }
   }
 
   return `
-    <div class="slideyui-hero-background${isVideo ? ' slideyui-hero-video' : ''}" style="${isVideo ? '' : inlineStyles}" data-loading-state="${loadingState}"${dataPrintUrl ? ' ' + dataPrintUrl : ''}>
-      ${isVideo ? backgroundContent : ''}
+    <div class="slideyui-hero-background${isVideo ? ' slideyui-hero-video' : ''}${isSVG ? ' slideyui-hero-svg' : ''}" style="${(isVideo || (isSVG && spec.svgType === 'inline')) ? '' : inlineStyles}" data-loading-state="${loadingState}"${dataPrintUrl ? ' ' + dataPrintUrl : ''}>
+      ${isVideo || isSVG ? backgroundContent : ''}
       ${showOverlay ? `
-      <div class="slideyui-hero-overlay" style="background: ${overlayCSS}; ${isVideo ? 'opacity: 0.5;' : ''}"></div>
+      <div class="slideyui-hero-overlay" style="background: ${overlayCSS}; ${isVideo || isSVG ? 'opacity: 0.5;' : ''}"></div>
       ` : ''}
       <div class="slideyui-hero-content slideyui-hero-content-${position}">
         <div style="max-width: ${maxWidth}; text-align: ${align};">
           ${title ? `<h1 class="slideyui-hero-title ${shadowClass} ${colorClass}" style="color: ${color};">${title}</h1>` : ''}
           ${subtitle ? `<p class="slideyui-hero-subtitle ${shadowClass} ${colorClass}" style="color: ${color};">${subtitle}</p>` : ''}
         </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render hero-card layout for media slides
+ *
+ * Card-based hero with background image and overlay
+ * Keeps the card structure but adds hero styling
+ */
+function renderHeroCardLayout(spec: MediaSlideSpec, _options: GenerationOptions): string {
+  const title = spec.title ? escapeHTML(spec.title) : '';
+  const subtitle = spec.subtitle ? escapeHTML(spec.subtitle) : '';
+
+  // Require either mediaUrl OR svgContent
+  if (!spec.mediaUrl && !spec.svgContent) {
+    return '';
+  }
+
+  const mediaUrl = spec.mediaUrl ? escapeHTML(spec.mediaUrl) : '';
+  const isSVG = spec.mediaType === 'svg';
+
+  // Extract overlay configuration
+  const overlay = spec.overlay || {};
+
+  // Build inline styles and content
+  let inlineStyles = '';
+  let svgBackgroundContent = '';
+
+  if (isSVG && spec.svgContent) {
+    // Handle SVG content
+    const svgType = spec.svgType || 'inline';
+    if (svgType === 'inline') {
+      // SVG as inline background element (UNESCAPED)
+      svgBackgroundContent = `<div class="slideyui-card-hero-svg-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">${spec.svgContent}</div>`;
+    } else {
+      // SVG as data URI background-image
+      const dataUri = `data:image/svg+xml;utf8,${encodeURIComponent(spec.svgContent)}`;
+      inlineStyles = `background-image: url('${dataUri}'); background-size: cover; background-position: center;`;
+    }
+  } else if (mediaUrl) {
+    // Handle regular image URL
+    inlineStyles = `background-image: url('${mediaUrl}');`;
+  }
+
+  // Add custom overlay if specified
+  if (overlay.customColors && overlay.customColors.length > 0) {
+    const customColors = overlay.customColors;
+    const gradientColors = customColors.map((color, index) => {
+      return `${color} ${(index / (customColors.length - 1)) * 100}%`;
+    }).join(', ');
+
+    if (isSVG && spec.svgType === 'inline') {
+      // For inline SVG, add overlay as separate element
+      svgBackgroundContent += `<div class="slideyui-card-hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(${overlay.direction || '135deg'}, ${gradientColors}); z-index: 1;"></div>`;
+    } else {
+      // For image/data-uri SVG, use CSS gradient overlay
+      const parts = inlineStyles.split('background-image:');
+      const secondPart = parts[1];
+      const bgImage = secondPart ? secondPart.split(';')[0] : '';
+      inlineStyles = `background-image: linear-gradient(${overlay.direction || '135deg'}, ${gradientColors}), ${bgImage};`;
+    }
+  }
+
+  return `
+    <div class="slideyui-card slideyui-card-hero${isSVG ? ' slideyui-card-hero-svg' : ''}" style="${inlineStyles}">
+      ${svgBackgroundContent}
+      <div class="slideyui-card-hero-content" style="position: relative; z-index: 2;">
+        ${title ? `<h1 class="slideyui-card-hero-title">${title}</h1>` : ''}
+        ${subtitle ? `<p class="slideyui-card-hero-subtitle">${subtitle}</p>` : ''}
       </div>
     </div>
   `;
@@ -145,7 +241,7 @@ function renderContainedLayout(spec: MediaSlideSpec): string {
   switch (spec.mediaType) {
     case 'image':
       // Use responsive images if configured
-      if (responsiveConfig.autoGenerate !== false) {
+      if (responsiveConfig.autoGenerate !== false && spec.mediaUrl) {
         // Generate picture element with srcset
         mediaHTML = generatePictureElement(
           spec.mediaUrl,
@@ -154,7 +250,7 @@ function renderContainedLayout(spec: MediaSlideSpec): string {
         );
         // Add wrapper styling
         mediaHTML = `<div class="slideyui-media-image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">${mediaHTML}</div>`;
-      } else {
+      } else if (spec.mediaUrl) {
         // Standard img tag
         mediaHTML = `<img src="${escapeHTML(spec.mediaUrl)}" alt="${caption || title}" class="slideyui-media-image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">`;
       }
@@ -164,11 +260,27 @@ function renderContainedLayout(spec: MediaSlideSpec): string {
       const videoHTML = renderVideoElement(spec, 'slideyui-media-video');
       mediaHTML = `<div style="max-width: 100%; height: auto; display: block; margin: 0 auto;">${videoHTML}</div>`;
       break;
+    case 'svg':
+      // Render SVG content inline or as data URI
+      if (spec.svgContent) {
+        const svgType = spec.svgType || 'inline';
+        if (svgType === 'inline') {
+          // Render SVG directly in HTML
+          mediaHTML = `<div class="slideyui-media-svg" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">${spec.svgContent}</div>`;
+        } else {
+          // Render as data URI in img tag
+          const dataUri = `data:image/svg+xml;utf8,${encodeURIComponent(spec.svgContent)}`;
+          mediaHTML = `<img src="${dataUri}" alt="${caption || title}" class="slideyui-media-svg" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">`;
+        }
+      }
+      break;
     case 'embed':
-      mediaHTML = `
-        <iframe src="${escapeHTML(spec.mediaUrl)}" class="slideyui-media-embed" frameborder="0" allowfullscreen style="width: 100%; height: 500px; border: none;">
-        </iframe>
-      `;
+      if (spec.mediaUrl) {
+        mediaHTML = `
+          <iframe src="${escapeHTML(spec.mediaUrl)}" class="slideyui-media-embed" frameborder="0" allowfullscreen style="width: 100%; height: 500px; border: none;">
+          </iframe>
+        `;
+      }
       break;
   }
 
@@ -198,6 +310,8 @@ export function mediaTemplate(
   switch (layout) {
     case 'hero':
       return renderHeroLayout(spec, options);
+    case 'hero-card':
+      return renderHeroCardLayout(spec, options);
     case 'contained':
     case 'split':
     case 'full-bleed':

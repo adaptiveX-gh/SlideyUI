@@ -1996,6 +1996,133 @@
   }
 
   /* ========================================================================
+   * Hero Card Variant
+   * Card-based hero slide with background image overlay
+   * Alternative to full-bleed hero layout - keeps card structure
+   * ======================================================================== */
+
+  .slideyui-card-hero {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    padding: 0;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Gradient overlay for hero cards */
+  .slideyui-card-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--slidey-primary-rgb, 193, 95, 60), 0.85),
+      rgba(var(--slidey-secondary-rgb, 195, 60, 91), 0.75)
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Content container for hero cards */
+  .slideyui-card-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 5%;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  /* Hero card title styling */
+  .slideyui-card-hero-title {
+    color: white;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Hero card subtitle styling */
+  .slideyui-card-hero-subtitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.3;
+    font-weight: 400;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Entrance animations for hero cards */
+  .slideyui-slide.active .slideyui-card-hero-title {
+    animation: slideHeroFadeUp 800ms ease-out 200ms backwards;
+  }
+
+  .slideyui-slide.active .slideyui-card-hero-subtitle {
+    animation: slideHeroFadeUp 800ms ease-out 400ms backwards;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .slideyui-card-hero-title,
+    .slideyui-card-hero-subtitle {
+      animation: none !important;
+    }
+  }
+
+  /* Responsive adjustments for hero cards */
+  @media (max-width: 1024px) {
+    .slideyui-card-hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .slideyui-card-hero-subtitle {
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .slideyui-card-hero-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .slideyui-card-hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .slideyui-card-hero-content {
+      padding: 8%;
+    }
+  }
+
+  /* Print support for hero cards */
+  @media print {
+    .slideyui-card-hero {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+    }
+
+    .slideyui-card-hero::before {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+    }
+  }
+
+  /* ========================================================================
    * Video Background Support
    * Full-bleed video backgrounds for hero slides
    * ======================================================================== */
@@ -2418,6 +2545,105 @@
   }
 
   /* ============================================================================
+   * Layout Density System
+   * Control spacing across all layout types based on density preset
+   * ========================================================================== */
+
+  /* Compact Density - Data-dense presentations */
+  [data-layout-density="compact"] {
+    --layout-gap-multiplier: 1;
+    --layout-hero-gap-multiplier: 1.5;
+  }
+
+  [data-layout-density="compact"] .card-layout-2col {
+    gap: calc(var(--slidey-spacing-gap) * 1);  /* 32px */
+  }
+
+  [data-layout-density="compact"] .card-layout-3col {
+    gap: calc(var(--slidey-spacing-gap) * 1);
+  }
+
+  [data-layout-density="compact"] .card-layout-4col {
+    gap: calc(var(--slidey-spacing-gap) * 0.75);  /* 24px */
+  }
+
+  [data-layout-density="compact"] .card-layout-split {
+    gap: calc(var(--slidey-spacing-gap) * 1.5);
+  }
+
+  [data-layout-density="compact"] .card-layout-bullets li {
+    gap: calc(var(--slidey-spacing-gap) * 0.5);
+    margin-bottom: 0.25rem;
+  }
+
+  /* Normal Density (DEFAULT) - Balanced presentations */
+  [data-layout-density="normal"] {
+    --layout-gap-multiplier: 1.5;
+    --layout-hero-gap-multiplier: 2;
+  }
+
+  [data-layout-density="normal"] .card-layout-2col {
+    gap: calc(var(--slidey-spacing-gap) * 1.5);  /* 48px */
+  }
+
+  [data-layout-density="normal"] .card-layout-3col {
+    gap: calc(var(--slidey-spacing-gap) * 1.5);
+  }
+
+  [data-layout-density="normal"] .card-layout-4col {
+    gap: calc(var(--slidey-spacing-gap) * 1);  /* 32px */
+  }
+
+  [data-layout-density="normal"] .card-layout-split {
+    gap: calc(var(--slidey-spacing-gap) * 2);
+  }
+
+  [data-layout-density="normal"] .card-layout-bullets li {
+    gap: calc(var(--slidey-spacing-gap) * 0.75);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Spacious Density - Premium presentations, fewer items */
+  [data-layout-density="spacious"] {
+    --layout-gap-multiplier: 2;
+    --layout-hero-gap-multiplier: 2.5;
+  }
+
+  [data-layout-density="spacious"] .card-layout-2col {
+    gap: calc(var(--slidey-spacing-gap) * 2);  /* 64px */
+  }
+
+  [data-layout-density="spacious"] .card-layout-3col {
+    gap: calc(var(--slidey-spacing-gap) * 1.75);  /* 56px */
+  }
+
+  [data-layout-density="spacious"] .card-layout-4col {
+    gap: calc(var(--slidey-spacing-gap) * 1.5);  /* 48px */
+  }
+
+  [data-layout-density="spacious"] .card-layout-split {
+    gap: calc(var(--slidey-spacing-gap) * 2.5);  /* 80px */
+  }
+
+  [data-layout-density="spacious"] .card-layout-bullets li {
+    gap: calc(var(--slidey-spacing-gap) * 1);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Hero split adjustments */
+  [data-layout-density="compact"] .card-hero-split {
+    gap: calc(var(--slidey-spacing-gap) * 1.5);
+  }
+
+  [data-layout-density="normal"] .card-hero-split {
+    gap: calc(var(--slidey-spacing-gap) * 2);
+  }
+
+  [data-layout-density="spacious"] .card-hero-split {
+    gap: calc(var(--slidey-spacing-gap) * 2.5);
+  }
+
+  /* ============================================================================
    * List Component
    * Presentation-optimized vertical list layout
    * Based on DaisyUI List component, adapted for presentations with fancy effects
@@ -2709,6 +2935,233 @@
     .card-list-row-actions {
       opacity: 1; /* Always visible on mobile */
       transform: translateX(0);
+    }
+  }
+
+  /* ========================================
+   * Grid Layouts
+   * Flexible grid layouts for feature showcases
+   * ======================================== */
+
+  /* Grid Card Container */
+  .slideyui-grid-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--slidey-spacing-gap);
+    height: 100%;
+  }
+
+  /* Grid Item */
+  .slideyui-grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--slidey-spacing-gap) * 0.5);
+    padding: calc(var(--slidey-spacing-gap) * 0.75);
+    border-radius: 0.5rem;
+    background-color: var(--slidey-muted);
+    border: 1px solid var(--slidey-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .slideyui-grid-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--slidey-primary);
+  }
+
+  /* Grid Item Icon */
+  .slideyui-grid-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+  }
+
+  .slideyui-grid-item-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Grid Item Image */
+  .slideyui-grid-item-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .slideyui-grid-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Grid Item Title */
+  .slideyui-grid-item-title {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 700;
+    color: var(--slidey-foreground);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* Grid Item Description */
+  .slideyui-grid-item-description {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    color: var(--slidey-muted-foreground);
+    margin: 0;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* ========================================
+   * Feature Cards
+   * Card-based layout for feature showcases
+   * ======================================== */
+
+  /* Feature Card Container */
+  .slideyui-feature-cards-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--slidey-spacing-gap);
+    height: 100%;
+  }
+
+  /* Feature Card */
+  .slideyui-feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: calc(var(--slidey-spacing-gap) * 0.625);
+    padding: calc(var(--slidey-spacing-gap) * 1.25);
+    border-radius: 0.75rem;
+    background-color: var(--slidey-background);
+    border: 2px solid var(--slidey-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slideyui-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--slidey-primary), var(--slidey-accent));
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slideyui-feature-card:hover::before {
+    opacity: 1;
+  }
+
+  .slideyui-feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    border-color: var(--slidey-primary);
+  }
+
+  /* Highlighted Feature Card */
+  .slideyui-feature-card-highlight {
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--slidey-accent) 10%, transparent),
+      color-mix(in srgb, var(--slidey-primary) 10%, transparent)
+    );
+    border-color: var(--slidey-accent);
+    border-width: 3px;
+  }
+
+  .slideyui-feature-card-highlight::before {
+    opacity: 1;
+    height: 6px;
+  }
+
+  /* Feature Card Icon */
+  .slideyui-feature-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    margin-bottom: calc(var(--slidey-spacing-gap) * 0.25);
+  }
+
+  .slideyui-feature-card-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .slideyui-feature-card-highlight .slideyui-feature-card-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  /* Feature Card Title */
+  .slideyui-feature-card-title {
+    font-size: clamp(1.375rem, 2.25vw, 1.75rem);
+    font-weight: 700;
+    color: var(--slidey-foreground);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .slideyui-feature-card-highlight .slideyui-feature-card-title {
+    background: linear-gradient(135deg, var(--slidey-primary), var(--slidey-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Feature Card Description */
+  .slideyui-feature-card-description {
+    font-size: clamp(1.125rem, 1.75vw, 1.375rem);
+    color: var(--slidey-muted-foreground);
+    margin: 0;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* Responsive Grid Adjustments */
+  @media (max-width: 768px) {
+    .slideyui-grid-item,
+    .slideyui-feature-card {
+      padding: calc(var(--slidey-spacing-gap) * 0.75);
+    }
+
+    .slideyui-grid-item-icon,
+    .slideyui-feature-card-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .slideyui-feature-card-highlight .slideyui-feature-card-icon {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  /* Print optimization for grid layouts */
+  @media print {
+    .slideyui-grid-item,
+    .slideyui-feature-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .slideyui-grid-item:hover,
+    .slideyui-feature-card:hover {
+      transform: none;
+      box-shadow: none;
     }
   }
 }
